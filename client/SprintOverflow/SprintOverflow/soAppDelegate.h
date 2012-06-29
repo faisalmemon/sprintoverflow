@@ -1,0 +1,17 @@
+//
+//  soAppDelegate.h
+//  SprintOverflow
+//
+//  Created by Faisal Memon on 29/06/2012.
+//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface soAppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate>
+
+@property (strong, nonatomic) UIWindow *window;
+
+@property (strong, nonatomic) UITabBarController *tabBarController;
+
+@end
