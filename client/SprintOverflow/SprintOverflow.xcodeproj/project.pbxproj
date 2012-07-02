@@ -13,6 +13,8 @@
 		3A48920915A1B17B00AAFF54 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A48920115A1B17B00AAFF54 /* SBJsonBase.m */; };
 		3A48920A15A1B17B00AAFF54 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A48920315A1B17B00AAFF54 /* SBJsonParser.m */; };
 		3A48920B15A1B17B00AAFF54 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A48920515A1B17B00AAFF54 /* SBJsonWriter.m */; };
+		3A48920E15A1B48C00AAFF54 /* soDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A48920D15A1B48C00AAFF54 /* soDatabase.m */; };
+		3A48921115A1B78A00AAFF54 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A48921015A1B78A00AAFF54 /* CoreData.framework */; };
 		3A9EAC70159E155C0042030E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A9EAC6F159E155C0042030E /* UIKit.framework */; };
 		3A9EAC72159E155C0042030E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A9EAC71159E155C0042030E /* Foundation.framework */; };
 		3A9EAC74159E155C0042030E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A9EAC73159E155C0042030E /* CoreGraphics.framework */; };
@@ -43,6 +45,9 @@
 		3A48920315A1B17B00AAFF54 /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
 		3A48920415A1B17B00AAFF54 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		3A48920515A1B17B00AAFF54 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
+		3A48920D15A1B48C00AAFF54 /* soDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soDatabase.m; sourceTree = "<group>"; };
+		3A48920F15A1B4F200AAFF54 /* soDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soDatabase.h; sourceTree = "<group>"; };
+		3A48921015A1B78A00AAFF54 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		3A9EAC6B159E155C0042030E /* SprintOverflow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SprintOverflow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A9EAC6F159E155C0042030E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3A9EAC71159E155C0042030E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -70,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A48921115A1B78A00AAFF54 /* CoreData.framework in Frameworks */,
 				3A9EAC70159E155C0042030E /* UIKit.framework in Frameworks */,
 				3A9EAC72159E155C0042030E /* Foundation.framework in Frameworks */,
 				3A9EAC74159E155C0042030E /* CoreGraphics.framework in Frameworks */,
@@ -102,6 +108,7 @@
 		3A9EAC60159E155C0042030E = {
 			isa = PBXGroup;
 			children = (
+				3A48921015A1B78A00AAFF54 /* CoreData.framework */,
 				3A9EAC75159E155C0042030E /* SprintOverflow */,
 				3A9EAC6E159E155C0042030E /* Frameworks */,
 				3A9EAC6C159E155C0042030E /* Products */,
@@ -129,6 +136,8 @@
 		3A9EAC75159E155C0042030E /* SprintOverflow */ = {
 			isa = PBXGroup;
 			children = (
+				3A48920F15A1B4F200AAFF54 /* soDatabase.h */,
+				3A48920D15A1B48C00AAFF54 /* soDatabase.m */,
 				3A4891F815A1B17B00AAFF54 /* JSON */,
 				3A9EAC7E159E155C0042030E /* soAppDelegate.h */,
 				3A9EAC7F159E155C0042030E /* soAppDelegate.m */,
@@ -236,6 +245,7 @@
 				3A48920915A1B17B00AAFF54 /* SBJsonBase.m in Sources */,
 				3A48920A15A1B17B00AAFF54 /* SBJsonParser.m in Sources */,
 				3A48920B15A1B17B00AAFF54 /* SBJsonWriter.m in Sources */,
+				3A48920E15A1B48C00AAFF54 /* soDatabase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
