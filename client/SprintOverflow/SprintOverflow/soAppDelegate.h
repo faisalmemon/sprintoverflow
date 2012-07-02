@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JSON/JSON.h"
 
 @interface soAppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate>
 
