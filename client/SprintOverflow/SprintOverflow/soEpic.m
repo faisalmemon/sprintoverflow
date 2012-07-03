@@ -23,6 +23,24 @@
     return self;
 }
 
+-(id)initWithName:(NSString *)name
+           withId:(NSNumber *)Id
+{
+    self.epicName = name;
+    self.epicId = Id;
+    
+    return self;
+}
+
+-(void)addStory:(soStory *)story
+{
+    if (self.epicStories == nil)
+    {
+        self.epicStories = [[NSMutableArray alloc] init];
+    }
+    [self.epicStories addObject:story];
+}
+
 -(void)dumpEpic
 {
     NSLog(@"epicId %@ epicName %@ stories %@", self.epicId, self.epicName, self.epicStories);

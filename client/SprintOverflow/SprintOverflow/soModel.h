@@ -14,6 +14,7 @@
 }
 
 + (id)sharedInstance;
+-(void)bootstrapFromServer:(NSString *)modelAsJsonString;
 -(void)addEpic:(soEpic*)epic;
 -(void)dumpEpics;
 

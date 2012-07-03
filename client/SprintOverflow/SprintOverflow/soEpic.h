@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "soStory.h"
 
 @interface soEpic : NSObject {
 }
@@ -14,6 +15,11 @@
 -(id)initWithName:(NSString *)name
            withId:(NSNumber *)Id
       withStories:(NSArray *)stories;
+
+-(id)initWithName:(NSString *)name
+           withId:(NSNumber *)Id;
+
+-(void)addStory:(soStory *)story;
 
 -(void)dumpEpic;
 

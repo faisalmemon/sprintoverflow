@@ -114,40 +114,9 @@
         return FALSE;
     }
     
-    NSDictionary *results = [jsonString JSONValue];
-    NSDictionary *epicDict = [results objectForKey:@"epic"];
-    NSNumber *epicId = [epicDict objectForKey:@"epicId"];
-    NSArray *stories = [epicDict  objectForKey:@"stories"];
-    NSString *epicName = [epicDict objectForKey:@"epicName"];
-    
-    soEpic *soepic = [[soEpic alloc] initWithName:epicName withId:epicId withStories:stories];
     soModel *theModel = [soModel sharedInstance];
-    [theModel addEpic:soepic];
-    [theModel dumpEpics];
+    [theModel bootstrapFromServer:jsonString];
     
-    /*
-     Printing description of results:
-     {
-     epic =     {
-     epicId = 872983;
-     epicName = "Bootstrap the AgileOverflow project";
-     stories =         (
-     {
-     storyId = 872984;
-     storyName = "Create GAE default scenario response";
-     tasks =                 (
-     {
-     status = NotStarted;
-     taskId = 872985;
-     taskName = "Create default scenario java class";
-     }
-     );
-     }
-     );
-     };
-     }
-     */
-
     return TRUE;
 
 }

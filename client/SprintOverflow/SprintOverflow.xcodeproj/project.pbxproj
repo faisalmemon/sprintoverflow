@@ -31,6 +31,8 @@
 		3A9EAC94159E155C0042030E /* soSecondViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A9EAC92159E155C0042030E /* soSecondViewController.xib */; };
 		3AB5F5E915A1D2AD000D9A55 /* soEpic.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB5F5E815A1D2AD000D9A55 /* soEpic.m */; };
 		3AB5F5ED15A1D78A000D9A55 /* soModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB5F5EC15A1D78A000D9A55 /* soModel.m */; };
+		3ABB585D15A2EDB1007A57A4 /* soStory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABB585C15A2EDB1007A57A4 /* soStory.m */; };
+		3AD7477E15A32D7A0034B799 /* soTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AD7477D15A32D7A0034B799 /* soTask.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,6 +76,10 @@
 		3AB5F5E815A1D2AD000D9A55 /* soEpic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soEpic.m; sourceTree = "<group>"; };
 		3AB5F5EB15A1D78A000D9A55 /* soModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soModel.h; sourceTree = "<group>"; };
 		3AB5F5EC15A1D78A000D9A55 /* soModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soModel.m; sourceTree = "<group>"; };
+		3ABB585B15A2EDB1007A57A4 /* soStory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soStory.h; sourceTree = "<group>"; };
+		3ABB585C15A2EDB1007A57A4 /* soStory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soStory.m; sourceTree = "<group>"; };
+		3AD7477C15A32D7A0034B799 /* soTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soTask.h; sourceTree = "<group>"; };
+		3AD7477D15A32D7A0034B799 /* soTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soTask.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,9 +148,13 @@
 		3A9EAC75159E155C0042030E /* SprintOverflow */ = {
 			isa = PBXGroup;
 			children = (
+				3ABB585B15A2EDB1007A57A4 /* soStory.h */,
+				3ABB585C15A2EDB1007A57A4 /* soStory.m */,
 				3AB5F5E715A1D2AD000D9A55 /* soEpic.h */,
 				3AB5F5EB15A1D78A000D9A55 /* soModel.h */,
 				3AB5F5EC15A1D78A000D9A55 /* soModel.m */,
+				3AD7477C15A32D7A0034B799 /* soTask.h */,
+				3AD7477D15A32D7A0034B799 /* soTask.m */,
 				3AB5F5E815A1D2AD000D9A55 /* soEpic.m */,
 				3A48920F15A1B4F200AAFF54 /* soDatabase.h */,
 				3A48920D15A1B48C00AAFF54 /* soDatabase.m */,
@@ -258,6 +268,8 @@
 				3A48920E15A1B48C00AAFF54 /* soDatabase.m in Sources */,
 				3AB5F5E915A1D2AD000D9A55 /* soEpic.m in Sources */,
 				3AB5F5ED15A1D78A000D9A55 /* soModel.m in Sources */,
+				3ABB585D15A2EDB1007A57A4 /* soStory.m in Sources */,
+				3AD7477E15A32D7A0034B799 /* soTask.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
