@@ -11,6 +11,7 @@
 #import "soFirstViewController.h"
 
 #import "soSecondViewController.h"
+#import "soDatabase.h"
 
 @implementation soAppDelegate
 
@@ -21,6 +22,9 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    
+    [soDatabase fetchEpicData:@"Faisal23"];
+    
     UIViewController *viewController1 = [[soFirstViewController alloc] initWithNibName:@"soFirstViewController" bundle:nil];
     UIViewController *viewController2 = [[soSecondViewController alloc] initWithNibName:@"soSecondViewController" bundle:nil];
     self.tabBarController = [[UITabBarController alloc] init];

@@ -99,24 +99,31 @@
 }
 
 
-+(void)fetchEpicData:(NSString *)forUser
++(BOOL)fetchEpicData:(NSString *)forUser
 {
     // Construct a Google Application Engine API request.
     // http://ios38722.appspot.com/barebones?Mode=Epic&User=JayRandomHacker
     //
-    NSString *urlString = [NSString stringWithFormat:@"http://ios38722.appspot.com/barebones?Mode=Epic&User=%@", forUser];
+    NSString *urlString = [NSString stringWithFormat:@"http://ios38722.appspot.com/sprintoverflow?Mode=Epic&User=%@", forUser];
     NSURL *url = [NSURL URLWithString:urlString];
     
     // Get the contents of the URL as a string, and parse the JSON into Foundation objects.
     NSString *jsonString = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
+    if (jsonString == nil) {
+        NSLog(@"Could not fetch epic data from the network.  Need to fallback on local data");
+        return FALSE;
+    }
+    
     NSDictionary *results = [jsonString JSONValue];
     NSDictionary *epicDict = [results objectForKey:@"epic"];
-    NSString *epicId = [epicDict objectForKey:@"epicId"];
+    NSNumber *epicId = [epicDict objectForKey:@"epicId"];
     NSArray *stories = [epicDict  objectForKey:@"stories"];
     NSString *epicName = [epicDict objectForKey:@"epicName"];
-    NSArray *keyArray = [epicDict allKeys];
-    NSLog(@"The key array is %@", keyArray);
-    //NSLog(@"EpicId is %@", epicId);
+    
+    soEpic *soepic = [[soEpic alloc] initWithName:epicName withId:epicId withStories:stories];
+    soModel *theModel = [soModel sharedInstance];
+    [theModel addEpic:soepic];
+    [theModel dumpEpics];
     
     /*
      Printing description of results:
@@ -140,10 +147,8 @@
      };
      }
      */
-    // Now we need to dig through the resulting objects.
-    // Read the documentation and make liberal use of the debugger or logs.
-    //return [[results objectForKey:@"user"] objectForKey:@"nsid"];
-    return;
+
+    return TRUE;
 
 }
 @end

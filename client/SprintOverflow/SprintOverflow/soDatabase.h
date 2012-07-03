@@ -10,15 +10,15 @@
 #import <CoreData/CoreData.h>
 #import "JSON.h"
 
+#import "soModel.h"
+
 @interface soDatabase : NSObject {
     NSManagedObjectModel *managedObjectModel;
     NSManagedObjectContext *managedObjectContext;
     NSPersistentStoreCoordinator *persistentStoreCoordinator;
 }
 
-+(void)populateBootstrapData;
-+(void)fetchEpicData:(NSString *)forUser;
-+ (id)sharedInstance;
-+(NSArray *)stories:(int)withStatus;
++(BOOL)      fetchEpicData:(NSString *)forUser;
++(id)        sharedInstance;
 
 @end
