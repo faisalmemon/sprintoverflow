@@ -2,10 +2,9 @@ server development
 ------------------
 
 To develop the server side of this project, you need
-- Eclipse Indigo release
-- Google App Engine SDK for Java
-- GAE plug-in for Eclipse
-- gson JSON library from google - a local copy is checked in to war/WEB-INF/lib
+- Eclipse Juno release
+- Google App Engine plug-in for Eclipse (4.2) including its SDK
+- gson JSON library (2.2.1) from google - a local copy is checked in to war/WEB-INF/lib
 
 Assume the latest version of everything above.  Each time they are updated and something
 breaks, let me know and I'll forward port anything needed.
@@ -15,5 +14,8 @@ check-in policy for non-source files
 
 The check-in policy is lax for this part of the project due to google mixing up
 source configuration files with generated binary files.  To keep things simple,
-we just therefore check in the war directory.  The thing we try to avoid is
-checking in user-specific metadata files from eclipse (.classpath etc).
+we therefore check in the war directory.  The thing we try to avoid is
+checking in user-specific metadata files from eclipse.  In order to get eclipse
+working with git, we need the .project and .classpath meta files so the code can
+be imported into an eclipse workspace.  Perhaps the classpath will need local
+modification.
