@@ -59,8 +59,7 @@
     for (NSDictionary *d in stories)
     {
         soStory *sostory;
-        sostory = [[soStory alloc] initWithName:[d objectForKey:@"storyName"] withId:[d objectForKey:@"storyId"] withTasks:[d objectForKey:@"tasks"]];
-        
+        sostory = [[soStory alloc] initWithName:[d objectForKey:@"storyName"] withId:[d objectForKey:@"storyId"] ];
         NSArray *tasks = [d objectForKey:@"tasks"];
         for (NSDictionary *d1 in tasks)
         {

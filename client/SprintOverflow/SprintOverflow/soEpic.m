@@ -44,5 +44,9 @@
 -(void)dumpEpic
 {
     NSLog(@"epicId %@ epicName %@ stories %@", self.epicId, self.epicName, self.epicStories);
+    for (soStory *sostory in self.epicStories)
+    {
+        [sostory dumpStory];
+    }
 }
 @end

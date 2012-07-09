@@ -47,5 +47,9 @@
 -(void)dumpStory
 {
     NSLog(@"storyId %@ storyName %@ tasks %@", self.storyId, self.storyName, self.storyTasks);
+    for (soTask *sotask in self.storyTasks)
+    {
+        [sotask dumpTask];
+    }
 }
 @end
