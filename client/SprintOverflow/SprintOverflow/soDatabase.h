@@ -19,6 +19,11 @@
 }
 
 +(BOOL)      fetchEpicData:(NSString *)forUser;
+
+extern const int soDatabase_fetchEpicData_NoFailureSimulation;
+extern const int soDatabase_fetchEpicData_SimulateNetworkDown;
+
++(BOOL)      fetchEpicData:(NSString *)forUser:(int)simulateFailure;
 +(id)        sharedInstance;
 
 @end

@@ -23,7 +23,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
-    [soDatabase fetchEpicData:@"Faisal23"];
+    [soDatabase fetchEpicData:@"Faisal23":soDatabase_fetchEpicData_SimulateNetworkDown];
     
     UIViewController *viewController1 = [[soFirstViewController alloc] initWithNibName:@"soFirstViewController" bundle:nil];
     UIViewController *viewController2 = [[soSecondViewController alloc] initWithNibName:@"soSecondViewController" bundle:nil];
