@@ -63,10 +63,10 @@ const int soDatabase_fetchEpicData_SimulateNetworkDown = 1;
         return persistentStoreCoordinator;
     }
 	
-	NSString	*path = [self databasePath];
+    NSString	*path = [self databasePath];
     NSURL *storeUrl = [NSURL fileURLWithPath:path];
 	
-	NSError *error = nil;
+    NSError *error = nil;
     persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
     if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeUrl options:nil error:&error]) {
 		/*
@@ -134,6 +134,8 @@ const int soDatabase_fetchEpicData_SimulateNetworkDown = 1;
         NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
         [request setSortDescriptors:sortDescriptors];
 
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"fetchUrl like %@", urlString];
+        [request setPredicate:predicate];
         
         // Execute the fetch -- create a mutable copy of the result.
         NSError *error = nil;
