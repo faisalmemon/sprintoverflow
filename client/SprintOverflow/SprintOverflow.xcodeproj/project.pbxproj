@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A2BDA0615AC3B5E00AB3F7B /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3A2BDA0415AC3B5E00AB3F7B /* Model.xcdatamodeld */; };
+		3A2BDA0A15AC3D9500AB3F7B /* LocalModelCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A2BDA0915AC3D9500AB3F7B /* LocalModelCache.m */; };
 		3A48920615A1B17B00AAFF54 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4891FB15A1B17B00AAFF54 /* NSObject+SBJSON.m */; };
 		3A48920715A1B17B00AAFF54 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4891FD15A1B17B00AAFF54 /* NSString+SBJSON.m */; };
 		3A48920815A1B17B00AAFF54 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4891FF15A1B17B00AAFF54 /* SBJSON.m */; };
@@ -36,6 +38,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3A2BDA0515AC3B5E00AB3F7B /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		3A2BDA0815AC3D9500AB3F7B /* LocalModelCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalModelCache.h; sourceTree = "<group>"; };
+		3A2BDA0915AC3D9500AB3F7B /* LocalModelCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalModelCache.m; sourceTree = "<group>"; };
 		3A4891F915A1B17B00AAFF54 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		3A4891FA15A1B17B00AAFF54 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
 		3A4891FB15A1B17B00AAFF54 /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
@@ -148,6 +153,9 @@
 		3A9EAC75159E155C0042030E /* SprintOverflow */ = {
 			isa = PBXGroup;
 			children = (
+				3A2BDA0415AC3B5E00AB3F7B /* Model.xcdatamodeld */,
+				3A2BDA0815AC3D9500AB3F7B /* LocalModelCache.h */,
+				3A2BDA0915AC3D9500AB3F7B /* LocalModelCache.m */,
 				3ABB585B15A2EDB1007A57A4 /* soStory.h */,
 				3ABB585C15A2EDB1007A57A4 /* soStory.m */,
 				3AB5F5E715A1D2AD000D9A55 /* soEpic.h */,
@@ -270,6 +278,8 @@
 				3AB5F5ED15A1D78A000D9A55 /* soModel.m in Sources */,
 				3ABB585D15A2EDB1007A57A4 /* soStory.m in Sources */,
 				3AD7477E15A32D7A0034B799 /* soTask.m in Sources */,
+				3A2BDA0615AC3B5E00AB3F7B /* Model.xcdatamodeld in Sources */,
+				3A2BDA0A15AC3D9500AB3F7B /* LocalModelCache.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -392,6 +402,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		3A2BDA0415AC3B5E00AB3F7B /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				3A2BDA0515AC3B5E00AB3F7B /* Model.xcdatamodel */,
+			);
+			currentVersion = 3A2BDA0515AC3B5E00AB3F7B /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 3A9EAC62159E155C0042030E /* Project object */;
 }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1171" systemVersion="11E2705" minimumToolsVersion="Xcode 4.1" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="LocalModelCache" representedClassName="LocalModelCache" syncable="YES">
+        <attribute name="fetchUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="responseJson" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="timeOfFetch" optional="YES" attributeType="Date" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="LocalModelCache" positionX="160" positionY="192" width="128" height="90"/>
+    </elements>
+</model>

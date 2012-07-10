@@ -7,6 +7,7 @@
 //
 
 #import "soDatabase.h"
+#import "LocalModelCache.h"
 //#import "acUtil.h"
 
 
@@ -109,7 +110,23 @@
     
     // Get the contents of the URL as a string, and parse the JSON into Foundation objects.
     NSString *jsonString = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
+    
+    soDatabase *instance = [soDatabase sharedInstance];
+    
+    // Create and configure a new instance of the Event entity.
+    NSManagedObjectContext* mocp = [instance managedObjectContext];
+    [NSEntityDescription insertNewObjectForEntityForName:@"LocalModelCache" inManagedObjectContext:mocp];
+    
+    LocalModelCache *cache;
+    cache = (LocalModelCache *)[NSEntityDescription insertNewObjectForEntityForName:@"LocalModelCache" inManagedObjectContext:mocp];
+    
+    [cache setFetchUrl:urlString];
+    [cache setTimeOfFetch:[NSDate date]];
+    [cache setResponseJson:jsonString];
+    [mocp save:nil];
+                                                     
     if (jsonString == nil) {
+        // TODO place code to fetch the local cache if it exists
         NSLog(@"Could not fetch epic data from the network.  Need to fallback on local data");
         return FALSE;
     }
