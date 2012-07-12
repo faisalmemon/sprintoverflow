@@ -53,15 +53,15 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.3639471"
-     inkscape:cx="258.35802"
-     inkscape:cy="695.38961"
+     inkscape:zoom="1.7833757"
+     inkscape:cx="311.09672"
+     inkscape:cy="786.67939"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1488"
      inkscape:window-height="899"
-     inkscape:window-x="86"
-     inkscape:window-y="6"
+     inkscape:window-x="1368"
+     inkscape:window-y="0"
      inkscape:window-maximized="0" />
   <metadata
      id="metadata4">
@@ -695,5 +695,34 @@
          id="tspan7475"
          x="304.57535"
          y="554.46613">add_epic</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="279.80643"
+       y="170.32706"
+       id="text7515"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan7517"
+         x="279.80643"
+         y="170.32706">Email address</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="291.58185"
+       y="189.39201"
+       id="text7519"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan7521"
+         x="291.58185"
+         y="189.39201">Email address</tspan></text>
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:0.9992126;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:2.9976378,0.9992126;stroke-dashoffset:0"
+       id="rect7523"
+       width="122.24009"
+       height="25.793779"
+       x="282.04938"
+       y="178.17734" />
   </g>
 </svg>
