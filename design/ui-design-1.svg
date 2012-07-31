@@ -39,15 +39,15 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.2626372"
-     inkscape:cx="517.67494"
-     inkscape:cy="289.71435"
+     inkscape:zoom="1.6489841"
+     inkscape:cx="372.04724"
+     inkscape:cy="824.3941"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1742"
      inkscape:window-height="790"
-     inkscape:window-x="794"
-     inkscape:window-y="0"
+     inkscape:window-x="93"
+     inkscape:window-y="72"
      inkscape:window-maximized="0" />
   <metadata
      id="metadata4">
@@ -57,7 +57,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -114,7 +114,7 @@
          y="107.5144">Bootstrap the AgileOverflow project</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 284.32553,97.218489 10.29591,7.919931 -9.50392,9.50392"
+       d="m 280.08049,93.579885 10.29591,7.919935 -9.50392,9.50392"
        id="path6388"
        inkscape:connector-curvature="0" />
     <rect
@@ -489,5 +489,40 @@
        id="path8666"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
+    <g
+       id="g4491">
+      <rect
+         y="482.91913"
+         x="569.44305"
+         height="23.759796"
+         width="57.023499"
+         id="rect3713"
+         style="fill:none;stroke:#000000;stroke-opacity:1" />
+      <rect
+         style="fill:#000000;stroke:#000000;stroke-width:0.61544871000000001;stroke-opacity:1;fill-opacity:1"
+         id="rect4489"
+         width="21.599195"
+         height="23.759796"
+         x="569.44305"
+         y="482.91913" />
+    </g>
+    <g
+       id="g4495"
+       transform="matrix(0.81187257,0,0,0.95101462,-232.56924,-366.30556)">
+      <rect
+         style="fill:none;stroke:#000000;stroke-opacity:1"
+         id="rect4497"
+         width="57.023499"
+         height="23.759796"
+         x="569.44305"
+         y="482.91913" />
+      <rect
+         y="482.91913"
+         x="569.44305"
+         height="23.759796"
+         width="21.599195"
+         id="rect4499"
+         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.61544871;stroke-opacity:1" />
+    </g>
   </g>
 </svg>
