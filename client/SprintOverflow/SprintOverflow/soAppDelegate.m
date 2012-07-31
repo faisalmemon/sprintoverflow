@@ -8,7 +8,7 @@
 
 #import "soAppDelegate.h"
 
-#import "soFirstViewController.h"
+#import "soWelcomeViewController.h"
 
 #import "soSecondViewController.h"
 #import "soDatabase.h"
@@ -25,10 +25,10 @@
     
     [soDatabase fetchEpicData:@"Faisal23":soDatabase_fetchEpicData_NoFailureSimulation];
     
-    UIViewController *viewController1 = [[soFirstViewController alloc] initWithNibName:@"welcome" bundle:nil];
+    UIViewController *welcomeViewController = [[soWelcomeViewController alloc] initWithNibName:@"welcome" bundle:nil];
     UIViewController *viewController2 = [[soSecondViewController alloc] initWithNibName:@"soSecondViewController" bundle:nil];
     self.tabBarController = [[UITabBarController alloc] init];
-    self.tabBarController.viewControllers = [NSArray arrayWithObjects:viewController1, viewController2, nil];
+    self.tabBarController.viewControllers = [NSArray arrayWithObjects:welcomeViewController, viewController2, nil];
     self.window.rootViewController = self.tabBarController;
     [self.window makeKeyAndVisible];
     return YES;

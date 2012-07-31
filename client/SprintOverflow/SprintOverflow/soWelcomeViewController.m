@@ -1,18 +1,18 @@
 //
-//  soFirstViewController.m
+//  soWelcomeViewController.m
 //  SprintOverflow
 //
 //  Created by Faisal Memon on 29/06/2012.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "soFirstViewController.h"
+#import "soWelcomeViewController.h"
 
-@interface soFirstViewController ()
+@interface soWelcomeViewController ()
 
 @end
 
-@implementation soFirstViewController
+@implementation soWelcomeViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

@@ -23,7 +23,7 @@
 		3A9EAC7A159E155C0042030E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A9EAC78159E155C0042030E /* InfoPlist.strings */; };
 		3A9EAC7C159E155C0042030E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9EAC7B159E155C0042030E /* main.m */; };
 		3A9EAC80159E155C0042030E /* soAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9EAC7F159E155C0042030E /* soAppDelegate.m */; };
-		3A9EAC83159E155C0042030E /* soFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9EAC82159E155C0042030E /* soFirstViewController.m */; };
+		3A9EAC83159E155C0042030E /* soWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9EAC82159E155C0042030E /* soWelcomeViewController.m */; };
 		3A9EAC85159E155C0042030E /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A9EAC84159E155C0042030E /* first.png */; };
 		3A9EAC87159E155C0042030E /* first@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A9EAC86159E155C0042030E /* first@2x.png */; };
 		3A9EAC8A159E155C0042030E /* soSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9EAC89159E155C0042030E /* soSecondViewController.m */; };
@@ -31,6 +31,8 @@
 		3A9EAC8E159E155C0042030E /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A9EAC8D159E155C0042030E /* second@2x.png */; };
 		3A9EAC91159E155C0042030E /* welcome.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A9EAC8F159E155C0042030E /* welcome.xib */; };
 		3A9EAC94159E155C0042030E /* soSecondViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A9EAC92159E155C0042030E /* soSecondViewController.xib */; };
+		3AA9E41215C851D9006A4704 /* soJoinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AA9E41015C851D9006A4704 /* soJoinViewController.m */; };
+		3AA9E41315C851D9006A4704 /* join.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AA9E41115C851D9006A4704 /* join.xib */; };
 		3AB5F5E915A1D2AD000D9A55 /* soEpic.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB5F5E815A1D2AD000D9A55 /* soEpic.m */; };
 		3AB5F5ED15A1D78A000D9A55 /* soModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB5F5EC15A1D78A000D9A55 /* soModel.m */; };
 		3ABB585D15A2EDB1007A57A4 /* soStory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABB585C15A2EDB1007A57A4 /* soStory.m */; };
@@ -67,8 +69,8 @@
 		3A9EAC7D159E155C0042030E /* SprintOverflow-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SprintOverflow-Prefix.pch"; sourceTree = "<group>"; };
 		3A9EAC7E159E155C0042030E /* soAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = soAppDelegate.h; sourceTree = "<group>"; };
 		3A9EAC7F159E155C0042030E /* soAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = soAppDelegate.m; sourceTree = "<group>"; };
-		3A9EAC81159E155C0042030E /* soFirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = soFirstViewController.h; sourceTree = "<group>"; };
-		3A9EAC82159E155C0042030E /* soFirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = soFirstViewController.m; sourceTree = "<group>"; };
+		3A9EAC81159E155C0042030E /* soWelcomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = soWelcomeViewController.h; sourceTree = "<group>"; };
+		3A9EAC82159E155C0042030E /* soWelcomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = soWelcomeViewController.m; sourceTree = "<group>"; };
 		3A9EAC84159E155C0042030E /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first.png; sourceTree = "<group>"; };
 		3A9EAC86159E155C0042030E /* first@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "first@2x.png"; sourceTree = "<group>"; };
 		3A9EAC88159E155C0042030E /* soSecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = soSecondViewController.h; sourceTree = "<group>"; };
@@ -77,6 +79,9 @@
 		3A9EAC8D159E155C0042030E /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
 		3A9EAC90159E155C0042030E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/welcome.xib; sourceTree = "<group>"; };
 		3A9EAC93159E155C0042030E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/soSecondViewController.xib; sourceTree = "<group>"; };
+		3AA9E40F15C851D9006A4704 /* soJoinViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soJoinViewController.h; sourceTree = "<group>"; };
+		3AA9E41015C851D9006A4704 /* soJoinViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soJoinViewController.m; sourceTree = "<group>"; };
+		3AA9E41115C851D9006A4704 /* join.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = join.xib; sourceTree = "<group>"; };
 		3AB5F5E715A1D2AD000D9A55 /* soEpic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soEpic.h; sourceTree = "<group>"; };
 		3AB5F5E815A1D2AD000D9A55 /* soEpic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soEpic.m; sourceTree = "<group>"; };
 		3AB5F5EB15A1D78A000D9A55 /* soModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soModel.h; sourceTree = "<group>"; };
@@ -169,15 +174,18 @@
 				3A4891F815A1B17B00AAFF54 /* JSON */,
 				3A9EAC7E159E155C0042030E /* soAppDelegate.h */,
 				3A9EAC7F159E155C0042030E /* soAppDelegate.m */,
-				3A9EAC81159E155C0042030E /* soFirstViewController.h */,
-				3A9EAC82159E155C0042030E /* soFirstViewController.m */,
+				3A9EAC81159E155C0042030E /* soWelcomeViewController.h */,
+				3A9EAC82159E155C0042030E /* soWelcomeViewController.m */,
+				3A9EAC8F159E155C0042030E /* welcome.xib */,
 				3A9EAC84159E155C0042030E /* first.png */,
 				3A9EAC86159E155C0042030E /* first@2x.png */,
 				3A9EAC88159E155C0042030E /* soSecondViewController.h */,
 				3A9EAC89159E155C0042030E /* soSecondViewController.m */,
 				3A9EAC8B159E155C0042030E /* second.png */,
 				3A9EAC8D159E155C0042030E /* second@2x.png */,
-				3A9EAC8F159E155C0042030E /* welcome.xib */,
+				3AA9E40F15C851D9006A4704 /* soJoinViewController.h */,
+				3AA9E41015C851D9006A4704 /* soJoinViewController.m */,
+				3AA9E41115C851D9006A4704 /* join.xib */,
 				3A9EAC92159E155C0042030E /* soSecondViewController.xib */,
 				3A9EAC76159E155C0042030E /* Supporting Files */,
 			);
@@ -253,6 +261,7 @@
 				3A9EAC8E159E155C0042030E /* second@2x.png in Resources */,
 				3A9EAC91159E155C0042030E /* welcome.xib in Resources */,
 				3A9EAC94159E155C0042030E /* soSecondViewController.xib in Resources */,
+				3AA9E41315C851D9006A4704 /* join.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,7 +274,7 @@
 			files = (
 				3A9EAC7C159E155C0042030E /* main.m in Sources */,
 				3A9EAC80159E155C0042030E /* soAppDelegate.m in Sources */,
-				3A9EAC83159E155C0042030E /* soFirstViewController.m in Sources */,
+				3A9EAC83159E155C0042030E /* soWelcomeViewController.m in Sources */,
 				3A9EAC8A159E155C0042030E /* soSecondViewController.m in Sources */,
 				3A48920615A1B17B00AAFF54 /* NSObject+SBJSON.m in Sources */,
 				3A48920715A1B17B00AAFF54 /* NSString+SBJSON.m in Sources */,
@@ -280,6 +289,7 @@
 				3AD7477E15A32D7A0034B799 /* soTask.m in Sources */,
 				3A2BDA0615AC3B5E00AB3F7B /* Model.xcdatamodeld in Sources */,
 				3A2BDA0A15AC3D9500AB3F7B /* LocalModelCache.m in Sources */,
+				3AA9E41215C851D9006A4704 /* soJoinViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

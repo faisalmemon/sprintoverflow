@@ -1,5 +1,5 @@
 //
-//  soFirstViewController.h
+//  soWelcomeViewController.h
 //  SprintOverflow
 //
 //  Created by Faisal Memon on 29/06/2012.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface soFirstViewController : UIViewController
+@interface soWelcomeViewController : UIViewController
 
 @end
