@@ -29,7 +29,7 @@
 		3A9EAC8A159E155C0042030E /* soSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9EAC89159E155C0042030E /* soSecondViewController.m */; };
 		3A9EAC8C159E155C0042030E /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A9EAC8B159E155C0042030E /* second.png */; };
 		3A9EAC8E159E155C0042030E /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A9EAC8D159E155C0042030E /* second@2x.png */; };
-		3A9EAC91159E155C0042030E /* soFirstViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A9EAC8F159E155C0042030E /* soFirstViewController.xib */; };
+		3A9EAC91159E155C0042030E /* welcome.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A9EAC8F159E155C0042030E /* welcome.xib */; };
 		3A9EAC94159E155C0042030E /* soSecondViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A9EAC92159E155C0042030E /* soSecondViewController.xib */; };
 		3AB5F5E915A1D2AD000D9A55 /* soEpic.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB5F5E815A1D2AD000D9A55 /* soEpic.m */; };
 		3AB5F5ED15A1D78A000D9A55 /* soModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB5F5EC15A1D78A000D9A55 /* soModel.m */; };
@@ -75,7 +75,7 @@
 		3A9EAC89159E155C0042030E /* soSecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = soSecondViewController.m; sourceTree = "<group>"; };
 		3A9EAC8B159E155C0042030E /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
 		3A9EAC8D159E155C0042030E /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
-		3A9EAC90159E155C0042030E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/soFirstViewController.xib; sourceTree = "<group>"; };
+		3A9EAC90159E155C0042030E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/welcome.xib; sourceTree = "<group>"; };
 		3A9EAC93159E155C0042030E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/soSecondViewController.xib; sourceTree = "<group>"; };
 		3AB5F5E715A1D2AD000D9A55 /* soEpic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soEpic.h; sourceTree = "<group>"; };
 		3AB5F5E815A1D2AD000D9A55 /* soEpic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soEpic.m; sourceTree = "<group>"; };
@@ -177,7 +177,7 @@
 				3A9EAC89159E155C0042030E /* soSecondViewController.m */,
 				3A9EAC8B159E155C0042030E /* second.png */,
 				3A9EAC8D159E155C0042030E /* second@2x.png */,
-				3A9EAC8F159E155C0042030E /* soFirstViewController.xib */,
+				3A9EAC8F159E155C0042030E /* welcome.xib */,
 				3A9EAC92159E155C0042030E /* soSecondViewController.xib */,
 				3A9EAC76159E155C0042030E /* Supporting Files */,
 			);
@@ -251,7 +251,7 @@
 				3A9EAC87159E155C0042030E /* first@2x.png in Resources */,
 				3A9EAC8C159E155C0042030E /* second.png in Resources */,
 				3A9EAC8E159E155C0042030E /* second@2x.png in Resources */,
-				3A9EAC91159E155C0042030E /* soFirstViewController.xib in Resources */,
+				3A9EAC91159E155C0042030E /* welcome.xib in Resources */,
 				3A9EAC94159E155C0042030E /* soSecondViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -294,12 +294,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		3A9EAC8F159E155C0042030E /* soFirstViewController.xib */ = {
+		3A9EAC8F159E155C0042030E /* welcome.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				3A9EAC90159E155C0042030E /* en */,
 			);
-			name = soFirstViewController.xib;
+			name = welcome.xib;
 			sourceTree = "<group>";
 		};
 		3A9EAC92159E155C0042030E /* soSecondViewController.xib */ = {

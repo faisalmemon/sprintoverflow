@@ -25,7 +25,7 @@
     
     [soDatabase fetchEpicData:@"Faisal23":soDatabase_fetchEpicData_NoFailureSimulation];
     
-    UIViewController *viewController1 = [[soFirstViewController alloc] initWithNibName:@"soFirstViewController" bundle:nil];
+    UIViewController *viewController1 = [[soFirstViewController alloc] initWithNibName:@"welcome" bundle:nil];
     UIViewController *viewController2 = [[soSecondViewController alloc] initWithNibName:@"soSecondViewController" bundle:nil];
     self.tabBarController = [[UITabBarController alloc] init];
     self.tabBarController.viewControllers = [NSArray arrayWithObjects:viewController1, viewController2, nil];
