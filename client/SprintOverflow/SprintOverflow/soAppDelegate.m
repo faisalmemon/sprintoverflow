@@ -17,6 +17,8 @@
 
 @synthesize window = _window;
 @synthesize tabBarController = _tabBarController;
+@synthesize uinavControllerWelcome;
+@synthesize uinavControllerMilestone;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -24,11 +26,19 @@
     // Override point for customization after application launch.
     
     [soDatabase fetchEpicData:@"Faisal23":soDatabase_fetchEpicData_NoFailureSimulation];
+
+    self.uinavControllerWelcome = [[UINavigationController alloc]init];
     
+    self.uinavControllerMilestone = [[UINavigationController alloc]init];
+
     UIViewController *welcomeViewController = [[soWelcomeViewController alloc] initWithNibName:@"welcome" bundle:nil];
     UIViewController *viewController2 = [[soSecondViewController alloc] initWithNibName:@"soSecondViewController" bundle:nil];
+    
+    [uinavControllerWelcome pushViewController:welcomeViewController animated:NO];
+    [uinavControllerMilestone pushViewController:viewController2 animated:NO];
+    
     self.tabBarController = [[UITabBarController alloc] init];
-    self.tabBarController.viewControllers = [NSArray arrayWithObjects:welcomeViewController, viewController2, nil];
+    self.tabBarController.viewControllers = [NSArray arrayWithObjects:uinavControllerWelcome, uinavControllerMilestone, nil];
     self.window.rootViewController = self.tabBarController;
     [self.window makeKeyAndVisible];
     return YES;

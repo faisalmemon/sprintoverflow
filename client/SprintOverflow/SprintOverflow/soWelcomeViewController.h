@@ -10,4 +10,5 @@
 
 @interface soWelcomeViewController : UIViewController
 
+-(IBAction) drillIntoJoin:(UIButton*)sender;
 @end

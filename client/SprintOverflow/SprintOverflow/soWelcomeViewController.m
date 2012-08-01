@@ -7,6 +7,7 @@
 //
 
 #import "soWelcomeViewController.h"
+#import "soJoinViewController.h"
 
 @interface soWelcomeViewController ()
 
@@ -39,6 +40,15 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return TRUE;
+}
+
+-(IBAction) drillIntoJoin:(UIButton*)sender
+{
+    soJoinViewController *joinvc;
+    joinvc = [[soJoinViewController alloc] initWithNibName:@"join" bundle:nil] ;
+    
+    joinvc.title = @"Join an Existing Project";
+    [self.navigationController pushViewController: joinvc animated:NO];
 }
 
 @end
