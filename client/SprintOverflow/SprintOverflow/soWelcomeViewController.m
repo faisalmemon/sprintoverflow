@@ -19,7 +19,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = NSLocalizedString(@"First", @"First");
+        self.title = NSLocalizedString(@"Projects", @"Projects welcome screen");
         self.tabBarItem.image = [UIImage imageNamed:@"first"];
     }
     return self;
@@ -47,8 +47,8 @@
     soJoinViewController *joinvc;
     joinvc = [[soJoinViewController alloc] initWithNibName:@"join" bundle:nil] ;
     
-    joinvc.title = @"Join an Existing Project";
-    [self.navigationController pushViewController: joinvc animated:NO];
+    joinvc.title = @"Join";
+    [self.navigationController pushViewController: joinvc animated:YES];
 }
 
 @end

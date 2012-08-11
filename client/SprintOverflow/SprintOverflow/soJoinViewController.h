@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface soJoinViewController : UIViewController
+@interface soJoinViewController : UIViewController <UITextFieldDelegate>
+@property (nonatomic, retain) IBOutlet UITextField *projectIdText;
+@property (nonatomic, retain) IBOutlet UITextField *projectOwnerEmailText;
+
 
 @end
