@@ -104,22 +104,34 @@
     [searchBar endEditing:YES];
 }
 
-- (CGPoint)originOfControl:(NSObject*)control
+-(CGPoint)screenCoordsFromLocalPoint:(CGPoint)localPosition
 {
-    CGPoint point = CGPointMake(0,0);
+    return [handleScrollView convertPoint:localPosition toView:nil];
+}
+
+-(CGRect)screenCoordsFromLocalRect:(CGRect)localRect
+{
+    CGRect returnRect = localRect;
+    CGPoint adjustedPoint = [self screenCoordsFromLocalPoint:localRect.origin];
+    returnRect.origin = adjustedPoint;
+    return returnRect;
+}
+
+- (CGRect)originOfControlInScreenCoords:(NSObject*)control
+{
+    CGRect rect = CGRectMake(0, 0, 0, 0);
     
     if ([control isKindOfClass:[UITextField class]]) {
         UITextField* textField = (UITextField*)control;
-        point = textField.frame.origin;
-        return point;
+        rect = textField.frame;
     } else if ([control isKindOfClass:[UISearchBar class]]) {
         UISearchBar* searchBar = (UISearchBar*)control;
-        point = searchBar.frame.origin;
-        return point;
+        rect = searchBar.frame;
     } else {
         NSLog(@"Unknown current control type to find origin of");
-        return point;
     }
+    rect.origin = [self screenCoordsFromLocalPoint:rect.origin];
+    return rect;
 }
 
 #pragma mark - Notification Handlers
@@ -127,9 +139,16 @@
 // Called when the UIKeyboardDidShowNotification is sent.
 - (void)keyboardWillShow:(NSNotification*)aNotification
 {
+    /*
+     When the keyboard shows, the tab bar is lost, thus making the scrollable area taller,
+     and the keyboard slides in, thus obscuring some of the scrollable area underneath.
+     We need to correct for both.  We also need to work in screen coords because the top of
+     the screen with show the carrier signal bar, and the navigation bar titles, and the
+     keyboard sizes come in screen coords.
+     */
     NSDictionary* info = [aNotification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-    
+    float tabBarHeight = [[[super tabBarController] tabBar] frame].size.height;
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
     handleScrollView.contentInset = contentInsets;
     handleScrollView.scrollIndicatorInsets = contentInsets;
@@ -137,11 +156,14 @@
     // If active text field is hidden by keyboard, scroll it so it's visible
     // Your application might not need or want this behavior.
     CGRect aRect = self.view.frame;
+    aRect = [self screenCoordsFromLocalRect:aRect];
     aRect.size.height -= kbSize.height;
     
-    CGPoint originOfCurrentControl = [self originOfControl:currentlyEditing];
-    if (!CGRectContainsPoint(aRect, originOfCurrentControl) ) {
-        CGPoint scrollPoint = CGPointMake(originOfCurrentControl.x, originOfCurrentControl.y - kbSize.height);
+    CGRect originOfCurrentControl = [self originOfControlInScreenCoords:currentlyEditing];
+    CGPoint bottomLeft = originOfCurrentControl.origin;
+    bottomLeft.y += originOfCurrentControl.size.height;
+    if (!CGRectContainsPoint(aRect, bottomLeft)) {
+        CGPoint scrollPoint = CGPointMake(0, bottomLeft.y - kbSize.height - tabBarHeight) ;
         [handleScrollView setContentOffset:scrollPoint animated:YES];
     }
 }
