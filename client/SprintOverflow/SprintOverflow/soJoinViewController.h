@@ -8,12 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-@interface soJoinViewController : UIViewController <UITextFieldDelegate> {
+@interface soJoinViewController : UIViewController <UITextFieldDelegate, UISearchBarDelegate> {
     CGRect savedFramePositionBeforeAnimation;
-    UITextField* currentlyEditing;
+    NSObject* currentlyEditing;
+    NSString* lastSearchText;
 }
+@property (weak, nonatomic) IBOutlet UIScrollView *handleScrollView;
 @property (nonatomic, retain) IBOutlet UITextField *projectIdText;
 @property (nonatomic, retain) IBOutlet UITextField *projectOwnerEmailText;
+@property (weak, nonatomic) IBOutlet UISearchBar *handleSearchBar;
 
 
 @end

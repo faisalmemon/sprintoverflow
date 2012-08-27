@@ -16,8 +16,10 @@
 
 @implementation soJoinViewController
 
+@synthesize handleScrollView;
 @synthesize projectIdText;
 @synthesize projectOwnerEmailText;
+@synthesize handleSearchBar;
 
 - (void)viewControllerInit
 {
@@ -44,6 +46,8 @@
 {
     [self setProjectIdText:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self setHandleScrollView:nil];
+    [self setHandleSearchBar:nil];
     [super viewDidUnload];
 }
 
@@ -66,192 +70,88 @@
     return YES;
 }
 
-#pragma mark - Notification Handlers
-
-- (void)keyboardWillShow:(NSNotification *)notification
+- (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    return;
-    // I'll try to make my text field 20 pixels above the top of the keyboard
-    // To do this first we need to find out where the keyboard will be.
-    
-    NSValue *keyboardEndFrameValue = [[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey];
-    CGRect keyboardEndFrame = [keyboardEndFrameValue CGRectValue];
-    
-    // When we move the textField up, we want to match the animation duration and curve that
-    // the keyboard displays. So we get those values out now
-    
-    NSNumber *animationDurationNumber = [[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey];
-    NSTimeInterval animationDuration = [animationDurationNumber doubleValue];
-    
-    NSNumber *animationCurveNumber = [[notification userInfo] objectForKey:UIKeyboardAnimationCurveUserInfoKey];
-    UIViewAnimationCurve animationCurve = [animationCurveNumber intValue];
-    
-    // UIView's block-based animation methods anticipate not a UIVieAnimationCurve but a UIViewAnimationOptions.
-    // We shift it according to the docs to get this curve.
-    
-    UIViewAnimationOptions animationOptions = animationCurve << 16;
-    
-    
-    // Now we set up our animation block.
-    [UIView animateWithDuration:animationDuration
-                          delay:0.0
-                        options:animationOptions
-                     animations:^{
-                         // Now we just animate the text field up an amount according to the keyboard's height,
-                         // as we mentioned above.
-                         savedFramePositionBeforeAnimation = self.projectIdText.frame;
-                         CGRect textFieldFrame = savedFramePositionBeforeAnimation;
-                         textFieldFrame.origin.y = keyboardEndFrame.origin.y + textFieldFrame.size.height; //I don't think the keyboard takes into account the status bar
-                         self.projectIdText.frame = textFieldFrame;
-                        [projectIdText layoutIfNeeded];
-                     }
-                     completion:^(BOOL finished) {}];
-    
+    currentlyEditing = textField;
 }
 
-
-- (void)keyboardWillHide:(NSNotification *)notification
+- (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    return;
-    NSNumber *animationDurationNumber = [[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey];
-    NSTimeInterval animationDuration = [animationDurationNumber doubleValue];
+    currentlyEditing = nil;
+}
+
+-(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    if (handleSearchBar == searchBar) {
+        currentlyEditing = searchBar;
+    }
+}
+
+- (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar
+{
+    [searchBar resignFirstResponder];
+    return YES;
+}
+
+-(void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+    currentlyEditing = nil;
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    lastSearchText = searchBar.text;
+    [searchBar endEditing:YES];
+}
+
+- (CGPoint)originOfControl:(NSObject*)control
+{
+    CGPoint point = CGPointMake(0,0);
     
-    NSNumber *animationCurveNumber = [[notification userInfo] objectForKey:UIKeyboardAnimationCurveUserInfoKey];
-    UIViewAnimationCurve animationCurve = [animationCurveNumber intValue];
-    UIViewAnimationOptions animationOptions = animationCurve << 16;
+    if ([control isKindOfClass:[UITextField class]]) {
+        UITextField* textField = (UITextField*)control;
+        point = textField.frame.origin;
+        return point;
+    } else if ([control isKindOfClass:[UISearchBar class]]) {
+        UISearchBar* searchBar = (UISearchBar*)control;
+        point = searchBar.frame.origin;
+        return point;
+    } else {
+        NSLog(@"Unknown current control type to find origin of");
+        return point;
+    }
+}
+
+#pragma mark - Notification Handlers
+
+// Called when the UIKeyboardDidShowNotification is sent.
+- (void)keyboardWillShow:(NSNotification*)aNotification
+{
+    NSDictionary* info = [aNotification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
-    [UIView animateWithDuration:animationDuration
-                          delay:0.0
-                        options:animationOptions
-                     animations:^{
-                         self.projectIdText.frame = savedFramePositionBeforeAnimation;
-                         [projectIdText layoutIfNeeded];
-                     }
-                     completion:^(BOOL finished) {}];
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+    handleScrollView.contentInset = contentInsets;
+    handleScrollView.scrollIndicatorInsets = contentInsets;
     
+    // If active text field is hidden by keyboard, scroll it so it's visible
+    // Your application might not need or want this behavior.
+    CGRect aRect = self.view.frame;
+    aRect.size.height -= kbSize.height;
+    
+    CGPoint originOfCurrentControl = [self originOfControl:currentlyEditing];
+    if (!CGRectContainsPoint(aRect, originOfCurrentControl) ) {
+        CGPoint scrollPoint = CGPointMake(originOfCurrentControl.x, originOfCurrentControl.y - kbSize.height);
+        [handleScrollView setContentOffset:scrollPoint animated:YES];
+    }
+}
+
+// Called when the UIKeyboardWillHideNotification is sent
+- (void)keyboardWillHide:(NSNotification*)aNotification
+{
+    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+    handleScrollView.contentInset = contentInsets;
+    handleScrollView.scrollIndicatorInsets = contentInsets;
 }
 
 @end
-
-/*
- @interface ViewController ()
- 
- - (void)viewControllerInit;
- 
- @end
- 
- @implementation ViewController
- 
- @synthesize textField;
- 
- - (id)initWithCoder:(NSCoder *)coder {
- self = [super initWithCoder:coder];
- if (self) {
- [self viewControllerInit];
- }
- return self;
- }
- 
- - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
- {
- if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])
- {
- [self viewControllerInit];
- }
- return self;
- }
- 
- 
- - (void)viewControllerInit
- {
- [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
- [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
- }
- 
- 
- - (void)dealloc {
- [[NSNotificationCenter defaultCenter] removeObserver:self];
- }
- 
- 
- #pragma mark - Notification Handlers
- 
- - (void)keyboardWillShow:(NSNotification *)notification
- {
- // I'll try to make my text field 20 pixels above the top of the keyboard
- // To do this first we need to find out where the keyboard will be.
- 
- NSValue *keyboardEndFrameValue = [[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey];
- CGRect keyboardEndFrame = [keyboardEndFrameValue CGRectValue];
- 
- // When we move the textField up, we want to match the animation duration and curve that
- // the keyboard displays. So we get those values out now
- 
- NSNumber *animationDurationNumber = [[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey];
- NSTimeInterval animationDuration = [animationDurationNumber doubleValue];
- 
- NSNumber *animationCurveNumber = [[notification userInfo] objectForKey:UIKeyboardAnimationCurveUserInfoKey];
- UIViewAnimationCurve animationCurve = [animationCurveNumber intValue];
- 
- // UIView's block-based animation methods anticipate not a UIVieAnimationCurve but a UIViewAnimationOptions.
- // We shift it according to the docs to get this curve.
- 
- UIViewAnimationOptions animationOptions = animationCurve << 16;
- 
- 
- // Now we set up our animation block.
- [UIView animateWithDuration:animationDuration
- delay:0.0
- options:animationOptions
- animations:^{
- // Now we just animate the text field up an amount according to the keyboard's height,
- // as we mentioned above.
- CGRect textFieldFrame = self.textField.frame;
- textFieldFrame.origin.y = keyboardEndFrame.origin.y - textFieldFrame.size.height - 40; //I don't think the keyboard takes into account the status bar
- self.textField.frame = textFieldFrame;
- }
- completion:^(BOOL finished) {}];
- 
- }
- 
- 
- - (void)keyboardWillHide:(NSNotification *)notification
- {
- 
- NSNumber *animationDurationNumber = [[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey];
- NSTimeInterval animationDuration = [animationDurationNumber doubleValue];
- 
- NSNumber *animationCurveNumber = [[notification userInfo] objectForKey:UIKeyboardAnimationCurveUserInfoKey];
- UIViewAnimationCurve animationCurve = [animationCurveNumber intValue];
- UIViewAnimationOptions animationOptions = animationCurve << 16;
- 
- [UIView animateWithDuration:animationDuration
- delay:0.0
- options:animationOptions
- animations:^{
- self.textField.frame = CGRectMake(20, 409, 280, 31); //just some hard coded value
- }
- completion:^(BOOL finished) {}];
- 
- }
- #pragma mark - View lifecycle
- 
- - (void)viewDidUnload
- {
- [self setTextField:nil];
- [super viewDidUnload];
- // Release any retained subviews of the main view.
- // e.g. self.myOutlet = nil;
- }
- 
- #pragma mark - UITextFieldDelegate
- 
- - (BOOL)textFieldShouldReturn:(UITextField *)textField
- {
- [self.textField resignFirstResponder];
- return YES;
- }
- 
- @end
- share|improve this answer
- */
