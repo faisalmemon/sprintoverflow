@@ -10,6 +10,7 @@
 
 @interface soJoinViewController : UIViewController <UITextFieldDelegate> {
     CGRect savedFramePositionBeforeAnimation;
+    UITextField* currentlyEditing;
 }
 @property (nonatomic, retain) IBOutlet UITextField *projectIdText;
 @property (nonatomic, retain) IBOutlet UITextField *projectOwnerEmailText;
