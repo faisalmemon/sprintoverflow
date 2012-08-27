@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "JSON/JSON.h"
 
-@interface soAppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate>
+@interface soAppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate> {
+
+}
 
 @property (strong, nonatomic) UIWindow *window;
 

@@ -12,11 +12,11 @@
     CGRect savedFramePositionBeforeAnimation;
     NSObject* currentlyEditing;
     NSString* lastSearchText;
+    UIInterfaceOrientation orientation;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *handleScrollView;
 @property (nonatomic, retain) IBOutlet UITextField *projectIdText;
 @property (nonatomic, retain) IBOutlet UITextField *projectOwnerEmailText;
 @property (weak, nonatomic) IBOutlet UISearchBar *handleSearchBar;
-
 
 @end
