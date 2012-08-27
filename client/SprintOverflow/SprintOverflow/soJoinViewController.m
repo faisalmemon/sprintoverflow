@@ -56,7 +56,13 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [self.projectIdText resignFirstResponder];
+    if (self.projectIdText == textField) {
+        NSLog(@"project Id field should return");
+        [textField resignFirstResponder];
+    } else if (self.projectOwnerEmailText == textField) {
+        NSLog(@"project owner text field should return");
+        [projectOwnerEmailText resignFirstResponder];
+    }
     return YES;
 }
 
@@ -64,6 +70,7 @@
 
 - (void)keyboardWillShow:(NSNotification *)notification
 {
+    return;
     // I'll try to make my text field 20 pixels above the top of the keyboard
     // To do this first we need to find out where the keyboard will be.
     
@@ -92,9 +99,11 @@
                      animations:^{
                          // Now we just animate the text field up an amount according to the keyboard's height,
                          // as we mentioned above.
-                         CGRect textFieldFrame = self.projectIdText.frame;
-                         textFieldFrame.origin.y = keyboardEndFrame.origin.y - textFieldFrame.size.height - 40; //I don't think the keyboard takes into account the status bar
+                         savedFramePositionBeforeAnimation = self.projectIdText.frame;
+                         CGRect textFieldFrame = savedFramePositionBeforeAnimation;
+                         textFieldFrame.origin.y = keyboardEndFrame.origin.y + textFieldFrame.size.height; //I don't think the keyboard takes into account the status bar
                          self.projectIdText.frame = textFieldFrame;
+                        [projectIdText layoutIfNeeded];
                      }
                      completion:^(BOOL finished) {}];
     
@@ -103,7 +112,7 @@
 
 - (void)keyboardWillHide:(NSNotification *)notification
 {
-    
+    return;
     NSNumber *animationDurationNumber = [[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey];
     NSTimeInterval animationDuration = [animationDurationNumber doubleValue];
     
@@ -115,7 +124,8 @@
                           delay:0.0
                         options:animationOptions
                      animations:^{
-                         self.projectIdText.frame = CGRectMake(20, 409, 280, 31); //just some hard coded value
+                         self.projectIdText.frame = savedFramePositionBeforeAnimation;
+                         [projectIdText layoutIfNeeded];
                      }
                      completion:^(BOOL finished) {}];
     

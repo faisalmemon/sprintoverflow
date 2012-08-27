@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface soJoinViewController : UIViewController <UITextFieldDelegate>
+@interface soJoinViewController : UIViewController <UITextFieldDelegate> {
+    CGRect savedFramePositionBeforeAnimation;
+}
 @property (nonatomic, retain) IBOutlet UITextField *projectIdText;
 @property (nonatomic, retain) IBOutlet UITextField *projectOwnerEmailText;
 
