@@ -122,43 +122,33 @@
 
 #pragma mark - Notification Handlers
 
-- (CGPoint)getScrollPointForControlAt:(CGPoint)bottomLeft WithKeyboard:(CGSize)keyboard
-{
-    NSLog(@"getScrollPointForControlAt %f %f with keyboard %f %f", bottomLeft.x,
-          bottomLeft.y, keyboard.width, keyboard.height);
-    CGPoint returnPoint = { 0, 0};
-    if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight) {
-        if (bottomLeft.y >= 133) {
-            returnPoint.y = bottomLeft.y - 133 + 20;
-        }
-    } else {
-        if (bottomLeft.y < 200) {
-            // do nothing
-        } else if (bottomLeft.y >= 200) {
-            returnPoint.y = bottomLeft.y - 200 + 20;
-        }
-    }
-    return returnPoint;
-}
-
 // Called when the UIKeyboardDidShowNotification is sent.
 - (void)keyboardWillShow:(NSNotification*)aNotification
 {
+    /*
+     Find the keyboard extent, mapping to the co-ordinate space of the scroll view.
+     The origin of this is the bottom left of the keyboard.  Note, convertToRect also
+     rotates the co-ords to be in the scroll view orientation.
+     */
     NSDictionary* info = [aNotification userInfo];
     CGRect keyboardRect = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
     keyboardRect = [handleScrollView convertRect:keyboardRect fromView:nil];
+    CGPoint keyboardTopLeft = { 0, keyboardRect.origin.y - keyboardRect.size.height};
 
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardRect.size.height, 0.0);
     handleScrollView.contentInset = contentInsets;
     handleScrollView.scrollIndicatorInsets = contentInsets;
     
     CGRect originOfCurrentControl = [self originOfControl:currentlyEditing];
-    CGPoint bottomLeft = originOfCurrentControl.origin;
-    bottomLeft.y += originOfCurrentControl.size.height;
-    CGPoint scrollPoint;
+    CGPoint controlBottomLeft = {
+        originOfCurrentControl.origin.x,
+        originOfCurrentControl.origin.y + originOfCurrentControl.size.height
+    };
+    CGPoint scrollPoint = {
+        0,
+        MAX(0, controlBottomLeft.y - keyboardTopLeft.y)
+    };
     savedContentOffset = [handleScrollView contentOffset];
-    scrollPoint.x = 0;
-    scrollPoint.y = MAX(0, bottomLeft.y - (keyboardRect.origin.y - keyboardRect.size.height));
     [handleScrollView setContentOffset:scrollPoint animated:YES];
 }
 
@@ -169,7 +159,6 @@
     handleScrollView.contentInset = contentInsets;
     handleScrollView.scrollIndicatorInsets = contentInsets;
     [handleScrollView setContentOffset:savedContentOffset animated:YES];
-
 }
 
 @end
