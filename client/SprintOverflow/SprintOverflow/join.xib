@@ -2,7 +2,7 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1296</int>
-		<string key="IBDocument.SystemVersion">12A269</string>
+		<string key="IBDocument.SystemVersion">12B19</string>
 		<string key="IBDocument.InterfaceBuilderVersion">2549</string>
 		<string key="IBDocument.AppKitVersion">1187</string>
 		<string key="IBDocument.HIToolboxVersion">624.00</string>
@@ -44,8 +44,8 @@
 						<array class="NSMutableArray" key="NSSubviews">
 							<object class="IBUILabel" id="975343371">
 								<reference key="NSNextResponder" ref="1008887713"/>
-								<int key="NSvFlags">260</int>
-								<string key="NSFrame">{{37, 73}, {127, 21}}</string>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{37, 20}, {127, 21}}</string>
 								<reference key="NSSuperview" ref="1008887713"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="393763726"/>
@@ -76,7 +76,7 @@
 							<object class="IBUITextField" id="393763726">
 								<reference key="NSNextResponder" ref="1008887713"/>
 								<int key="NSvFlags">262</int>
-								<string key="NSFrame">{{37, 102}, {247, 31}}</string>
+								<string key="NSFrame">{{37, 49}, {247, 31}}</string>
 								<reference key="NSSuperview" ref="1008887713"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="647561658"/>
@@ -98,7 +98,7 @@
 								<bool key="IBUIAdjustsFontSizeToFit">YES</bool>
 								<float key="IBUIMinimumFontSize">17</float>
 								<object class="IBUITextInputTraits" key="IBUITextInputTraits">
-									<int key="IBUIReturnKeyType">4</int>
+									<int key="IBUIAutocorrectionType">1</int>
 									<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								</object>
 								<object class="IBUIFontDescription" key="IBUIFontDescription" id="669167667">
@@ -114,7 +114,7 @@
 							<object class="IBUILabel" id="647561658">
 								<reference key="NSNextResponder" ref="1008887713"/>
 								<int key="NSvFlags">260</int>
-								<string key="NSFrame">{{37, 141}, {184, 21}}</string>
+								<string key="NSFrame">{{37, 88}, {184, 21}}</string>
 								<reference key="NSSuperview" ref="1008887713"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="852266621"/>
@@ -135,10 +135,10 @@
 							<object class="IBUITextField" id="852266621">
 								<reference key="NSNextResponder" ref="1008887713"/>
 								<int key="NSvFlags">262</int>
-								<string key="NSFrame">{{37, 170}, {247, 31}}</string>
+								<string key="NSFrame">{{37, 117}, {247, 31}}</string>
 								<reference key="NSSuperview" ref="1008887713"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
+								<reference key="NSNextKeyView" ref="691832344"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -155,6 +155,7 @@
 								<bool key="IBUIAdjustsFontSizeToFit">YES</bool>
 								<float key="IBUIMinimumFontSize">17</float>
 								<object class="IBUITextInputTraits" key="IBUITextInputTraits">
+									<int key="IBUIAutocorrectionType">1</int>
 									<int key="IBUIKeyboardType">7</int>
 									<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								</object>
@@ -163,11 +164,10 @@
 							</object>
 							<object class="IBUISearchBar" id="691832344">
 								<reference key="NSNextResponder" ref="1008887713"/>
-								<int key="NSvFlags">290</int>
-								<string key="NSFrameSize">{320, 44}</string>
+								<int key="NSvFlags">298</int>
+								<string key="NSFrame">{{0, 416}, {320, 44}}</string>
 								<reference key="NSSuperview" ref="1008887713"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="975343371"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<int key="IBUIContentMode">3</int>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -180,7 +180,7 @@
 						<string key="NSFrameSize">{320, 460}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="691832344"/>
+						<reference key="NSNextKeyView" ref="975343371"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
@@ -370,17 +370,12 @@
 					<string key="className">soJoinViewController</string>
 					<string key="superclassName">UIViewController</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="handleOtherText">UITextField</string>
 						<string key="handleScrollView">UIScrollView</string>
 						<string key="handleSearchBar">UISearchBar</string>
 						<string key="projectIdText">UITextField</string>
 						<string key="projectOwnerEmailText">UITextField</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="handleOtherText">
-							<string key="name">handleOtherText</string>
-							<string key="candidateClassName">UITextField</string>
-						</object>
 						<object class="IBToOneOutletInfo" key="handleScrollView">
 							<string key="name">handleScrollView</string>
 							<string key="candidateClassName">UIScrollView</string>
