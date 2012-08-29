@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface soJoinViewController : UIViewController <UITextFieldDelegate, UISearchBarDelegate> {
-    CGRect savedFramePositionBeforeAnimation;
     NSObject* currentlyEditing;
     NSString* lastSearchText;
     UIInterfaceOrientation orientation;

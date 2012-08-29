@@ -8,6 +8,7 @@
 
 #import "soWelcomeViewController.h"
 #import "soJoinViewController.h"
+#import "soCreateViewController.h"
 
 @interface soWelcomeViewController ()
 
@@ -56,6 +57,15 @@
     joinvc.title = @"Join";
     joinvc.orientation = orientation;
     [self.navigationController pushViewController: joinvc animated:YES];
+}
+
+- (IBAction)drillIntoStartProject:(id)sender {
+    soCreateViewController *createvc;
+    createvc = [[soCreateViewController alloc] initWithNibName:@"soCreateViewController" bundle:nil] ;
+    
+    createvc.title = @"Create";
+    createvc.orientation = orientation;
+    [self.navigationController pushViewController: createvc animated:YES];
 }
 
 @end

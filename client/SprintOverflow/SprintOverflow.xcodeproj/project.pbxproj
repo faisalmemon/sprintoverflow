@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		3A2BDA0615AC3B5E00AB3F7B /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3A2BDA0415AC3B5E00AB3F7B /* Model.xcdatamodeld */; };
 		3A2BDA0A15AC3D9500AB3F7B /* LocalModelCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A2BDA0915AC3D9500AB3F7B /* LocalModelCache.m */; };
+		3A30C02015EE671300FE937C /* soCreateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A30C01E15EE671300FE937C /* soCreateViewController.m */; };
+		3A30C02115EE671300FE937C /* soCreateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A30C01F15EE671300FE937C /* soCreateViewController.xib */; };
 		3A48920615A1B17B00AAFF54 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4891FB15A1B17B00AAFF54 /* NSObject+SBJSON.m */; };
 		3A48920715A1B17B00AAFF54 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4891FD15A1B17B00AAFF54 /* NSString+SBJSON.m */; };
 		3A48920815A1B17B00AAFF54 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4891FF15A1B17B00AAFF54 /* SBJSON.m */; };
@@ -43,6 +45,9 @@
 		3A2BDA0515AC3B5E00AB3F7B /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		3A2BDA0815AC3D9500AB3F7B /* LocalModelCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalModelCache.h; sourceTree = "<group>"; };
 		3A2BDA0915AC3D9500AB3F7B /* LocalModelCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalModelCache.m; sourceTree = "<group>"; };
+		3A30C01D15EE671300FE937C /* soCreateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soCreateViewController.h; sourceTree = "<group>"; };
+		3A30C01E15EE671300FE937C /* soCreateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soCreateViewController.m; sourceTree = "<group>"; };
+		3A30C01F15EE671300FE937C /* soCreateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = soCreateViewController.xib; sourceTree = "<group>"; };
 		3A4891F915A1B17B00AAFF54 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		3A4891FA15A1B17B00AAFF54 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
 		3A4891FB15A1B17B00AAFF54 /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
@@ -181,12 +186,15 @@
 				3A9EAC86159E155C0042030E /* first@2x.png */,
 				3A9EAC88159E155C0042030E /* soSecondViewController.h */,
 				3A9EAC89159E155C0042030E /* soSecondViewController.m */,
+				3A9EAC92159E155C0042030E /* soSecondViewController.xib */,
 				3A9EAC8B159E155C0042030E /* second.png */,
 				3A9EAC8D159E155C0042030E /* second@2x.png */,
 				3AA9E40F15C851D9006A4704 /* soJoinViewController.h */,
 				3AA9E41015C851D9006A4704 /* soJoinViewController.m */,
 				3AA9E41115C851D9006A4704 /* join.xib */,
-				3A9EAC92159E155C0042030E /* soSecondViewController.xib */,
+				3A30C01D15EE671300FE937C /* soCreateViewController.h */,
+				3A30C01E15EE671300FE937C /* soCreateViewController.m */,
+				3A30C01F15EE671300FE937C /* soCreateViewController.xib */,
 				3A9EAC76159E155C0042030E /* Supporting Files */,
 			);
 			path = SprintOverflow;
@@ -262,6 +270,7 @@
 				3A9EAC91159E155C0042030E /* welcome.xib in Resources */,
 				3A9EAC94159E155C0042030E /* soSecondViewController.xib in Resources */,
 				3AA9E41315C851D9006A4704 /* join.xib in Resources */,
+				3A30C02115EE671300FE937C /* soCreateViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,6 +299,7 @@
 				3A2BDA0615AC3B5E00AB3F7B /* Model.xcdatamodeld in Sources */,
 				3A2BDA0A15AC3D9500AB3F7B /* LocalModelCache.m in Sources */,
 				3AA9E41215C851D9006A4704 /* soJoinViewController.m in Sources */,
+				3A30C02015EE671300FE937C /* soCreateViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
