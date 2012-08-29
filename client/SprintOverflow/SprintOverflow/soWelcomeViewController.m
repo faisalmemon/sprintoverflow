@@ -42,12 +42,19 @@
     return TRUE;
 }
 
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+                                duration:(NSTimeInterval)duration {
+    orientation = toInterfaceOrientation;
+}
+
+
 -(IBAction) drillIntoJoin:(UIButton*)sender
 {
     soJoinViewController *joinvc;
     joinvc = [[soJoinViewController alloc] initWithNibName:@"join" bundle:nil] ;
     
     joinvc.title = @"Join";
+    joinvc.orientation = orientation;
     [self.navigationController pushViewController: joinvc animated:YES];
 }
 

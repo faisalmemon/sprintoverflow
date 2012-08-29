@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface soWelcomeViewController : UIViewController
+@interface soWelcomeViewController : UIViewController {
+    UIInterfaceOrientation orientation;
+}
 
 -(IBAction) drillIntoJoin:(UIButton*)sender;
 @end
