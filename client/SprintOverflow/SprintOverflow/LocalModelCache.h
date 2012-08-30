@@ -2,8 +2,8 @@
 //  LocalModelCache.h
 //  SprintOverflow
 //
-//  Created by Faisal Memon on 10/07/2012.
-//  Copyright (c) 2012 Perivale Software Company. All rights reserved.
+//  Created by Faisal Memon on 30/08/2012.
+//
 //
 
 #import <Foundation/Foundation.h>
@@ -12,8 +12,8 @@
 
 @interface LocalModelCache : NSManagedObject
 
-@property (nonatomic, retain) NSDate * timeOfFetch;
-@property (nonatomic, retain) NSString * fetchUrl;
-@property (nonatomic, retain) NSString * responseJson;
+@property (nonatomic, retain) NSString * url;
+@property (nonatomic, retain) NSString * serverResponse;
+@property (nonatomic, retain) NSDate * time;
 
 @end

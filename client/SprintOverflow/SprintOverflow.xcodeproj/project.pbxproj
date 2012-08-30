@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3A2BDA0615AC3B5E00AB3F7B /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3A2BDA0415AC3B5E00AB3F7B /* Model.xcdatamodeld */; };
-		3A2BDA0A15AC3D9500AB3F7B /* LocalModelCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A2BDA0915AC3D9500AB3F7B /* LocalModelCache.m */; };
 		3A30C02015EE671300FE937C /* soCreateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A30C01E15EE671300FE937C /* soCreateViewController.m */; };
 		3A30C02515EECBE100FE937C /* soSecurity.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A30C02415EECBE100FE937C /* soSecurity.m */; };
 		3A30C03015EFD33D00FE937C /* findMissingLocalizedStrings.sh in Resources */ = {isa = PBXBuildFile; fileRef = 3A30C02F15EFD33D00FE937C /* findMissingLocalizedStrings.sh */; };
@@ -40,13 +39,12 @@
 		3AB5F5E915A1D2AD000D9A55 /* soEpic.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB5F5E815A1D2AD000D9A55 /* soEpic.m */; };
 		3AB5F5ED15A1D78A000D9A55 /* soModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB5F5EC15A1D78A000D9A55 /* soModel.m */; };
 		3ABB585D15A2EDB1007A57A4 /* soStory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABB585C15A2EDB1007A57A4 /* soStory.m */; };
+		3AC0A37115F009BF0095F685 /* LocalModelCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AC0A37015F009BF0095F685 /* LocalModelCache.m */; };
 		3AD7477E15A32D7A0034B799 /* soTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AD7477D15A32D7A0034B799 /* soTask.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		3A2BDA0515AC3B5E00AB3F7B /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		3A2BDA0815AC3D9500AB3F7B /* LocalModelCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalModelCache.h; sourceTree = "<group>"; };
-		3A2BDA0915AC3D9500AB3F7B /* LocalModelCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalModelCache.m; sourceTree = "<group>"; };
 		3A30C01D15EE671300FE937C /* soCreateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soCreateViewController.h; sourceTree = "<group>"; };
 		3A30C01E15EE671300FE937C /* soCreateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soCreateViewController.m; sourceTree = "<group>"; };
 		3A30C02315EECBE100FE937C /* soSecurity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soSecurity.h; sourceTree = "<group>"; };
@@ -98,6 +96,8 @@
 		3AB5F5EC15A1D78A000D9A55 /* soModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soModel.m; sourceTree = "<group>"; };
 		3ABB585B15A2EDB1007A57A4 /* soStory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soStory.h; sourceTree = "<group>"; };
 		3ABB585C15A2EDB1007A57A4 /* soStory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soStory.m; sourceTree = "<group>"; };
+		3AC0A36F15F009BF0095F685 /* LocalModelCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalModelCache.h; sourceTree = "<group>"; };
+		3AC0A37015F009BF0095F685 /* LocalModelCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalModelCache.m; sourceTree = "<group>"; };
 		3AD7477C15A32D7A0034B799 /* soTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soTask.h; sourceTree = "<group>"; };
 		3AD7477D15A32D7A0034B799 /* soTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soTask.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -169,8 +169,8 @@
 			isa = PBXGroup;
 			children = (
 				3A2BDA0415AC3B5E00AB3F7B /* Model.xcdatamodeld */,
-				3A2BDA0815AC3D9500AB3F7B /* LocalModelCache.h */,
-				3A2BDA0915AC3D9500AB3F7B /* LocalModelCache.m */,
+				3AC0A36F15F009BF0095F685 /* LocalModelCache.h */,
+				3AC0A37015F009BF0095F685 /* LocalModelCache.m */,
 				3ABB585B15A2EDB1007A57A4 /* soStory.h */,
 				3ABB585C15A2EDB1007A57A4 /* soStory.m */,
 				3AB5F5E715A1D2AD000D9A55 /* soEpic.h */,
@@ -306,10 +306,10 @@
 				3ABB585D15A2EDB1007A57A4 /* soStory.m in Sources */,
 				3AD7477E15A32D7A0034B799 /* soTask.m in Sources */,
 				3A2BDA0615AC3B5E00AB3F7B /* Model.xcdatamodeld in Sources */,
-				3A2BDA0A15AC3D9500AB3F7B /* LocalModelCache.m in Sources */,
 				3AA9E41215C851D9006A4704 /* soJoinViewController.m in Sources */,
 				3A30C02015EE671300FE937C /* soCreateViewController.m in Sources */,
 				3A30C02515EECBE100FE937C /* soSecurity.m in Sources */,
+				3AC0A37115F009BF0095F685 /* LocalModelCache.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

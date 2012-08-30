@@ -26,6 +26,7 @@
 
 extern const int soDatabase_fetchEpicData_NoFailureSimulation;
 extern const int soDatabase_fetchEpicData_SimulateNetworkDown;
+extern const int soDatabase_saveSecurityToken_NoFailureSimulation;
 
 @interface soDatabase : NSObject {
     NSManagedObjectModel *managedObjectModel;
@@ -35,9 +36,19 @@ extern const int soDatabase_fetchEpicData_SimulateNetworkDown;
 }
 
 - (void)fetchEpicDataAsyncForUser:(NSString*)for_user;
-- (void)fetchEpicDataAsyncForUser:(NSString*)for_user SimulateFailure:(int)simulate_failure;
-+(BOOL)fetchEpicDataForUser:(NSString *)forUser;
-+(BOOL)fetchEpicDataForUser:(NSString *)forUser SimulateFailure:(int)simulateFailure;
+
+- (void)fetchEpicDataAsyncForUser:(NSString*)for_user
+                  SimulateFailure:(int)simulate_failure;
+
+- (void)saveAsyncSecurityCodeForProjectID:(NSString*)project_id
+                     ForProjectOwnerEmail:(NSString *)project_owner_email
+                                WithToken:(NSString*)security_token;
+
+- (void)saveAsyncSecurityCodeForProjectID:(NSString*)project_id
+                     ForProjectOwnerEmail:(NSString *)project_owner_email
+                                WithToken:(NSString*)security_token
+                          SimulateFailure:(int)simulate_failure;
+
 +(id)        sharedInstance;
 
 @end

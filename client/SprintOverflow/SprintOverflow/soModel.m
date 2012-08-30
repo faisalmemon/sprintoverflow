@@ -13,6 +13,7 @@
 #import "soStory.h"
 #import "soTask.h"
 #import "soSecurity.h"
+#import "soDatabase.h"
 
 @implementation soModel
 
@@ -87,6 +88,8 @@
     NSString *securityCode = [_securityCodes valueForKey:key];
     if (nil == securityCode) {
         securityCode = [soSecurity createSecurityCode];
+        soDatabase* database = [soDatabase sharedInstance];
+        [database saveAsyncSecurityCodeForProjectID:project_id ForProjectOwnerEmail:owner_email WithToken:securityCode SimulateFailure:soDatabase_saveSecurityToken_NoFailureSimulation];
         [_securityCodes setObject:securityCode forKey:key];
     }
     return securityCode;

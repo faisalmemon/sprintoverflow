@@ -11,6 +11,7 @@
 
 const int soDatabase_fetchEpicData_NoFailureSimulation = 0;
 const int soDatabase_fetchEpicData_SimulateNetworkDown = 1;
+const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
 
 
 @implementation soDatabase
@@ -146,6 +147,58 @@ const int soDatabase_fetchEpicData_SimulateNetworkDown = 1;
     });
 }
 
+- (void)saveAsyncSecurityCodeForProjectID:(NSString*)project_id
+                     ForProjectOwnerEmail:(NSString *)project_owner_email
+                                WithToken:(NSString*)security_token
+{
+    [self saveAsyncSecurityCodeForProjectID:project_id ForProjectOwnerEmail:project_owner_email WithToken:security_token SimulateFailure:soDatabase_saveSecurityToken_NoFailureSimulation];
+}
+
+- (void)saveAsyncSecurityCodeForProjectID:(NSString*)project_id
+                     ForProjectOwnerEmail:(NSString *)project_owner_email
+                                WithToken:(NSString*)security_token
+                          SimulateFailure:(int)simulate_failure
+{
+    if (!queue) {
+        return;
+    }
+    
+    dispatch_async(queue, ^{
+        [soDatabase saveSecurityCodeForProjectID:project_id ForProjectOwnerEmail:project_owner_email WithToken:security_token SimulateFailure:simulate_failure];
+    });
+}
+
++(BOOL)saveSecurityCodeForProjectID:(NSString*)project_id ForProjectOwnerEmail:(NSString*)project_owner_email WithToken:(NSString*)security_token SimulateFailure:(int)simulateFailure
+{
+    soDatabase *instance = [soDatabase sharedInstance];
+    NSManagedObjectContext* mocp = [instance managedObjectContext];
+    
+    NSString *urlString = [NSString stringWithFormat:@"http://ios38722.appspot.com/sprintoverflow?Mode=SaveToken&ProjectId=%@&ProjectEmail=%@&SecurityToken=%@", project_id, project_owner_email, security_token]; // Not NSLocalizedString
+    NSString *serverResponse = @"ServerNotRespondedYet"; // Not NSLocalizedString
+    
+    // Store the request in the local cache
+    LocalModelCache *cache;
+    NSError *error = nil;
+    cache = (LocalModelCache *)[NSEntityDescription insertNewObjectForEntityForName:@"LocalModelCache" inManagedObjectContext:mocp]; // Not NSLocalizedString
+    
+    [cache setUrl:urlString];
+    [cache setTime:[NSDate date]];
+    [cache setServerResponse:serverResponse];
+    [mocp save:&error];
+    NSLog(@"Saving a local model cache, error object is %@", error);
+
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSString *response;
+    if (simulateFailure == soDatabase_saveSecurityToken_NoFailureSimulation) {
+        response = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
+    } else {
+        response = @"ServerDidNotRespond"; // Not NSLocalizedString
+    }
+    [cache setServerResponse:response];
+    [mocp save:&error];
+    return TRUE;
+}
+
 +(BOOL)fetchEpicDataForUser:(NSString *)forUser
 {
     return [soDatabase fetchEpicDataForUser:forUser SimulateFailure:soDatabase_fetchEpicData_NoFailureSimulation];
@@ -175,12 +228,12 @@ const int soDatabase_fetchEpicData_SimulateNetworkDown = 1;
         [request setEntity:entity];
         
         // Order the events by fetch date, most recent first.
-        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeOfFetch" ascending:NO]; // Not NSLocalizedString
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"time" ascending:NO]; // Not NSLocalizedString
 
         NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
         [request setSortDescriptors:sortDescriptors];
 
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"fetchUrl like %@", urlString]; // Not NSLocalizedString
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"url like %@", urlString]; // Not NSLocalizedString
 
         [request setPredicate:predicate];
         
@@ -191,7 +244,7 @@ const int soDatabase_fetchEpicData_SimulateNetworkDown = 1;
             NSLog(@"Could not fetch epic data from the network or a local cache.  Need to start off with blank setup.");
             return FALSE;
         }
-        jsonString = [[mutableFetchResults objectAtIndex:0] responseJson];
+        jsonString = [[mutableFetchResults objectAtIndex:0] serverResponse];
         
     } else {
         // Store the result of the query in the local cache
@@ -199,9 +252,9 @@ const int soDatabase_fetchEpicData_SimulateNetworkDown = 1;
         NSError *error = nil;
         cache = (LocalModelCache *)[NSEntityDescription insertNewObjectForEntityForName:@"LocalModelCache" inManagedObjectContext:mocp]; // Not NSLocalizedString
         
-        [cache setFetchUrl:urlString];
-        [cache setTimeOfFetch:[NSDate date]];
-        [cache setResponseJson:jsonString];
+        [cache setUrl:urlString];
+        [cache setTime:[NSDate date]];
+        [cache setServerResponse:jsonString];
         [mocp save:&error];
         NSLog(@"Saving a local model cache, error object is %@", error);
     }                                                     
