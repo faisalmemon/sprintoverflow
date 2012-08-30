@@ -11,6 +11,7 @@
 		3A2BDA0A15AC3D9500AB3F7B /* LocalModelCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A2BDA0915AC3D9500AB3F7B /* LocalModelCache.m */; };
 		3A30C02015EE671300FE937C /* soCreateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A30C01E15EE671300FE937C /* soCreateViewController.m */; };
 		3A30C02115EE671300FE937C /* soCreateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A30C01F15EE671300FE937C /* soCreateViewController.xib */; };
+		3A30C02515EECBE100FE937C /* soSecurity.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A30C02415EECBE100FE937C /* soSecurity.m */; };
 		3A48920615A1B17B00AAFF54 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4891FB15A1B17B00AAFF54 /* NSObject+SBJSON.m */; };
 		3A48920715A1B17B00AAFF54 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4891FD15A1B17B00AAFF54 /* NSString+SBJSON.m */; };
 		3A48920815A1B17B00AAFF54 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4891FF15A1B17B00AAFF54 /* SBJSON.m */; };
@@ -48,6 +49,8 @@
 		3A30C01D15EE671300FE937C /* soCreateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soCreateViewController.h; sourceTree = "<group>"; };
 		3A30C01E15EE671300FE937C /* soCreateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soCreateViewController.m; sourceTree = "<group>"; };
 		3A30C01F15EE671300FE937C /* soCreateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = soCreateViewController.xib; sourceTree = "<group>"; };
+		3A30C02315EECBE100FE937C /* soSecurity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soSecurity.h; sourceTree = "<group>"; };
+		3A30C02415EECBE100FE937C /* soSecurity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soSecurity.m; sourceTree = "<group>"; };
 		3A4891F915A1B17B00AAFF54 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		3A4891FA15A1B17B00AAFF54 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
 		3A4891FB15A1B17B00AAFF54 /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
@@ -171,6 +174,8 @@
 				3AB5F5E715A1D2AD000D9A55 /* soEpic.h */,
 				3AB5F5EB15A1D78A000D9A55 /* soModel.h */,
 				3AB5F5EC15A1D78A000D9A55 /* soModel.m */,
+				3A30C02315EECBE100FE937C /* soSecurity.h */,
+				3A30C02415EECBE100FE937C /* soSecurity.m */,
 				3AD7477C15A32D7A0034B799 /* soTask.h */,
 				3AD7477D15A32D7A0034B799 /* soTask.m */,
 				3AB5F5E815A1D2AD000D9A55 /* soEpic.m */,
@@ -300,6 +305,7 @@
 				3A2BDA0A15AC3D9500AB3F7B /* LocalModelCache.m in Sources */,
 				3AA9E41215C851D9006A4704 /* soJoinViewController.m in Sources */,
 				3A30C02015EE671300FE937C /* soCreateViewController.m in Sources */,
+				3A30C02515EECBE100FE937C /* soSecurity.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

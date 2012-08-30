@@ -13,15 +13,20 @@
 @end
 
 @implementation soCreateViewController
-@synthesize handleProjectName;
+@synthesize handleProjectId;
 @synthesize handleOwnerEmailAddress;
 @synthesize handleScrollView;
+@synthesize handleSecurityTokenExplanation;
+@synthesize handleSecurityToken;
+@synthesize handleCreateProjectButton;
 @synthesize orientation;
 
 - (void)viewControllerInit
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    model = [soModel sharedInstance];
+    state = soInitialState;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -36,15 +41,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    handleScrollView.contentSize=CGSizeMake(self.view.frame.size.width,self.view.frame.size.height);
 }
 
 - (void)viewDidUnload
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self setHandleProjectName:nil];
+    [self setHandleProjectId:nil];
     [self setHandleScrollView:nil];
     [self setHandleOwnerEmailAddress:nil];
+    [self setHandleSecurityTokenExplanation:nil];
+    [self setHandleSecurityToken:nil];
+    [self setHandleCreateProjectButton:nil];
     [super viewDidUnload];
 }
 
@@ -58,6 +66,32 @@
     orientation = toInterfaceOrientation;
 }
 
+- (void)updateStateMachine:(enum soCreateActions)action
+{
+    if (action == soModifyingText) {
+        if (state == soShowSecurityToken) {
+            handleSecurityTokenExplanation.hidden=YES;
+            handleSecurityToken.text = nil;
+            handleSecurityToken.hidden=YES;
+            handleCreateProjectButton.hidden=YES;
+            state = soHideSecurityToken;
+            [handleScrollView layoutIfNeeded];
+            return;
+        }
+    }
+    if (action == soNotModifyingText) {
+        if (0 != handleProjectId.text.length && 0 != handleOwnerEmailAddress.text.length) {
+            handleSecurityToken.text = [model securityCodeFromId:handleProjectId.text FromOwner:handleOwnerEmailAddress.text];
+        }
+        if (state == soHideSecurityToken && [handleSecurityToken.text length] > 0) {
+            handleSecurityTokenExplanation.hidden=NO;
+            handleSecurityToken.hidden=NO;
+            handleCreateProjectButton.hidden=NO;
+            [handleScrollView layoutIfNeeded];
+            state = soShowSecurityToken;
+        }
+    }
+}
 
 #pragma mark - UITextFieldDelegate
 
@@ -70,11 +104,13 @@
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
     currentlyEditing = textField;
+    [self updateStateMachine:soModifyingText];
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     currentlyEditing = nil;
+    [self updateStateMachine:soNotModifyingText];
 }
 
 - (CGRect)originOfControl:(NSObject*)control

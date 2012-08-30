@@ -25,5 +25,10 @@ extern const int soDatabase_fetchEpicData_SimulateNetworkDown;
 
 +(BOOL)      fetchEpicData:(NSString *)forUser:(int)simulateFailure;
 +(id)        sharedInstance;
+/*
+ TODO
+ Add a transaction manager on its own thread to pull the epic data and
+ also to push the security codes.
+ */
 
 @end

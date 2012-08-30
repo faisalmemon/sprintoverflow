@@ -11,11 +11,13 @@
 
 @interface soModel : NSObject {
     NSMutableArray *_epics;
+    NSMutableDictionary *_securityCodes;
 }
 
 + (id)sharedInstance;
 -(void)bootstrapFromServer:(NSString *)modelAsJsonString;
 -(void)addEpic:(soEpic*)epic;
 -(void)dumpEpics;
+-(NSString*)securityCodeFromId:(NSString*)project_id FromOwner:(NSString*)owner_email;
 
 @end

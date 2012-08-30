@@ -12,6 +12,7 @@
 #import "soEpic.h"
 #import "soStory.h"
 #import "soTask.h"
+#import "soSecurity.h"
 
 @implementation soModel
 
@@ -74,6 +75,20 @@
 
     [self addEpic:soepic];
     [self dumpEpics];
+}
+
+-(NSString*)securityCodeFromId:(NSString*)project_id FromOwner:(NSString*)owner_email
+{
+    if (_securityCodes == nil) {
+        _securityCodes = [[NSMutableDictionary alloc] init];
+    }
+    NSString *key = [[NSString alloc] initWithFormat:@"%@:%@", project_id, owner_email];
+    NSString *securityCode = [_securityCodes valueForKey:key];
+    if (nil == securityCode) {
+        securityCode = [soSecurity createSecurityCode];
+        [_securityCodes setObject:securityCode forKey:key];
+    }
+    return securityCode;
 }
 
 @end
