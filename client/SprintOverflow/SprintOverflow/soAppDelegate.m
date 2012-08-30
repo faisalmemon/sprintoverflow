@@ -24,8 +24,11 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    
-    [soDatabase fetchEpicData:@"Faisal23":soDatabase_fetchEpicData_NoFailureSimulation];
+    database = [soDatabase sharedInstance];
+    [database fetchEpicDataAsyncForUser:@"Faisal23" SimulateFailure:soDatabase_fetchEpicData_NoFailureSimulation];
+    //- (void)fetchEpicDataAsyncForUser:(NSString*)for_user SimulateFailure:(int)simulate_failure
+
+    //[soDatabase fetchEpicData:@"Faisal23":soDatabase_fetchEpicData_NoFailureSimulation];
 
     self.uinavControllerWelcome = [[UINavigationController alloc]init];
     

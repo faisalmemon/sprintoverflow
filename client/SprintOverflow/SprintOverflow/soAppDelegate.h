@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "JSON/JSON.h"
 
-@interface soAppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate> {
+#import "soDatabase.h"
 
+@interface soAppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate> {
+    soDatabase* database;
 }
 
 @property (strong, nonatomic) UIWindow *window;

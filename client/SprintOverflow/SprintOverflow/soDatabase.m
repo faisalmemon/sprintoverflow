@@ -28,6 +28,18 @@ const int soDatabase_fetchEpicData_SimulateNetworkDown = 1;
     return master;
 }
 
+- (void)handleError:(NSError *)error {
+    NSString *errorMessage = [error localizedDescription];
+    UIAlertView *alertView =
+    [[UIAlertView alloc] initWithTitle:
+                        NSLocalizedString(@"Error", @"Title for alert displayed when a system, download, server, or parse error occurs.")
+                               message:errorMessage
+                              delegate:nil
+                     cancelButtonTitle:@"OK"
+                     otherButtonTitles:nil];
+    [alertView show];
+}
+
 /**
  Returns the path to the application's Documents directory.
  */
@@ -38,6 +50,22 @@ const int soDatabase_fetchEpicData_SimulateNetworkDown = 1;
 - (NSString *)databasePath
 {
 	return [[self applicationDocumentsDirectory] stringByAppendingPathComponent: @"sprintoverflow0.sqlite"];
+}
+
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        queue = dispatch_queue_create(SO_SERVER_PROTOCOL_QUEUE_NAME, NULL);
+        if (NULL == queue) {
+            NSDictionary *userInfo =
+            [NSDictionary dictionaryWithObject: NSLocalizedString(@"System Queue Error.  A core system service is not available; perhaps shutdown other applications.  Going into offline mode.", @"Error message displayed when system could not provide a core system service for queuing.")
+                                        forKey:NSLocalizedDescriptionKey];
+            NSError *error = [NSError errorWithDomain:@"System" code:SO_QUEUE_ERROR userInfo:userInfo];
+            [self handleError:error];
+        }
+    }
+    return self;
 }
 
 /**
@@ -101,12 +129,28 @@ const int soDatabase_fetchEpicData_SimulateNetworkDown = 1;
     return managedObjectContext;
 }
 
-+(BOOL)fetchEpicData:(NSString *)forUser
+- (void)fetchEpicDataAsyncForUser:(NSString*)for_user
 {
-    return [soDatabase fetchEpicData:forUser :soDatabase_fetchEpicData_NoFailureSimulation];
+    [self fetchEpicDataAsyncForUser:for_user SimulateFailure:soDatabase_fetchEpicData_NoFailureSimulation];
 }
 
-+(BOOL)fetchEpicData:(NSString *)forUser:(int)simulateFailure
+- (void)fetchEpicDataAsyncForUser:(NSString*)for_user SimulateFailure:(int)simulate_failure
+{
+    if (!queue) {
+        return;
+    }
+    
+    dispatch_async(queue, ^{
+        [soDatabase fetchEpicDataForUser:for_user SimulateFailure:simulate_failure];
+    });
+}
+
++(BOOL)fetchEpicDataForUser:(NSString *)forUser
+{
+    return [soDatabase fetchEpicDataForUser:forUser SimulateFailure:soDatabase_fetchEpicData_NoFailureSimulation];
+}
+
++(BOOL)fetchEpicDataForUser:(NSString *)forUser SimulateFailure:(int)simulateFailure
 {
     soDatabase *instance = [soDatabase sharedInstance];    
     NSManagedObjectContext* mocp = [instance managedObjectContext];
