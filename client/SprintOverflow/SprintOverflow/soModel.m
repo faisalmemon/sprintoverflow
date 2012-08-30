@@ -51,21 +51,22 @@
 -(void)bootstrapFromServer:(NSString *)modelAsJsonString
 {
     NSDictionary *top = [modelAsJsonString JSONValue];
-    NSDictionary *m = [top objectForKey:@"epic"];
+    NSDictionary *m = [top objectForKey:@"epic"]; // Not NSLocalizedString
     
     soEpic *soepic;
-    soepic = [[soEpic alloc] initWithName:[m objectForKey:@"epicName"] withId:[m objectForKey:@"epicId"]];
+    soepic = [[soEpic alloc] initWithName:[m objectForKey:@"epicName"] withId:[m objectForKey:@"epicId"]]; // Not NSLocalizedString
+
     
-    NSArray *stories = [m objectForKey:@"stories"];
+    NSArray *stories = [m objectForKey:@"stories"]; // Not NSLocalizedString
     for (NSDictionary *d in stories)
     {
         soStory *sostory;
-        sostory = [[soStory alloc] initWithName:[d objectForKey:@"storyName"] withId:[d objectForKey:@"storyId"] ];
-        NSArray *tasks = [d objectForKey:@"tasks"];
+        sostory = [[soStory alloc] initWithName:[d objectForKey:@"storyName"] withId:[d objectForKey:@"storyId"] ]; // Not NSLocalizedString
+        NSArray *tasks = [d objectForKey:@"tasks"]; // Not NSLocalizedString
         for (NSDictionary *d1 in tasks)
         {
             soTask *sotask;
-            sotask = [[soTask alloc] initWithName:[d1 objectForKey:@"taskName"] withId:[d1 objectForKey:@"taskId"] withStatus:[d1 objectForKey:@"status"]];
+            sotask = [[soTask alloc] initWithName:[d1 objectForKey:@"taskName"] withId:[d1 objectForKey:@"taskId"] withStatus:[d1 objectForKey:@"status"]]; // Not NSLocalizedString
             [sostory addTask:sotask];
         }
         [soepic addStory:sostory];
@@ -82,7 +83,7 @@
     if (_securityCodes == nil) {
         _securityCodes = [[NSMutableDictionary alloc] init];
     }
-    NSString *key = [[NSString alloc] initWithFormat:@"%@:%@", project_id, owner_email];
+    NSString *key = [[NSString alloc] initWithFormat:@"%@:%@", project_id, owner_email]; // Not NSLocalizedString
     NSString *securityCode = [_securityCodes valueForKey:key];
     if (nil == securityCode) {
         securityCode = [soSecurity createSecurityCode];

@@ -20,6 +20,7 @@
 
 #import "soModel.h"
 
+#define SO_SQLITE_DATABASE_NAME "sprintoverflow0.sqlite"
 #define SO_SERVER_PROTOCOL_QUEUE_NAME "com.perivalebluebell.SprintOverflow.0"
 #define SO_QUEUE_ERROR 1
 

@@ -21,7 +21,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.title = NSLocalizedString(@"Projects", @"Projects welcome screen");
-        self.tabBarItem.image = [UIImage imageNamed:@"first"];
+        self.tabBarItem.image = [UIImage imageNamed:@"first"]; // Not NSLocalizedString
     }
     return self;
 }
@@ -52,18 +52,17 @@
 -(IBAction) drillIntoJoin:(UIButton*)sender
 {
     soJoinViewController *joinvc;
-    joinvc = [[soJoinViewController alloc] initWithNibName:@"join" bundle:nil] ;
+    joinvc = [[soJoinViewController alloc] initWithNibName:@"join" bundle:nil]; // Not NSLocalizedString
     
-    joinvc.title = @"Join";
+    joinvc.title = NSLocalizedString(@"Join", @"Screen where you Join a project; join here means to participate in the project");
     joinvc.orientation = orientation;
     [self.navigationController pushViewController: joinvc animated:YES];
 }
 
 - (IBAction)drillIntoStartProject:(id)sender {
     soCreateViewController *createvc;
-    createvc = [[soCreateViewController alloc] initWithNibName:@"soCreateViewController" bundle:nil] ;
-    
-    createvc.title = @"Create";
+    createvc = [[soCreateViewController alloc] initWithNibName:@"soCreateViewController" bundle:nil] ; // Not NSLocalizedString
+    createvc.title = NSLocalizedString(@"Create", @"Screen where you Create a project");
     createvc.orientation = orientation;
     [self.navigationController pushViewController: createvc animated:YES];
 }

@@ -25,14 +25,14 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     database = [soDatabase sharedInstance];
-    [database fetchEpicDataAsyncForUser:@"Faisal23" SimulateFailure:soDatabase_fetchEpicData_NoFailureSimulation];
+    [database fetchEpicDataAsyncForUser:@"Faisal23" SimulateFailure:soDatabase_fetchEpicData_NoFailureSimulation]; // Not NSLocalizedString
     
     self.uinavControllerWelcome = [[UINavigationController alloc]init];
     
     self.uinavControllerMilestone = [[UINavigationController alloc]init];
 
-    UIViewController *welcomeViewController = [[soWelcomeViewController alloc] initWithNibName:@"welcome" bundle:nil];
-    UIViewController *viewController2 = [[soSecondViewController alloc] initWithNibName:@"soSecondViewController" bundle:nil];
+    UIViewController *welcomeViewController = [[soWelcomeViewController alloc] initWithNibName:@"welcome" bundle:nil]; // Not NSLocalizedString
+    UIViewController *viewController2 = [[soSecondViewController alloc] initWithNibName:@"soSecondViewController" bundle:nil]; // Not NSLocalizedString
     
     [uinavControllerWelcome pushViewController:welcomeViewController animated:NO];
     [uinavControllerMilestone pushViewController:viewController2 animated:NO];

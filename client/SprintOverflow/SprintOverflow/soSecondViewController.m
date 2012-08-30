@@ -18,8 +18,8 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = NSLocalizedString(@"Second", @"Second");
-        self.tabBarItem.image = [UIImage imageNamed:@"second"];
+        self.title = NSLocalizedString(@"Second", @"Second"); // Not NSLocalizedString
+        self.tabBarItem.image = [UIImage imageNamed:@"second"]; // Not NSLocalizedString
     }
     return self;
 }

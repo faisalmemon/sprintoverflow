@@ -35,7 +35,7 @@ const int soDatabase_fetchEpicData_SimulateNetworkDown = 1;
                         NSLocalizedString(@"Error", @"Title for alert displayed when a system, download, server, or parse error occurs.")
                                message:errorMessage
                               delegate:nil
-                     cancelButtonTitle:@"OK"
+                     cancelButtonTitle:NSLocalizedString(@"OK", @"Acknowledge the alert message")
                      otherButtonTitles:nil];
     [alertView show];
 }
@@ -49,7 +49,8 @@ const int soDatabase_fetchEpicData_SimulateNetworkDown = 1;
 
 - (NSString *)databasePath
 {
-	return [[self applicationDocumentsDirectory] stringByAppendingPathComponent: @"sprintoverflow0.sqlite"];
+    NSString *databaseName = [[NSString alloc] initWithCString:SO_SQLITE_DATABASE_NAME encoding:NSUTF8StringEncoding];
+	return [[self applicationDocumentsDirectory] stringByAppendingPathComponent: databaseName];
 }
 
 - (id)init
@@ -61,7 +62,7 @@ const int soDatabase_fetchEpicData_SimulateNetworkDown = 1;
             NSDictionary *userInfo =
             [NSDictionary dictionaryWithObject: NSLocalizedString(@"System Queue Error.  A core system service is not available; perhaps shutdown other applications.  Going into offline mode.", @"Error message displayed when system could not provide a core system service for queuing.")
                                         forKey:NSLocalizedDescriptionKey];
-            NSError *error = [NSError errorWithDomain:@"System" code:SO_QUEUE_ERROR userInfo:userInfo];
+            NSError *error = [NSError errorWithDomain:@"System" code:SO_QUEUE_ERROR userInfo:userInfo]; // Not NSLocalizedString
             [self handleError:error];
         }
     }
@@ -158,7 +159,7 @@ const int soDatabase_fetchEpicData_SimulateNetworkDown = 1;
     // Construct a Google Application Engine API request.
     // http://ios38722.appspot.com/barebones?Mode=Epic&User=JayRandomHacker
     //
-    NSString *urlString = [NSString stringWithFormat:@"http://ios38722.appspot.com/sprintoverflow?Mode=Epic&User=%@", forUser];
+    NSString *urlString = [NSString stringWithFormat:@"http://ios38722.appspot.com/sprintoverflow?Mode=Epic&User=%@", forUser]; // Not NSLocalizedString
     NSURL *url = [NSURL URLWithString:urlString];
     NSString *jsonString = nil;
     
@@ -170,15 +171,17 @@ const int soDatabase_fetchEpicData_SimulateNetworkDown = 1;
     if (jsonString == nil) {
         // Try to get the most recent result cached locally
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"LocalModelCache" inManagedObjectContext:mocp];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"LocalModelCache" inManagedObjectContext:mocp]; // Not NSLocalizedString
         [request setEntity:entity];
         
         // Order the events by fetch date, most recent first.
-        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeOfFetch" ascending:NO];
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeOfFetch" ascending:NO]; // Not NSLocalizedString
+
         NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
         [request setSortDescriptors:sortDescriptors];
 
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"fetchUrl like %@", urlString];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"fetchUrl like %@", urlString]; // Not NSLocalizedString
+
         [request setPredicate:predicate];
         
         // Execute the fetch -- create a mutable copy of the result.
@@ -194,7 +197,7 @@ const int soDatabase_fetchEpicData_SimulateNetworkDown = 1;
         // Store the result of the query in the local cache
         LocalModelCache *cache;
         NSError *error = nil;
-        cache = (LocalModelCache *)[NSEntityDescription insertNewObjectForEntityForName:@"LocalModelCache" inManagedObjectContext:mocp];
+        cache = (LocalModelCache *)[NSEntityDescription insertNewObjectForEntityForName:@"LocalModelCache" inManagedObjectContext:mocp]; // Not NSLocalizedString
         
         [cache setFetchUrl:urlString];
         [cache setTimeOfFetch:[NSDate date]];

@@ -73,7 +73,7 @@
 					<object class="IBUIButton" id="963471808">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">290</int>
-						<string key="NSFrame">{{78, 65}, {164, 37}}</string>
+						<string key="NSFrame">{{72, 65}, {177, 37}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSNextKeyView" ref="291829546"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -82,7 +82,7 @@
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<int key="IBUIButtonType">1</int>
-						<string key="IBUINormalTitle">Start a New Project</string>
+						<string key="IBUINormalTitle">Create a New Project</string>
 						<reference key="IBUIHighlightedTitleColor" ref="1040295810"/>
 						<object class="NSColor" key="IBUINormalTitleColor">
 							<int key="NSColorSpace">1</int>

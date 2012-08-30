@@ -12,6 +12,7 @@
 		3A30C02015EE671300FE937C /* soCreateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A30C01E15EE671300FE937C /* soCreateViewController.m */; };
 		3A30C02115EE671300FE937C /* soCreateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A30C01F15EE671300FE937C /* soCreateViewController.xib */; };
 		3A30C02515EECBE100FE937C /* soSecurity.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A30C02415EECBE100FE937C /* soSecurity.m */; };
+		3A30C03015EFD33D00FE937C /* findMissingLocalizedStrings.sh in Resources */ = {isa = PBXBuildFile; fileRef = 3A30C02F15EFD33D00FE937C /* findMissingLocalizedStrings.sh */; };
 		3A48920615A1B17B00AAFF54 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4891FB15A1B17B00AAFF54 /* NSObject+SBJSON.m */; };
 		3A48920715A1B17B00AAFF54 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4891FD15A1B17B00AAFF54 /* NSString+SBJSON.m */; };
 		3A48920815A1B17B00AAFF54 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4891FF15A1B17B00AAFF54 /* SBJSON.m */; };
@@ -51,6 +52,7 @@
 		3A30C01F15EE671300FE937C /* soCreateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = soCreateViewController.xib; sourceTree = "<group>"; };
 		3A30C02315EECBE100FE937C /* soSecurity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soSecurity.h; sourceTree = "<group>"; };
 		3A30C02415EECBE100FE937C /* soSecurity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soSecurity.m; sourceTree = "<group>"; };
+		3A30C02F15EFD33D00FE937C /* findMissingLocalizedStrings.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = findMissingLocalizedStrings.sh; sourceTree = "<group>"; };
 		3A4891F915A1B17B00AAFF54 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		3A4891FA15A1B17B00AAFF54 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
 		3A4891FB15A1B17B00AAFF54 /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
@@ -208,6 +210,7 @@
 		3A9EAC76159E155C0042030E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				3A30C02F15EFD33D00FE937C /* findMissingLocalizedStrings.sh */,
 				3A9EAC77159E155C0042030E /* SprintOverflow-Info.plist */,
 				3A9EAC78159E155C0042030E /* InfoPlist.strings */,
 				3A9EAC7B159E155C0042030E /* main.m */,
@@ -276,6 +279,7 @@
 				3A9EAC94159E155C0042030E /* soSecondViewController.xib in Resources */,
 				3AA9E41315C851D9006A4704 /* join.xib in Resources */,
 				3A30C02115EE671300FE937C /* soCreateViewController.xib in Resources */,
+				3A30C03015EFD33D00FE937C /* findMissingLocalizedStrings.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
