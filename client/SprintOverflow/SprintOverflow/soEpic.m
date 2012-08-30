@@ -16,11 +16,16 @@
            withId:(NSNumber *)Id
       withStories:(NSArray *) stories
 {
-    self.epicName = name;
-    self.epicId = Id;
-    self.epicStories = [[NSMutableArray alloc] initWithArray:stories];
-    
-    return self;
+    self = [super init];
+    if (self) {
+        self.epicName = name;
+        self.epicId = Id;
+        self.epicStories = [[NSMutableArray alloc] initWithArray:stories];
+        return self;
+    }
+    else {
+        return nil;
+    }
 }
 
 -(id)initWithName:(NSString *)name

@@ -26,10 +26,7 @@
     // Override point for customization after application launch.
     database = [soDatabase sharedInstance];
     [database fetchEpicDataAsyncForUser:@"Faisal23" SimulateFailure:soDatabase_fetchEpicData_NoFailureSimulation];
-    //- (void)fetchEpicDataAsyncForUser:(NSString*)for_user SimulateFailure:(int)simulate_failure
-
-    //[soDatabase fetchEpicData:@"Faisal23":soDatabase_fetchEpicData_NoFailureSimulation];
-
+    
     self.uinavControllerWelcome = [[UINavigationController alloc]init];
     
     self.uinavControllerMilestone = [[UINavigationController alloc]init];

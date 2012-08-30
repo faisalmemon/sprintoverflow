@@ -19,11 +19,15 @@
            withId:(NSNumber *)Id
         withTasks:(NSArray *) tasks
 {
-    self.storyName = name;
-    self.storyId = Id;
-    self.storyTasks = [[NSMutableArray alloc] initWithArray:tasks];
-    
-    return self;
+    self = [super init];
+    if (self) {
+        self.storyName = name;
+        self.storyId = Id;
+        self.storyTasks = [[NSMutableArray alloc] initWithArray:tasks];
+        return self;
+    } else {
+        return nil;
+    }
 }
 
 -(id)initWithName:(NSString *)name
