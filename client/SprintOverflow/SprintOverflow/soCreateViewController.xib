@@ -174,7 +174,7 @@
 								<int key="IBUIContentMode">7</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<string key="IBUIText">Security token we will send to email</string>
+								<string key="IBUIText">A security token will be emailed:</string>
 								<reference key="IBUITextColor" ref="52765608"/>
 								<nil key="IBUIHighlightedColor"/>
 								<int key="IBUIBaselineAdjustment">0</int>
@@ -220,6 +220,7 @@
 								<string key="NSFrame">{{96, 271}, {128, 37}}</string>
 								<reference key="NSSuperview" ref="109364535"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
