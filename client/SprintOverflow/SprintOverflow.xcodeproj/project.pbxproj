@@ -21,6 +21,8 @@
 		3A48920B15A1B17B00AAFF54 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A48920515A1B17B00AAFF54 /* SBJsonWriter.m */; };
 		3A48920E15A1B48C00AAFF54 /* soDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A48920D15A1B48C00AAFF54 /* soDatabase.m */; };
 		3A48921115A1B78A00AAFF54 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A48921015A1B78A00AAFF54 /* CoreData.framework */; };
+		3A6117BF15F4C20F00C155AD /* soConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6117BE15F4C20F00C155AD /* soConstants.m */; };
+		3A6117C215F4C44600C155AD /* soUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6117C115F4C44600C155AD /* soUtil.m */; };
 		3A9EAC70159E155C0042030E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A9EAC6F159E155C0042030E /* UIKit.framework */; };
 		3A9EAC72159E155C0042030E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A9EAC71159E155C0042030E /* Foundation.framework */; };
 		3A9EAC74159E155C0042030E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A9EAC73159E155C0042030E /* CoreGraphics.framework */; };
@@ -68,6 +70,10 @@
 		3A48920D15A1B48C00AAFF54 /* soDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soDatabase.m; sourceTree = "<group>"; };
 		3A48920F15A1B4F200AAFF54 /* soDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soDatabase.h; sourceTree = "<group>"; };
 		3A48921015A1B78A00AAFF54 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		3A6117BD15F4C20F00C155AD /* soConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soConstants.h; sourceTree = "<group>"; };
+		3A6117BE15F4C20F00C155AD /* soConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soConstants.m; sourceTree = "<group>"; };
+		3A6117C015F4C44600C155AD /* soUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soUtil.h; sourceTree = "<group>"; };
+		3A6117C115F4C44600C155AD /* soUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soUtil.m; sourceTree = "<group>"; };
 		3A9EAC6B159E155C0042030E /* SprintOverflow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SprintOverflow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A9EAC6F159E155C0042030E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3A9EAC71159E155C0042030E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -175,6 +181,8 @@
 				3ABB585C15A2EDB1007A57A4 /* soStory.m */,
 				3AB5F5E715A1D2AD000D9A55 /* soEpic.h */,
 				3AB5F5EB15A1D78A000D9A55 /* soModel.h */,
+				3A6117BD15F4C20F00C155AD /* soConstants.h */,
+				3A6117BE15F4C20F00C155AD /* soConstants.m */,
 				3AB5F5EC15A1D78A000D9A55 /* soModel.m */,
 				3A30C02315EECBE100FE937C /* soSecurity.h */,
 				3A30C02415EECBE100FE937C /* soSecurity.m */,
@@ -201,6 +209,8 @@
 				3A30C03315EFD46000FE937C /* join.xib */,
 				3A30C01D15EE671300FE937C /* soCreateViewController.h */,
 				3A30C01E15EE671300FE937C /* soCreateViewController.m */,
+				3A6117C015F4C44600C155AD /* soUtil.h */,
+				3A6117C115F4C44600C155AD /* soUtil.m */,
 				3A30C03615EFD49C00FE937C /* soCreateViewController.xib */,
 				3A9EAC76159E155C0042030E /* Supporting Files */,
 			);
@@ -310,6 +320,8 @@
 				3A30C02015EE671300FE937C /* soCreateViewController.m in Sources */,
 				3A30C02515EECBE100FE937C /* soSecurity.m in Sources */,
 				3AC0A37115F009BF0095F685 /* LocalModelCache.m in Sources */,
+				3A6117BF15F4C20F00C155AD /* soConstants.m in Sources */,
+				3A6117C215F4C44600C155AD /* soUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

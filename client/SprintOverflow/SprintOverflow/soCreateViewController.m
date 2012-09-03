@@ -7,6 +7,8 @@
 //
 
 #import "soCreateViewController.h"
+#import "soConstants.h"
+#import "soUtil.h"
 
 @interface soCreateViewController ()
 
@@ -42,6 +44,7 @@
 {
     [super viewDidLoad];
     handleScrollView.contentSize=CGSizeMake(self.view.frame.size.width,self.view.frame.size.height);
+    ownerEmailAddressTextFieldOriginalColor = handleOwnerEmailAddress.backgroundColor;
 }
 
 - (void)viewDidUnload
@@ -80,7 +83,8 @@
         }
     }
     if (action == soNotModifyingText) {
-        if (0 != handleProjectId.text.length && 0 != handleOwnerEmailAddress.text.length) {
+        if (0 != handleProjectId.text.length && 0 != handleOwnerEmailAddress.text.length &&
+            [soUtil isValidEmail:handleOwnerEmailAddress.text Strictly:YES]) {
             handleSecurityToken.text = [model securityCodeFromId:handleProjectId.text FromOwner:handleOwnerEmailAddress.text];
         }
         if (state == soHideSecurityToken && [handleSecurityToken.text length] > 0) {
@@ -110,6 +114,14 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     currentlyEditing = nil;
+    if (handleOwnerEmailAddress == textField) {
+        if ([soUtil isValidEmail:textField.text Strictly:YES]) {
+            [handleOwnerEmailAddress setBackgroundColor:ownerEmailAddressTextFieldOriginalColor];
+        } else {
+            [handleOwnerEmailAddress setBackgroundColor:[soConstants faultyEmailAddressBackgroundColor]];
+        }
+    }
+    
     [self updateStateMachine:soNotModifyingText];
 }
 

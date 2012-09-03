@@ -24,6 +24,7 @@ enum soCreateActions {
     UIInterfaceOrientation orientation;
     NSObject* currentlyEditing;
     CGPoint savedContentOffset;
+    UIColor *ownerEmailAddressTextFieldOriginalColor;
     soModel* model;
     enum soCreateStateMachine state;
 }
