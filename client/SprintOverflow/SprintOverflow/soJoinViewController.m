@@ -7,6 +7,8 @@
 //
 
 #import "soJoinViewController.h"
+#import "soUtil.h"
+#import "soConstants.h"
 
 // Create a local method to intialize the view controller
 @interface soJoinViewController ()
@@ -40,6 +42,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    ownerEmailAddressTextFieldOriginalColor = [projectOwnerEmailText backgroundColor];
+    
 }
 
 - (void)viewDidUnload
@@ -78,6 +82,13 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     currentlyEditing = nil;
+    if (projectOwnerEmailText == textField) {
+        if ([soUtil isValidEmail:textField.text Strictly:YES]) {
+            [projectOwnerEmailText setBackgroundColor:ownerEmailAddressTextFieldOriginalColor];
+        } else {
+            [projectOwnerEmailText setBackgroundColor:[soConstants faultyEmailAddressBackgroundColor]];
+        }
+    }
 }
 
 -(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar

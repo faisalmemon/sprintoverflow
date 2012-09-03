@@ -11,6 +11,7 @@
 @interface soJoinViewController : UIViewController <UITextFieldDelegate, UISearchBarDelegate> {
     NSObject* currentlyEditing;
     NSString* lastSearchText;
+    UIColor* ownerEmailAddressTextFieldOriginalColor;
     UIInterfaceOrientation orientation;
     CGPoint savedContentOffset;
 }
