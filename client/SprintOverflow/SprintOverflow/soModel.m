@@ -23,11 +23,49 @@
     
     @synchronized(self)
     {
-        if (master == nil)
+        if (master == nil) {
             master = [self new];
+            [master initFromEnvironment];
+        }
+            
     }
     
     return master;
+}
+
+-(void)initFromEnvironment
+{
+    NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
+    
+    NSString *mode = [standardDefaults stringForKey:@"mode"]; // Not NSLocalizedString
+    NSString *server = [standardDefaults stringForKey:@"server"]; // Not NSLocalizedString
+    
+    if ([mode isEqualToString:@"debug"]) {
+        isDebug = YES;
+    } else {
+        isDebug = NO;
+    }    
+    if ([server isEqualToString:@"local"]) {
+        isLocalServer = YES;
+    } else {
+        isLocalServer = NO;
+    }
+}
+
+-(NSString*)serverUrlPrefix
+{
+    if (isLocalServer) {
+        // we don't retrieve the server url as a setting to avoid security problems due to injecting a bad server
+        // url, and to avoid license circumvention to a different server
+        return @"http://localhost:8888/sprintoverflow"; // Not NSLocalizedString
+    } else {
+        return @"http://ios38722.appspot.com/sprintoverflow"; // Not NSLocalizedString
+    }
+}
+
+-(BOOL)isDebug
+{
+    return isDebug;
 }
 
 -(void)addEpic:(soEpic *)epic

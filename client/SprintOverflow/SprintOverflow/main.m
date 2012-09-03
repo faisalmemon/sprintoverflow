@@ -10,6 +10,9 @@
 
 #import "soAppDelegate.h"
 
+/*
+ See soModel.h for an explanation of command line arguments accepted by the application.
+ */
 int main(int argc, char *argv[])
 {
     @autoreleasepool {

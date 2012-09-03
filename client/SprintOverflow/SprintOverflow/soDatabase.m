@@ -173,7 +173,7 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     soDatabase *instance = [soDatabase sharedInstance];
     NSManagedObjectContext* mocp = [instance managedObjectContext];
     
-    NSString *urlString = [NSString stringWithFormat:@"http://ios38722.appspot.com/sprintoverflow?Mode=SaveToken&ProjectId=%@&ProjectEmail=%@&SecurityToken=%@", project_id, project_owner_email, security_token]; // Not NSLocalizedString
+    NSString *urlString = [NSString stringWithFormat:@"%@?Mode=SaveToken&ProjectOwnerEmail=%@&ProjectId=%@&SecurityToken=%@", [[soModel sharedInstance ] serverUrlPrefix], project_owner_email, project_id, security_token]; // Not NSLocalizedString
     NSString *serverResponse = @"ServerNotRespondedYet"; // Not NSLocalizedString
     
     // Store the request in the local cache
