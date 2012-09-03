@@ -22,9 +22,9 @@ package com.pcc.SprintOverflow;
  *
  */
 public enum Request {
-	/** ?Mode=Epic or Sprint, Story, Task */
+	/** ?Mode=Epic or Sprint, Story, Task, SaveToken */
 	Mode,
-	Epic, Sprint, Story, Task,
+	Epic, Sprint, Story, Task, SaveToken,
 	/** ?Version=2 where the supplied number is the highest protocol version understood by the client */
 	Version,
 }

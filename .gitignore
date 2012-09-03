@@ -1,1 +1,11 @@
 .DS_Store
+
+*.class
+
+*.class
+
+server/SprintOverflow/war/WEB-INF/classes/com/pcc/SprintOverflow/AgileConstants$queryMode.class
+
+server/SprintOverflow/war/WEB-INF/classes/com/pcc/SprintOverflow/Request.class
+
+server/SprintOverflow/war/WEB-INF/classes/com/pcc/SprintOverflow/SprintOverflowServlet.class

@@ -51,7 +51,13 @@ public class SprintOverflowServlet extends HttpServlet {
 			HttpServletResponse resp) throws IOException {
 		if (modeValue.equals(Request.Epic.toString())) {
 			resp.getWriter().println(theGson.toJson(DefaultScenario.theDefaultScenario));
-		} 
+		} else if (modeValue.equals(Request.SaveToken.toString())) {
+			String owner = req.getParameter("ProjectOwnerEmail");
+			String id = req.getParameter("ProjectId");
+			String token = req.getParameter("SecurityToken");
+			SecurityToken securityToken = new SecurityToken(owner, id, token);
+			resp.getWriter().println(theGson.toJson(securityToken));
+		}
 	}
 	
 	private void supplyDefaultResponse(HttpServletResponse resp) throws IOException {
