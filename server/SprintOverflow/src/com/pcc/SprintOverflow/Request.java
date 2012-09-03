@@ -25,6 +25,12 @@ public enum Request {
 	/** ?Mode=Epic or Sprint, Story, Task, SaveToken */
 	Mode,
 	Epic, Sprint, Story, Task, SaveToken,
+	
+	/** SaveToken mode protocol */
+	ProjectOwnerEmail, 
+	ProjectId, 
+	SecurityToken,
+	
 	/** ?Version=2 where the supplied number is the highest protocol version understood by the client */
 	Version,
 }
