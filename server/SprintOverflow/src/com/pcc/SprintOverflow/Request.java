@@ -14,23 +14,44 @@ package com.pcc.SprintOverflow;
 /**
  * Request parameters from the client
  * 
- * This class encapsulates all the different request types passed from the client.
+ * This class encapsulates all the different request types passed from the
+ * client.
  * 
- * The names of the enumerations cannot change due to their String equivalent being
- * used as actual protocol strings sent from the client.
+ * The names of the enumerations MUST NOT change due to their String equivalent
+ * being used as actual protocol strings sent from the client.
+ * 
+ * The notation used here is URL request notation so it is clear the
+ * mapping between the protocol and the URLs that represent them.
+ * 
+ * <h1>Protocol Modes</h1>
+ * The request protocol is divided at the top level into Modes.  Each mode
+ * has its own set of attributes.
+ * The supported modes are:
+ * 	?Mode=Epic
+ * 	?Mode=Sprint
+ *  ?Mode=Story
+ *  ?Mode=Task
+ *  ?Mode=SaveToken
+ *  ?Mode=Version
+ *  
+ * <h2>Version Mode</h2>
+ * The client can specify the highest protocol version it supports and the
+ * server then can respond if that version is understood or not.
+ * ?Mode=Version&ClientVersion=2
+ *  
  * @author faisalmemon
  *
  */
 public enum Request {
 	/** ?Mode=Epic or Sprint, Story, Task, SaveToken */
 	Mode,
-	Epic, Sprint, Story, Task, SaveToken,
+	Epic, Sprint, Story, Task, SaveToken, Version,
 	
 	/** SaveToken mode protocol */
 	ProjectOwnerEmail, 
 	ProjectId, 
 	SecurityToken,
 	
-	/** ?Version=2 where the supplied number is the highest protocol version understood by the client */
-	Version,
+	/** Version mode protocol */
+	ClientVersion,
 }

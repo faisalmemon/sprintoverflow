@@ -208,11 +208,11 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
 {
     soDatabase *instance = [soDatabase sharedInstance];    
     NSManagedObjectContext* mocp = [instance managedObjectContext];
+    soModel *model = [soModel sharedInstance];
     
     // Construct a Google Application Engine API request.
-    // http://ios38722.appspot.com/barebones?Mode=Epic&User=JayRandomHacker
-    //
-    NSString *urlString = [NSString stringWithFormat:@"http://ios38722.appspot.com/sprintoverflow?Mode=Epic&User=%@", forUser]; // Not NSLocalizedString
+
+    NSString *urlString = [NSString stringWithFormat:@"%@?Mode=Epic&User=%@", [model serverUrlPrefix], forUser]; // Not NSLocalizedString
     NSURL *url = [NSURL URLWithString:urlString];
     NSString *jsonString = nil;
     

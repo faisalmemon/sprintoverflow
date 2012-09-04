@@ -26,24 +26,11 @@ public class SprintOverflowServlet extends HttpServlet {
 		resp.setContentType("application/json");
 		
 		String modeValue = req.getParameter(Request.Mode.toString());
-		String versionOfClient = req.getParameter(Request.Version.toString());
 		
 		if (modeValue != null) {
 			handleModeQuery(modeValue, req, resp);
-		} else if (versionOfClient != null) {
-			handleVersionQuery(versionOfClient, req, resp);
 		} else {
 			supplyDefaultResponse(resp);
-		}
-	}
-
-	private void handleVersionQuery(String versionOfClient, HttpServletRequest req,
-			HttpServletResponse resp) throws IOException {
-		if (versionOfClient.equals(Response.Version1_0.toString())) {
-			resp.getWriter().println(theGson.toJson(Response.Version1_0));
-		} else {
-			resp.getWriter().println(theGson.toJson(Response.VersionNotSupported));
-
 		}
 	}
 
@@ -57,6 +44,13 @@ public class SprintOverflowServlet extends HttpServlet {
 			String token = req.getParameter(Request.SecurityToken.toString());
 			SecurityToken securityToken = new SecurityToken(owner, id, token);
 			resp.getWriter().println(theGson.toJson(securityToken));
+		} else if (modeValue.equals(Request.Version.toString())) {
+			String version = req.getParameter(Request.ClientVersion.toString());
+			if (version.equals(Response.Version1_0.toString())) {
+				resp.getWriter().println(theGson.toJson(Response.Version1_0));
+			} else {
+				resp.getWriter().println(theGson.toJson(Response.VersionNotSupported));
+			}
 		}
 	}
 	
