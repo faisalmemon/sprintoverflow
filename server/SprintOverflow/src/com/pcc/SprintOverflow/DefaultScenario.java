@@ -26,10 +26,12 @@ package com.pcc.SprintOverflow;
 public class DefaultScenario {
 	public static DefaultScenario theDefaultScenario = new DefaultScenario();
 	
-	private Epic epic;
+	private Project project;
 	
 	private DefaultScenario() {
-		epic = new Epic("Bootstrap the AgileOverflow project");
+		project = new Project("john@appleseed.com", "rb23", "qf6u6x2her");
+		Epic epic = new Epic("Bootstrap the AgileOverflow project");
+		project.addEpic(epic);
 		Story story0 = new Story("Create GAE default scenario response");
 		epic.addStory(story0);
 		Task task0 = new Task("Create default scenario java class");

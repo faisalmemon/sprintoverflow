@@ -69,13 +69,9 @@
     return isDebug;
 }
 
--(void)addEpic:(soEpic *)epic
+-(void)addEpic:(soEpic*)epic toProject:(soProject*)project
 {
-    if (_epics == nil) {
-        _epics = [NSMutableArray new];
-    }
-    
-    [_epics addObject:epic];
+    [project addEpic:epic];
 }
 
 -(void)addProject:(soProject *)project
@@ -87,44 +83,34 @@
     [_projects addObject:project];
 }
 
--(void)dumpEpics
-{
-    NSLog(@"dumpEpics");
-    for (soEpic *e in _epics)
-    {
-        NSLog(@"Dumping epic: %@", e);
-        [e dumpEpic];
-    }
-}
-
 -(void)bootstrapFromServer:(NSString *)modelAsJsonString
 {
     NSDictionary *top = [modelAsJsonString JSONValue];
-    NSDictionary *m = [top objectForKey:@"epic"]; // Not NSLocalizedString
-    
-    soEpic *soepic;
-    soepic = [[soEpic alloc] initWithName:[m objectForKey:@"epicName"] withId:[m objectForKey:@"epicId"]]; // Not NSLocalizedString
-
-    
-    NSArray *stories = [m objectForKey:@"stories"]; // Not NSLocalizedString
-    for (NSDictionary *d in stories)
+    NSDictionary *p = [top objectForKey:@"project"]; // Not NSLocalizedString
+    soProject *soproject;
+    soproject = [[soProject alloc] initWithOwner:[p objectForKey:@"projectOwnerEmail"] withProjectId:[p objectForKey:@"projectId"] withSecurityToken:[p objectForKey:@"securityToken"]]; // Not NSLocalizedString
+    NSArray *epics = [p objectForKey:@"epics"]; // Not NSLocalizedString
+    for (NSDictionary *e in epics)
     {
-        soStory *sostory;
-        sostory = [[soStory alloc] initWithName:[d objectForKey:@"storyName"] withId:[d objectForKey:@"storyId"] ]; // Not NSLocalizedString
-        NSArray *tasks = [d objectForKey:@"tasks"]; // Not NSLocalizedString
-        for (NSDictionary *d1 in tasks)
+        soEpic *soepic;
+        soepic = [[soEpic alloc] initWithName:[e objectForKey:@"epicName"] withId:[e objectForKey:@"epicId"]]; // Not NSLocalizedString
+        NSArray *stories = [e objectForKey:@"stories"]; // Not NSLocalizedString
+        for (NSDictionary *d in stories)
         {
-            soTask *sotask;
-            sotask = [[soTask alloc] initWithName:[d1 objectForKey:@"taskName"] withId:[d1 objectForKey:@"taskId"] withStatus:[d1 objectForKey:@"status"]]; // Not NSLocalizedString
-            [sostory addTask:sotask];
+            soStory *sostory;
+            sostory = [[soStory alloc] initWithName:[d objectForKey:@"storyName"] withId:[d objectForKey:@"storyId"] ]; // Not NSLocalizedString
+            NSArray *tasks = [d objectForKey:@"tasks"]; // Not NSLocalizedString
+            for (NSDictionary *d1 in tasks)
+            {
+                soTask *sotask;
+                sotask = [[soTask alloc] initWithName:[d1 objectForKey:@"taskName"] withId:[d1 objectForKey:@"taskId"] withStatus:[d1 objectForKey:@"status"]]; // Not NSLocalizedString
+                [sostory addTask:sotask];
+            }
+            [soepic addStory:sostory];
         }
-        [soepic addStory:sostory];
-        
+        [soproject addEpic:soepic];
     }
-    
-
-    [self addEpic:soepic];
-    [self dumpEpics];
+    [soproject dumpProject];
 }
 
 -(NSString*)securityCodeFromId:(NSString*)project_id FromOwner:(NSString*)owner_email

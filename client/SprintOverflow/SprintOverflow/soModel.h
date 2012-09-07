@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "soEpic.h"
+#import "soProject.h"
 
 /*
  Command line arguments:
@@ -35,7 +36,8 @@
 -(NSString*)serverUrlPrefix;
 -(BOOL)isDebug;
 -(void)bootstrapFromServer:(NSString *)modelAsJsonString;
--(void)addEpic:(soEpic*)epic;
+-(void)addProject:(soProject *)project;
+-(void)addEpic:(soEpic*)epic toProject:(soProject*)project;
 -(void)dumpEpics;
 -(NSString*)securityCodeFromId:(NSString*)project_id FromOwner:(NSString*)owner_email;
 
