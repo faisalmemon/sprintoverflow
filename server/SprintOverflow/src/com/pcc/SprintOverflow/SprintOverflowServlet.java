@@ -42,7 +42,7 @@ public class SprintOverflowServlet extends HttpServlet {
 			String owner = req.getParameter(Request.ProjectOwnerEmail.toString());
 			String id = req.getParameter(Request.ProjectId.toString());
 			String token = req.getParameter(Request.SecurityToken.toString());
-			SecurityToken securityToken = new SecurityToken(owner, id, token);
+			Project securityToken = new Project(owner, id, token);
 			resp.getWriter().println(theGson.toJson(securityToken));
 		} else if (modeValue.equals(Request.Version.toString())) {
 			String version = req.getParameter(Request.ClientVersion.toString());

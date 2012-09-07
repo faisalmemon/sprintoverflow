@@ -11,5 +11,6 @@
 @interface soUtil : NSObject
 
 + (BOOL)isValidEmail:(NSString *)checkString Strictly:(BOOL)strictFiltering;
++ (NSString*)safeWebStringFromString:(NSString*)unsafeString;
 
 @end

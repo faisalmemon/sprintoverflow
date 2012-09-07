@@ -19,4 +19,21 @@
     return [emailTest evaluateWithObject:checkString];
 }
 
++ (NSString*)safeWebStringFromString:(NSString*)unsafeString
+{
+    CFStringRef preprocessedString =
+    CFURLCreateStringByReplacingPercentEscapesUsingEncoding(
+                                                            kCFAllocatorDefault,
+                                                            (__bridge CFStringRef)(unsafeString),
+                                                            CFSTR(""),
+                                                            kCFStringEncodingUTF8);
+    
+    NSString * encodedString = (__bridge NSString *)CFURLCreateStringByAddingPercentEscapes(
+                                                                                   NULL,
+                                                                                   preprocessedString,
+                                                                                   NULL,
+                                                                                   (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                                                   kCFStringEncodingUTF8 );
+    return encodedString;
+}
 @end

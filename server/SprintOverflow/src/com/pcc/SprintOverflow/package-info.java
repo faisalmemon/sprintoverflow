@@ -31,6 +31,15 @@ will confirm that the protocol version specified is supported
 http://ios38722.appspot.com/sprintoverflow?Mode=Epic
 will provide a publicly viewable sample epic when deployed
 
+<h1>Persistence</h1>
+The server uses Java Persistence API v1.0 for its persistence service.  
+This was chosen because it is simple to use, and works by default with
+Eclipse.  We anticipate that data mining will be efficient as the backing
+store is geared for massively horizontal queries.
+
+As a consequence, the source code has JPA annotations throughout for data
+classes.
+
 @author Faisal Memon
 */
 package com.pcc.SprintOverflow;

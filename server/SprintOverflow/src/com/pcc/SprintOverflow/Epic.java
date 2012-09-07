@@ -14,8 +14,19 @@ package com.pcc.SprintOverflow;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-public class Epic {
+import javax.persistence.Entity;
+import javax.persistence.GenerationType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
+import com.google.appengine.api.datastore.Key;
+
+@Entity
+public class Epic {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Key key;
+	
 	/**
 	 * The first field for serialization is the unique identifier so that in the
 	 * future we can encode compatibility data here.
