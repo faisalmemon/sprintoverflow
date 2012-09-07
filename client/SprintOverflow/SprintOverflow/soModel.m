@@ -14,6 +14,7 @@
 #import "soTask.h"
 #import "soSecurity.h"
 #import "soDatabase.h"
+#import "soProject.h"
 
 @implementation soModel
 
@@ -75,6 +76,15 @@
     }
     
     [_epics addObject:epic];
+}
+
+-(void)addProject:(soProject *)project
+{
+    if (_projects == nil) {
+        _projects = [NSMutableArray new];
+    }
+    
+    [_projects addObject:project];
 }
 
 -(void)dumpEpics

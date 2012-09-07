@@ -8,6 +8,7 @@
 
 #import "soDatabase.h"
 #import "LocalModelCache.h"
+#import "soUtil.h"
 
 const int soDatabase_fetchEpicData_NoFailureSimulation = 0;
 const int soDatabase_fetchEpicData_SimulateNetworkDown = 1;
@@ -58,16 +59,26 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
 {
     self = [super init];
     if (self) {
-        queue = dispatch_queue_create(SO_SERVER_PROTOCOL_QUEUE_NAME, NULL);
-        if (NULL == queue) {
-            NSDictionary *userInfo =
-            [NSDictionary dictionaryWithObject: NSLocalizedString(@"System Queue Error.  A core system service is not available; perhaps shutdown other applications.  Going into offline mode.", @"Error message displayed when system could not provide a core system service for queuing.")
-                                        forKey:NSLocalizedDescriptionKey];
-            NSError *error = [NSError errorWithDomain:@"System" code:SO_QUEUE_ERROR userInfo:userInfo]; // Not NSLocalizedString
-            [self handleError:error];
-        }
+        [self dispatchQueue];
     }
     return self;
+}
+
+- (dispatch_queue_t) dispatchQueue
+{
+    @synchronized(self) {
+        if (NULL == queue) {
+            queue = dispatch_queue_create(SO_SERVER_PROTOCOL_QUEUE_NAME, NULL);
+        }
+    }
+    if (NULL == queue) {
+        NSDictionary *userInfo =
+        [NSDictionary dictionaryWithObject: NSLocalizedString(@"System Queue Error.  A core system service is not available; perhaps shutdown other applications.  Going into offline mode.", @"Error message displayed when system could not provide a core system service for queuing.")
+                                    forKey:NSLocalizedDescriptionKey];
+        NSError *error = [NSError errorWithDomain:@"System" code:SO_QUEUE_ERROR userInfo:userInfo]; // Not NSLocalizedString
+        [self handleError:error];
+    }
+    return queue;
 }
 
 /**
@@ -138,7 +149,7 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
 
 - (void)fetchEpicDataAsyncForUser:(NSString*)for_user SimulateFailure:(int)simulate_failure
 {
-    if (!queue) {
+    if (![self dispatchQueue]) {
         return;
     }
     
@@ -159,7 +170,7 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
                                 WithToken:(NSString*)security_token
                           SimulateFailure:(int)simulate_failure
 {
-    if (!queue) {
+    if (![self dispatchQueue]) {
         return;
     }
     
@@ -173,7 +184,12 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     soDatabase *instance = [soDatabase sharedInstance];
     NSManagedObjectContext* mocp = [instance managedObjectContext];
     
-    NSString *urlString = [NSString stringWithFormat:@"%@?Mode=SaveToken&ProjectOwnerEmail=%@&ProjectId=%@&SecurityToken=%@", [[soModel sharedInstance ] serverUrlPrefix], project_owner_email, project_id, security_token]; // Not NSLocalizedString
+    NSString *urlString =
+    [NSString stringWithFormat:@"%@?Mode=SaveToken&ProjectOwnerEmail=%@&ProjectId=%@&SecurityToken=%@", // Not NSLocalizedString
+     [[soModel sharedInstance ] serverUrlPrefix],
+     [soUtil safeWebStringFromString:project_owner_email],
+     [soUtil safeWebStringFromString:project_id],
+     [soUtil safeWebStringFromString:security_token]]; 
     NSString *serverResponse = @"ServerNotRespondedYet"; // Not NSLocalizedString
     
     // Store the request in the local cache

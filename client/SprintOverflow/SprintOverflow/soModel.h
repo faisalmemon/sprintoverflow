@@ -26,6 +26,7 @@
 @interface soModel : NSObject {
     BOOL isDebug;
     BOOL isLocalServer;
+    NSMutableArray *_projects;
     NSMutableArray *_epics;
     NSMutableDictionary *_securityCodes;
 }

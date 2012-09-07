@@ -13,6 +13,7 @@
 		3A30C03015EFD33D00FE937C /* findMissingLocalizedStrings.sh in Resources */ = {isa = PBXBuildFile; fileRef = 3A30C02F15EFD33D00FE937C /* findMissingLocalizedStrings.sh */; };
 		3A30C03115EFD46000FE937C /* join.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A30C03315EFD46000FE937C /* join.xib */; };
 		3A30C03415EFD49C00FE937C /* soCreateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A30C03615EFD49C00FE937C /* soCreateViewController.xib */; };
+		3A32968B15FA41B500D0501C /* soProject.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A32968A15FA41B500D0501C /* soProject.m */; };
 		3A48920615A1B17B00AAFF54 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4891FB15A1B17B00AAFF54 /* NSObject+SBJSON.m */; };
 		3A48920715A1B17B00AAFF54 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4891FD15A1B17B00AAFF54 /* NSString+SBJSON.m */; };
 		3A48920815A1B17B00AAFF54 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4891FF15A1B17B00AAFF54 /* SBJSON.m */; };
@@ -54,6 +55,8 @@
 		3A30C02F15EFD33D00FE937C /* findMissingLocalizedStrings.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = findMissingLocalizedStrings.sh; sourceTree = "<group>"; };
 		3A30C03215EFD46000FE937C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/join.xib; sourceTree = "<group>"; };
 		3A30C03515EFD49C00FE937C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/soCreateViewController.xib; sourceTree = "<group>"; };
+		3A32968915FA41B500D0501C /* soProject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soProject.h; sourceTree = "<group>"; };
+		3A32968A15FA41B500D0501C /* soProject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soProject.m; sourceTree = "<group>"; };
 		3A4891F915A1B17B00AAFF54 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		3A4891FA15A1B17B00AAFF54 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
 		3A4891FB15A1B17B00AAFF54 /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
@@ -179,15 +182,17 @@
 				3AC0A37015F009BF0095F685 /* LocalModelCache.m */,
 				3ABB585B15A2EDB1007A57A4 /* soStory.h */,
 				3ABB585C15A2EDB1007A57A4 /* soStory.m */,
-				3AB5F5E715A1D2AD000D9A55 /* soEpic.h */,
 				3AB5F5EB15A1D78A000D9A55 /* soModel.h */,
 				3AB5F5EC15A1D78A000D9A55 /* soModel.m */,
+				3A32968915FA41B500D0501C /* soProject.h */,
+				3A32968A15FA41B500D0501C /* soProject.m */,
 				3A6117BD15F4C20F00C155AD /* soConstants.h */,
 				3A6117BE15F4C20F00C155AD /* soConstants.m */,
 				3A30C02315EECBE100FE937C /* soSecurity.h */,
 				3A30C02415EECBE100FE937C /* soSecurity.m */,
 				3AD7477C15A32D7A0034B799 /* soTask.h */,
 				3AD7477D15A32D7A0034B799 /* soTask.m */,
+				3AB5F5E715A1D2AD000D9A55 /* soEpic.h */,
 				3AB5F5E815A1D2AD000D9A55 /* soEpic.m */,
 				3A48920F15A1B4F200AAFF54 /* soDatabase.h */,
 				3A48920D15A1B48C00AAFF54 /* soDatabase.m */,
@@ -322,6 +327,7 @@
 				3AC0A37115F009BF0095F685 /* LocalModelCache.m in Sources */,
 				3A6117BF15F4C20F00C155AD /* soConstants.m in Sources */,
 				3A6117C215F4C44600C155AD /* soUtil.m in Sources */,
+				3A32968B15FA41B500D0501C /* soProject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
