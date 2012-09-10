@@ -58,9 +58,11 @@
     if (isLocalServer) {
         // we don't retrieve the server url as a setting to avoid security problems due to injecting a bad server
         // url, and to avoid license circumvention to a different server
+        
+        // the development server ignores https so use http
         return @"http://localhost:8888/sprintoverflow"; // Not NSLocalizedString
     } else {
-        return @"http://ios38722.appspot.com/sprintoverflow"; // Not NSLocalizedString
+        return @"https://ios38722.appspot.com/sprintoverflow"; // Not NSLocalizedString
     }
 }
 
