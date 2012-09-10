@@ -4,11 +4,46 @@
 //
 //  Created by Faisal Memon on 03/09/2012.
 //
+//  The file's constants assumed to never need localization and thus is
+//  hardcoded as exempt from string checking in the script
+//  findMissingLocalizedStrings.sh
 //
 
 #import "soConstants.h"
 
 @implementation soConstants
+
+/*
+ These constants must match the symbolic names of the server-side enumerations in Request.java
+ because that file, together with Response.java, is the official definition of the client-server
+ protocol, and its documentation.
+ 
+ These constants are kept in alphabetic order.
+ */
+NSString *const ksoClientVersion = @"ClientVersion";
+NSString *const ksoCreateProject = @"CreateProject";
+NSString *const ksoEpic = @"Epic";
+NSString *const ksoMode = @"Mode";
+NSString *const ksoProjectId = @"ProjectId";
+NSString *const ksoProjectOwnerEmail = @"ProjectOwnerEmail";
+NSString *const ksoSecurityToken = @"SecurityToken";
+NSString *const ksoSprint = @"Sprint";
+NSString *const ksoStory = @"Story";
+NSString *const ksoTask = @"Task";
+NSString *const ksoVersion = @"Version";
+
+// Creating a new project request url is built from the above constants and should be kept in sync with them
+NSString *const ksoCreateNewProjectUrl = @"%@?Mode=CreateProject&ProjectOwnerEmail=%@&ProjectId=%@&SecurityToken=%@";
+
+/*
+ These constants must match the symbolic names of the server-side enumerations in Response.java
+ because that file, together with Request.java, is the official definition of the client-server
+ protocol, and its documentation.
+ */
+NSString *const ksoServerNotRespondedYet = @"ServerNotRespondedYet";
+NSString *const ksoServerDidNotRespond = @"ServerDidNotRespond";
+
+
 
 + (UIColor *)faultyEmailAddressBackgroundColor
 {

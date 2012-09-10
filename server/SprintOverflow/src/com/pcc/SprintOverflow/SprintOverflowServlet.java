@@ -12,6 +12,9 @@
 package com.pcc.SprintOverflow;
 
 import java.io.IOException;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.servlet.http.*;
 
 import com.google.gson.*;
@@ -36,26 +39,39 @@ public class SprintOverflowServlet extends HttpServlet {
 
 	private void handleModeQuery(String modeValue, HttpServletRequest req,
 			HttpServletResponse resp) throws IOException {
+		String returnString;
+		
 		if (modeValue.equals(Request.Epic.toString())) {
-			resp.getWriter().println(theGson.toJson(DefaultScenario.theDefaultScenario));
-		} else if (modeValue.equals(Request.SaveToken.toString())) {
+			returnString = theGson.toJson(DefaultScenario.theDefaultScenario);
+			resp.getWriter().println(returnString);
+		} else if (modeValue.equals(Request.CreateProject.toString())) {
 			String owner = req.getParameter(Request.ProjectOwnerEmail.toString());
 			String id = req.getParameter(Request.ProjectId.toString());
 			String token = req.getParameter(Request.SecurityToken.toString());
-			Project securityToken = new Project(owner, id, token);
-			resp.getWriter().println(theGson.toJson(securityToken));
+			EntityManager em = SingletonEntityManager.get().createEntityManager();
+			Project project = new Project(owner, id, token);
+			try {
+				em.persist(project);
+				returnString = theGson.toJson(project);
+				resp.getWriter().println(returnString);
+			} finally {
+				em.close();
+			}		
 		} else if (modeValue.equals(Request.Version.toString())) {
 			String version = req.getParameter(Request.ClientVersion.toString());
 			if (version.equals(Response.Version1_0.toString())) {
-				resp.getWriter().println(theGson.toJson(Response.Version1_0));
+				returnString = theGson.toJson(Response.Version1_0);
+				resp.getWriter().println(returnString);
 			} else {
-				resp.getWriter().println(theGson.toJson(Response.VersionNotSupported));
+				returnString = theGson.toJson(Response.VersionNotSupported);
+				resp.getWriter().println(returnString);
 			}
 		}
 	}
 	
 	private void supplyDefaultResponse(HttpServletResponse resp) throws IOException {
-		resp.getWriter().println(theGson.toJson(JohnSmithDemo.JohnSmith));
+		String returnString = theGson.toJson(JohnSmithDemo.JohnSmith);
+		resp.getWriter().println(returnString);
 	}
 
 }

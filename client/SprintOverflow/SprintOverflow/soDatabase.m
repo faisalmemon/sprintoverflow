@@ -9,6 +9,7 @@
 #import "soDatabase.h"
 #import "LocalModelCache.h"
 #import "soUtil.h"
+#import "soConstants.h"
 
 const int soDatabase_fetchEpicData_NoFailureSimulation = 0;
 const int soDatabase_fetchEpicData_SimulateNetworkDown = 1;
@@ -185,12 +186,12 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     NSManagedObjectContext* mocp = [instance managedObjectContext];
     
     NSString *urlString =
-    [NSString stringWithFormat:@"%@?Mode=SaveToken&ProjectOwnerEmail=%@&ProjectId=%@&SecurityToken=%@", // Not NSLocalizedString
+    [NSString stringWithFormat:ksoCreateNewProjectUrl,
      [[soModel sharedInstance ] serverUrlPrefix],
      [soUtil safeWebStringFromString:project_owner_email],
      [soUtil safeWebStringFromString:project_id],
      [soUtil safeWebStringFromString:security_token]]; 
-    NSString *serverResponse = @"ServerNotRespondedYet"; // Not NSLocalizedString
+    NSString *serverResponse = ksoServerNotRespondedYet;
     
     // Store the request in the local cache
     LocalModelCache *cache;
@@ -208,7 +209,7 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     if (simulateFailure == soDatabase_saveSecurityToken_NoFailureSimulation) {
         response = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
     } else {
-        response = @"ServerDidNotRespond"; // Not NSLocalizedString
+        response = ksoServerDidNotRespond;
     }
     [cache setServerResponse:response];
     [mocp save:&error];

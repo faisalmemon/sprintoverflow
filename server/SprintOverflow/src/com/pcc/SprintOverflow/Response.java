@@ -25,7 +25,13 @@ package com.pcc.SprintOverflow;
 public enum Response {
 	/** The first version supported by the server */
 	Version1_0,
-	/** Unsupported Version */
-	VersionNotSupported;
 	
+	/** Unsupported Version */
+	VersionNotSupported,
+	
+	/** Placeholder response assumed by client before it listens to the server */
+	ServerNotRespondedYet,
+	
+	/** Response assumed when the server did not respond in time */
+	ServerDidNotRespond,
 }

@@ -41,12 +41,12 @@
     NSString *mode = [standardDefaults stringForKey:@"mode"]; // Not NSLocalizedString
     NSString *server = [standardDefaults stringForKey:@"server"]; // Not NSLocalizedString
     
-    if ([mode isEqualToString:@"debug"]) {
+    if ([mode isEqualToString:@"debug"]) { // Not NSLocalizedString
         isDebug = YES;
     } else {
         isDebug = NO;
     }    
-    if ([server isEqualToString:@"local"]) {
+    if ([server isEqualToString:@"local"]) { // Not NSLocalizedString
         isLocalServer = YES;
     } else {
         isLocalServer = NO;

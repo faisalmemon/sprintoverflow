@@ -21,6 +21,12 @@ public class Project {
 	private String securityToken;
 	private Set<Epic> epics;
 	
+	/**
+	 * No-arg public constructor as required by the Java Persistence API.
+	 */
+	public Project() {
+	}
+	
 	Project(String aOwner, String aId, String aToken) {
 		this.projectOwnerEmail = aOwner;
 		this.projectId = aId;

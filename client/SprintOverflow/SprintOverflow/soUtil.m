@@ -32,7 +32,7 @@
                                                                                    NULL,
                                                                                    preprocessedString,
                                                                                    NULL,
-                                                                                   (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                                                   (CFStringRef)@"!*'();:@&=+$,/?%#[]", // Not NSLocalizedString
                                                                                    kCFStringEncodingUTF8 );
     return encodedString;
 }
