@@ -6,8 +6,9 @@ import javax.persistence.Persistence;
 /**
  * SingletonEntityManager ensures we only use one create entity manager factory.
  * 
+ * Developer documentation https://developers.google.com/appengine/docs/java/datastore/jpa/overview
+ * 
  * @author faisal
- * @see https://developers.google.com/appengine/docs/java/datastore/jpa/overview
  */
 public final class SingletonEntityManager {
 	private static final EntityManagerFactory emfInstance =

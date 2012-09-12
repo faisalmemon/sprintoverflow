@@ -48,52 +48,90 @@ data classes.
 
 <h2>Client-side Persistent Data</h2>
 
-On the client side the following data is persisted on disk:
-	ProjectList
-	LastFetch
-	PendingQueue
+On the client side the following data is persisted on disk
+
+<ul>
+<li>ProjectList<code>[ {ProjectOwnerEmail,ProjectId,SecurityToken}* ]</code>
+<ul>
+	<li>may be null (no projects yet)
+	<li>may be projects not known on the server yet
+</ul>	
+<li>LastFetch<code>{JSON array of projects with e/s/t tree data}</code> for each project in the ProjectList
+<ul>
+	<li>may be null (never been online before)
+</ul>
 	
-ProjectList
-	may be null (no projects yet)
-	[ {ProjectOwnerEmail,ProjectId,SecurityToken}* ]
-	may be projects not known on the server yet
-	
-LastFetch
-	may be null (never been online before)
-	{JSON array of projects with e/s/t tree data} for each project
-	in the ProjectList
-	
-PendingQueue
-	[ {action, resolution}* ]
+<li>PendingQueue<code>[ {action, resolution}* ]</code>
+</ul>	
 
+<h2>Client originated local model changes</h2>
 
+The client, whether online or not, can make model changes, such as
+adding a new project, adding a new story, etc.  This needs to be
+responsive but also cope with faults when synchronizing with the
+server.
 
-When communication is possible we do a Sync:
-1) Upload
-2) Download
+Suppose the local model change is to AddNewProject.
 
-The Upload comprises:
-1) ProjectList
-2) PendingQueue
+For any local model change, the following steps are done:
+<ol>
+<li>AsyncRecordRequest
+<li>SyncUpdateMemoryModel
+</ol>
 
-The Download comprises:
-1) ResolvedQueue
-2) Model for each project in ProjectList
+This means the change is seen immediately in the UI to the user.
 
-then we do a persist:
-update ProjectList, LastFetch, PendingQueue
+<h3>AsyncRecordRequest</h3>
 
-then we update the in-memory model according to LastFetch
-then we do a UI refresh
---
+The AsyncRecordRequest does not run on the UI thread.  It does the
+following when scheduled (on a serial dispatch queue):
 
-Whenever a user action is done, e.g. add task, add project, we
-1) Update ProjectList (only for new projects)
-2) Append request to the PendingQueue
-3) Update local model to assume the requested change was valid
-4) Kick-off a Sync.
+<ol>
+<li>UpdatePersistentData:
+<ul>
+<li>ProjectList - updated here for the new project request
+<li>PendingQueue - updated here to add the request
+"AddNewProject <ProjectOwnerEmail,ProjectId,SecurityToken>"
+</ul>
+
+<li>Do a SyncWithServer
+
+<li>Update the in-memory model to the persistent store
+
+<li>Trigger a UI update
+
+<li>Put a badge next to the sync tab if there is a pending queue
+   item that needs resolving
+</ol>
+
+<h4>SyncWithServer</h4>
+
+A SyncWithServer is a communication with the server which results in a
+new definitive model for a project, and resolution actions on pending
+requests.
+
+<p>
+First there is an Upload to the server, and then a Download from the
+server.
+<ul>
+<li>Upload comprises sending ProjectList and PendingQueue.
+<li>Download comprises PendingQueue and LastFetch data.
+</ul>
+
+After Download, we update our persistent store with PendingQueue
+and LastFetch.
+
+<h3>SyncUpdateMemoryModel</h3>
+This is directly updating the memory model for the given project and
+reloading the UI so it is shown.
+
+<h2>Resolving inconsistencies</h2>
+
+The PendingQueue has a UI view which presents it as well as actions
+to resolve the items.  The view is on its own tab, with a badge
+indicating how many unresolved items are present.
 
 @author Faisal Memon
-*/
+ */
 package com.pcc.SprintOverflow;
 

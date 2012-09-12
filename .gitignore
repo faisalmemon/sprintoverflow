@@ -9,3 +9,5 @@ server/SprintOverflow/war/WEB-INF/classes/com/pcc/SprintOverflow/AgileConstants$
 server/SprintOverflow/war/WEB-INF/classes/com/pcc/SprintOverflow/Request.class
 
 server/SprintOverflow/war/WEB-INF/classes/com/pcc/SprintOverflow/SprintOverflowServlet.class
+
+server/SprintOverflow/doc/*

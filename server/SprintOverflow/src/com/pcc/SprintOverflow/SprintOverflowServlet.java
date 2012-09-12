@@ -19,6 +19,16 @@ import javax.servlet.http.*;
 
 import com.google.gson.*;
 
+/**
+ * Main protocol handler class for SprintOverflow project.
+ * 
+ * This class is the point of service for iOS clients wishing to
+ * get updates from the server on the current state of a given project.
+ * 
+ * It implements the client-server protocol {@link com.pcc.SprintOverflow}
+ * @author faisal
+ *
+ */
 @SuppressWarnings("serial")
 public class SprintOverflowServlet extends HttpServlet {
 	

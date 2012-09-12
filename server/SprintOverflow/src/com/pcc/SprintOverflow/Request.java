@@ -44,23 +44,25 @@ package com.pcc.SprintOverflow;
  */
 public enum Request {
 	/** Mode selection
-	 * E.g.
-	 * ?Mode=Epic
+	 * <code> ?Mode=Epic </code> or
+	 * <code> ?Mode=Sprint </code> or
+	 * <code> ?Mode=Story </code> or
+	 * <code> ?Mode=Task </code> or
+	 * <code> ?Mode=CreateProject </code> or
+	 * <code> ?Mode=Version </code>
 	 */
 	Mode,
 	Epic, Sprint, Story, Task, CreateProject, Version,
 	
 	/** CreateProject mode
-	 * E.g.
-	 * ?Mode=CreateProject&ProjectOwnerEmail=john@example.com&ProjectId=df23&SecurityToken=jk3424jee 
+	 * <code>?Mode=CreateProject&ProjectOwnerEmail=john@example.com&ProjectId=df23&SecurityToken=jk3424jee</code> 
 	 */
 	ProjectOwnerEmail, 
 	ProjectId, 
 	SecurityToken,
 	
 	/** Version mode protocol
-	 * E.g.
-	 * ?Mode=Version&ClientVersion=1
+	 * <code> ?Mode=Version&ClientVersion=1 </code>
 	 */
 	ClientVersion,
 }
