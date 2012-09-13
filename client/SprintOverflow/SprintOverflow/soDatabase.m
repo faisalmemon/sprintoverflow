@@ -10,6 +10,8 @@
 #import "LocalModelCache.h"
 #import "soUtil.h"
 #import "soConstants.h"
+#import "ProjectList.h"
+#import "PendingQueue.h"
 
 const int soDatabase_fetchEpicData_NoFailureSimulation = 0;
 const int soDatabase_fetchEpicData_SimulateNetworkDown = 1;
@@ -193,6 +195,70 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     });
 }
 
+-(int)getNextFreePendingQueueItemNumber
+{
+    NSManagedObjectContext* mocp = [self managedObjectContext];
+    if (nil == mocp) {
+        return 0;
+    }
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"PendingQueue" inManagedObjectContext:mocp]; // Not NSLocalizedString
+    [request setEntity:entity];
+    
+    // Order the events by fetch date, most recent first.
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"itemNumber" ascending:NO]; // Not NSLocalizedString
+    
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+    [request setSortDescriptors:sortDescriptors];
+    
+    // Execute the fetch -- create a mutable copy of the result.
+    NSError *error = nil;
+    NSMutableArray *mutableFetchResults = [[mocp executeFetchRequest:request error:&error] mutableCopy];
+    if (mutableFetchResults == nil || 0 >= [mutableFetchResults count]) {
+        return 0;  // We have no items in the pending queue
+    } else {
+        PendingQueue *pq = [mutableFetchResults objectAtIndex:0];
+        return 1 + [[pq itemNumber] intValue];
+    }
+}
+
+-(BOOL) addToProjectListProjectOwner:(NSString*)project_owner_email WithID:(NSString*)project_id WithSecurityToken:(NSString*)security_token
+{
+    NSManagedObjectContext* mocp = [self managedObjectContext];
+    if (nil == mocp) {
+        return NO;
+    }
+
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"ProjectList" inManagedObjectContext:mocp]; // Not NSLocalizedString
+    [request setEntity:entity];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(projectOwnerEmail == %@) and (projectID == %@)", project_owner_email, project_id]; // Not NSLocalizedString
+    
+    [request setPredicate:predicate];
+    
+    // Execute the fetch -- create a mutable copy of the result.
+    NSError *error = nil;
+    NSMutableArray *mutableFetchResults = [[mocp executeFetchRequest:request error:&error] mutableCopy];
+    if (mutableFetchResults == nil || 0 >= [mutableFetchResults count]) {
+        // The project has not been seen
+        NSLog(@"The project %@ %@ has not been on the project interest list", project_owner_email, project_id);
+
+        ProjectList *projectList;
+        NSError *error = nil;
+        projectList = (ProjectList*)[NSEntityDescription insertNewObjectForEntityForName:@"ProjectList" inManagedObjectContext:mocp]; // Not NSLocalizedString
+        
+        [projectList setProjectOwnerEmail:project_owner_email];
+        [projectList setProjectID:project_id];
+        [projectList setSecurityToken:security_token];
+        
+        [mocp save:&error];
+        
+        return YES;  // newly added to the project interest list
+    }
+    return NO; // already on the project interest list    
+}
+
 +(BOOL)saveSecurityCodeForProjectID:(NSString*)project_id ForProjectOwnerEmail:(NSString*)project_owner_email WithToken:(NSString*)security_token SimulateFailure:(int)simulateFailure
 {
     soDatabase *instance = [soDatabase sharedInstance];
@@ -200,6 +266,12 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     if (nil == mocp) {
         return NO;
     }
+    
+    [instance addToProjectListProjectOwner:project_owner_email WithID:project_id WithSecurityToken:security_token];
+    
+    int nextFreePendingQueueItemNumber = [instance getNextFreePendingQueueItemNumber];
+    NSLog(@"next free pending queue item number is %d", nextFreePendingQueueItemNumber);
+    
     NSString *urlString =
     [NSString stringWithFormat:ksoCreateNewProjectUrl,
      [[soModel sharedInstance ] serverUrlPrefix],

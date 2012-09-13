@@ -46,6 +46,10 @@ data classes.
 
 <h1>Synchronization Model</h1>
 
+The following is a conceptual description of the Synchronization Model.
+Some actual implementation details are listed, but in other cases the
+steps shown are implemented by differently named methods.
+
 <h2>Client-side Persistent Data</h2>
 
 On the client side the following data is persisted on disk
@@ -75,11 +79,18 @@ Suppose the local model change is to AddNewProject.
 
 For any local model change, the following steps are done:
 <ol>
+<li>CalculateNewModel
 <li>AsyncRecordRequest
 <li>SyncUpdateMemoryModel
 </ol>
 
 This means the change is seen immediately in the UI to the user.
+
+<h3>CalculateNewModel</h3>
+This step merely works out what delta will be applied to the in-memory
+model.  For example, in the case of creating a new project, the
+SecurityToken value is computed.  In the case of adding a Task, it is
+the object that would represent the task that is established.
 
 <h3>AsyncRecordRequest</h3>
 
@@ -131,6 +142,17 @@ The PendingQueue has a UI view which presents it as well as actions
 to resolve the items.  The view is on its own tab, with a badge
 indicating how many unresolved items are present.
 
+<h1>Boot Model</h1>
+The Boot Model is how the system boots up.  Its design is derived from
+the Synchronization Model.  Upon boot,
+<ul>
+<li>Read in the ProjectList
+<li>For each project, read in the LastFetch data.  Build the data
+model from it.
+<li>For each project, read in the PendingQueue.  Augment the model
+from it.
+<li>Kick off a Synchronization in the background.
+</ul>
 @author Faisal Memon
  */
 package com.pcc.SprintOverflow;

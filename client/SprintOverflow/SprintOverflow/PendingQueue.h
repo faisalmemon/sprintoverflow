@@ -12,7 +12,7 @@
 
 @interface PendingQueue : NSManagedObject
 
-@property (nonatomic, retain) NSString * itemNumber;
+@property (nonatomic, retain) NSNumber * itemNumber;
 @property (nonatomic, retain) NSString * action;
 @property (nonatomic, retain) NSString * outcome;
 @property (nonatomic, retain) NSString * pendingUrl;

@@ -12,7 +12,7 @@
     </entity>
     <entity name="PendingQueue" representedClassName="PendingQueue" syncable="YES">
         <attribute name="action" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="itemNumber" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="itemNumber" optional="YES" attributeType="Integer 32" defaultValueString="0" indexed="YES" syncable="YES"/>
         <attribute name="outcome" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="pendingUrl" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
