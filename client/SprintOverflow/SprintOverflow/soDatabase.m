@@ -32,15 +32,31 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
 }
 
 - (void)handleError:(NSError *)error {
+    dispatch_queue_t currentQueue = dispatch_get_current_queue();
+    dispatch_queue_t mainQueue = dispatch_get_main_queue();
+    
     NSString *errorMessage = [error localizedDescription];
     UIAlertView *alertView =
     [[UIAlertView alloc] initWithTitle:
-                        NSLocalizedString(@"Error", @"Title for alert displayed when a system, download, server, or parse error occurs.")
+     NSLocalizedString(@"Error", @"Title for alert displayed when a system, download, server, or parse error occurs.")
                                message:errorMessage
                               delegate:nil
                      cancelButtonTitle:NSLocalizedString(@"OK", @"Acknowledge the alert message")
                      otherButtonTitles:nil];
-    [alertView show];
+
+    
+    __block BOOL didRunBlock = NO;
+    void (^blockInTheMainThread)(void) = ^(void) {
+        NSLog(@"on main thread!");
+        [alertView show];
+        didRunBlock = YES;
+    };
+    
+    if (currentQueue == mainQueue) {
+        blockInTheMainThread();
+    } else {
+        dispatch_sync(mainQueue, blockInTheMainThread);
+    }
 }
 
 /**
@@ -111,18 +127,13 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     NSError *error = nil;
     persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
     if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeUrl options:nil error:&error]) {
-		/*
-		 Replace this implementation with code to handle the error appropriately.
-		 
-		 abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
-		 
-		 Typical reasons for an error here include:
-		 * The persistent store is not accessible
-		 * The schema for the persistent store is incompatible with current managed object model
-		 Check the error message to determine what the actual problem was.
-		 */
+        NSDictionary *userInfo =
+        [NSDictionary dictionaryWithObject: NSLocalizedString(@"Local Persistent Store Problem.  This application has problems accessing its local data store.  The server will however have the official copy.  This can occur during faulty client or server upgrades or system failures.  The resolution is to uninstall and reinstall this application whilst good network access and battery levels are present.", @"Error message displayed when system could not access its internal local data store.")
+                                    forKey:NSLocalizedDescriptionKey];
+        NSError *error = [NSError errorWithDomain:@"ApplicationCoreData" code:SO_CORE_DATA_ERROR userInfo:userInfo]; // Not NSLocalizedString
+        [self handleError:error];
 		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-		abort();
+        persistentStoreCoordinator = nil;
     }
 	
     return persistentStoreCoordinator;
@@ -139,8 +150,10 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     if (coordinator != nil) {
         managedObjectContext = [[NSManagedObjectContext alloc] init];
         [managedObjectContext setPersistentStoreCoordinator: coordinator];
+        return managedObjectContext;
+
     }
-    return managedObjectContext;
+    return nil;
 }
 
 - (void)fetchEpicDataAsyncForUser:(NSString*)for_user
@@ -184,7 +197,9 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
 {
     soDatabase *instance = [soDatabase sharedInstance];
     NSManagedObjectContext* mocp = [instance managedObjectContext];
-    
+    if (nil == mocp) {
+        return NO;
+    }
     NSString *urlString =
     [NSString stringWithFormat:ksoCreateNewProjectUrl,
      [[soModel sharedInstance ] serverUrlPrefix],
@@ -225,6 +240,9 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
 {
     soDatabase *instance = [soDatabase sharedInstance];    
     NSManagedObjectContext* mocp = [instance managedObjectContext];
+    if (nil == mocp) {
+        return NO;
+    }
     soModel *model = [soModel sharedInstance];
     
     // Construct a Google Application Engine API request.
@@ -279,7 +297,7 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     soModel *theModel = [soModel sharedInstance];
     [theModel bootstrapFromServer:jsonString];
     
-    return TRUE;
+    return YES;
 
 }
 @end

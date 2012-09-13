@@ -23,6 +23,7 @@
 #define SO_SQLITE_DATABASE_NAME "sprintoverflow0.sqlite"
 #define SO_SERVER_PROTOCOL_QUEUE_NAME "com.perivalebluebell.SprintOverflow.0"
 #define SO_QUEUE_ERROR 1
+#define SO_CORE_DATA_ERROR 2
 
 extern const int soDatabase_fetchEpicData_NoFailureSimulation;
 extern const int soDatabase_fetchEpicData_SimulateNetworkDown;

@@ -131,4 +131,9 @@
     return securityCode;
 }
 
+-(void)dumpEpics
+{
+    // no implementation yet
+}
+
 @end
