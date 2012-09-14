@@ -24,6 +24,7 @@ NSString *const ksoClientVersion = @"ClientVersion";
 NSString *const ksoCreateProject = @"CreateProject";
 NSString *const ksoEpic = @"Epic";
 NSString *const ksoMode = @"Mode";
+NSString *const ksoPending =@"Pending";
 NSString *const ksoProjectId = @"ProjectId";
 NSString *const ksoProjectOwnerEmail = @"ProjectOwnerEmail";
 NSString *const ksoSecurityToken = @"SecurityToken";

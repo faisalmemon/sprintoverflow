@@ -34,6 +34,7 @@ extern const int soDatabase_saveSecurityToken_NoFailureSimulation;
     NSManagedObjectContext *managedObjectContext;
     NSPersistentStoreCoordinator *persistentStoreCoordinator;
     dispatch_queue_t queue;
+    NSMutableData   *receivedData;
 }
 
 - (void)fetchEpicDataAsyncForUser:(NSString*)for_user;

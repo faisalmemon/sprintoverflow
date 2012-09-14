@@ -65,4 +65,11 @@ public enum Request {
 	 * <code> ?Mode=Version&ClientVersion=1 </code>
 	 */
 	ClientVersion,
+	
+	/** Upload of PendingQueue protocol
+	 * <code> ?PendingItem=AddProject&ProjectOwnerEmail=john@example.com&ProjectId=df23&SecurityToken=jk3424jee</code>
+	 */
+	PendingItem,
+	AddProject,
+	Pending,
 }

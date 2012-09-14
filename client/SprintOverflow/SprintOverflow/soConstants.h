@@ -17,6 +17,7 @@ extern NSString *const ksoClientVersion;
 extern NSString *const ksoCreateProject;
 extern NSString *const ksoEpic;
 extern NSString *const ksoMode;
+extern NSString *const ksoPending;
 extern NSString *const ksoProjectId;
 extern NSString *const ksoProjectOwnerEmail;
 extern NSString *const ksoSecurityToken;

@@ -233,7 +233,7 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"ProjectList" inManagedObjectContext:mocp]; // Not NSLocalizedString
     [request setEntity:entity];
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(projectOwnerEmail == %@) and (projectID == %@)", project_owner_email, project_id]; // Not NSLocalizedString
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(securityToken == %@) and (projectOwnerEmail == %@)", security_token, project_owner_email]; // Not NSLocalizedString
     
     [request setPredicate:predicate];
     
@@ -259,9 +259,103 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     return NO; // already on the project interest list    
 }
 
+- (BOOL)pendingQueueNewProjectOwnerEmail:(NSString*)project_owner_email WithID:(NSString*)project_id WithSecurityToken:(NSString*)security_token
+{
+    NSManagedObjectContext* mocp = [self managedObjectContext];
+    if (nil == mocp) {
+        return NO;
+    }
+    int nextFreePendingQueueItemNumber = [self getNextFreePendingQueueItemNumber];
+    NSLog(@"next free pending queue item number is %d", nextFreePendingQueueItemNumber);
+    NSString *urlString =
+    [NSString stringWithFormat:ksoCreateNewProjectUrl,
+     [[soModel sharedInstance ] serverUrlPrefix],
+     [soUtil safeWebStringFromString:project_owner_email],
+     [soUtil safeWebStringFromString:project_id],
+     [soUtil safeWebStringFromString:security_token]];
+    PendingQueue *pendingQueue;
+    NSError *error = nil;
+    pendingQueue = (PendingQueue*)[NSEntityDescription insertNewObjectForEntityForName:@"PendingQueue" inManagedObjectContext:mocp]; // Not NSLocalizedString
+    
+    [pendingQueue setItemNumber:[NSNumber numberWithInt:nextFreePendingQueueItemNumber] ];
+    [pendingQueue setPendingUrl:urlString];
+    [pendingQueue setAction:NSLocalizedString(@"Add a new project", @"Description used when the user is reviewing what pending actions are present")];
+    [pendingQueue setOutcome:ksoPending];
+    
+    [mocp save:&error];
+    return YES;
+}
+
+-(BOOL)syncWithServer
+{
+    // In body data for the 'application/x-www-form-urlencoded' content type,
+    // form fields are separated by an ampersand. Note the absence of a
+    // leading ampersand.
+    NSString *bodyData = @"name=Jane+Doe&address=123+Main+St";
+    
+    NSMutableURLRequest *postRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"https://www.apple.com"]];
+    
+    // Set the request's content type to application/x-www-form-urlencoded
+    [postRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    
+    // Designate the request a POST request and specify its body data
+    [postRequest setHTTPMethod:@"POST"];
+    [postRequest setHTTPBody:[NSData dataWithBytes:[bodyData UTF8String] length:[bodyData length]]];
+     
+     // Initialize the NSURLConnection and proceed as usual
+    NSURLConnection *theConnection=[[NSURLConnection alloc] initWithRequest:postRequest delegate:self];
+    if (theConnection) {
+        // Create the NSMutableData to hold the received data.
+        // receivedData is an instance variable declared elsewhere.
+        receivedData = [NSMutableData data];
+    } else {
+        // Inform the user that the connection failed.
+    }
+
+    
+    return YES;
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+{
+    // This method is called when the server has determined that it
+    // has enough information to create the NSURLResponse.
+    
+    // It can be called multiple times, for example in the case of a
+    // redirect, so each time we reset the data.
+    
+    // receivedData is an instance variable declared elsewhere.
+    [receivedData setLength:0];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+    // Append the new data to receivedData.
+    // receivedData is an instance variable declared elsewhere.
+    [receivedData appendData:data];
+}
+
+- (void)connection:(NSURLConnection *)connection
+  didFailWithError:(NSError *)error
+{
+    // inform the user
+    NSLog(@"Connection failed! Error - %@ %@",
+          [error localizedDescription],
+          [[error userInfo] objectForKey:NSURLErrorFailingURLStringErrorKey]);
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    // do something with the data
+    // receivedData is declared as a method instance elsewhere
+    NSLog(@"Succeeded! Received %d bytes of data",[receivedData length]);
+}
+
+
 +(BOOL)saveSecurityCodeForProjectID:(NSString*)project_id ForProjectOwnerEmail:(NSString*)project_owner_email WithToken:(NSString*)security_token SimulateFailure:(int)simulateFailure
 {
     soDatabase *instance = [soDatabase sharedInstance];
+    
     NSManagedObjectContext* mocp = [instance managedObjectContext];
     if (nil == mocp) {
         return NO;
@@ -269,38 +363,11 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     
     [instance addToProjectListProjectOwner:project_owner_email WithID:project_id WithSecurityToken:security_token];
     
-    int nextFreePendingQueueItemNumber = [instance getNextFreePendingQueueItemNumber];
-    NSLog(@"next free pending queue item number is %d", nextFreePendingQueueItemNumber);
+    [instance pendingQueueNewProjectOwnerEmail:project_owner_email WithID:project_id WithSecurityToken:security_token];
     
-    NSString *urlString =
-    [NSString stringWithFormat:ksoCreateNewProjectUrl,
-     [[soModel sharedInstance ] serverUrlPrefix],
-     [soUtil safeWebStringFromString:project_owner_email],
-     [soUtil safeWebStringFromString:project_id],
-     [soUtil safeWebStringFromString:security_token]]; 
-    NSString *serverResponse = ksoServerNotRespondedYet;
+    [instance syncWithServer];
     
-    // Store the request in the local cache
-    LocalModelCache *cache;
-    NSError *error = nil;
-    cache = (LocalModelCache *)[NSEntityDescription insertNewObjectForEntityForName:@"LocalModelCache" inManagedObjectContext:mocp]; // Not NSLocalizedString
-    
-    [cache setUrl:urlString];
-    [cache setTime:[NSDate date]];
-    [cache setServerResponse:serverResponse];
-    [mocp save:&error];
-    NSLog(@"Saving a local model cache, error object is %@", error);
-
-    NSURL *url = [NSURL URLWithString:urlString];
-    NSString *response;
-    if (simulateFailure == soDatabase_saveSecurityToken_NoFailureSimulation) {
-        response = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
-    } else {
-        response = ksoServerDidNotRespond;
-    }
-    [cache setServerResponse:response];
-    [mocp save:&error];
-    return TRUE;
+    return YES;
 }
 
 +(BOOL)fetchEpicDataForUser:(NSString *)forUser
@@ -373,3 +440,35 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
 
 }
 @end
+
+#ifdef USE_OLD_CODE_FRAGMENT_TO_TALK_TO_SERVER
+NSString *urlString =
+[NSString stringWithFormat:ksoCreateNewProjectUrl,
+ [[soModel sharedInstance ] serverUrlPrefix],
+ [soUtil safeWebStringFromString:project_owner_email],
+ [soUtil safeWebStringFromString:project_id],
+ [soUtil safeWebStringFromString:security_token]];
+NSString *serverResponse = ksoServerNotRespondedYet;
+
+// Store the request in the local cache
+LocalModelCache *cache;
+NSError *error = nil;
+cache = (LocalModelCache *)[NSEntityDescription insertNewObjectForEntityForName:@"LocalModelCache" inManagedObjectContext:mocp]; // Not NSLocalizedString
+
+[cache setUrl:urlString];
+[cache setTime:[NSDate date]];
+[cache setServerResponse:serverResponse];
+[mocp save:&error];
+NSLog(@"Saving a local model cache, error object is %@", error);
+
+NSURL *url = [NSURL URLWithString:urlString];
+NSString *response;
+if (simulateFailure == soDatabase_saveSecurityToken_NoFailureSimulation) {
+    response = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
+} else {
+    response = ksoServerDidNotRespond;
+}
+[cache setServerResponse:response];
+[mocp save:&error];
+return TRUE;
+#endif

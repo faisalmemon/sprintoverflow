@@ -44,6 +44,41 @@ backing store is geared for massively horizontal queries.
 As a consequence, the source code has JPA annotations throughout for
 data classes.
 
+<h1>Global Keys</h1>
+The SprintOverflow tool needs to address competing needs: allow
+autonomous operation, allow sharing, allow flexibility.  So the key
+used to gain access to a project for the first time is the
+concatenation projectOwnerEmail:securityToken
+
+Your email address is globally unique otherwise you cannot get your
+own email.  However, when the email address is a group list, then
+multiple people can use the same address.  Therefore a unique-ifying
+securityToken is added.  This is designed to be easy to type in by not
+using ambiguous characters, or mixing case, or using symbols.  It is
+within a number space of 28**10 so it alone likely avoids a clash.
+
+To make it easy to manage, track and use projects you have permission
+to use, we have an additional id, the projectID.  This is chosen by
+the user.  We envisage this being able to be changed during the
+project.
+
+The security token is never chosen by the user, so low strength tokens
+cannot be introduced.
+
+A user can join a project using projectOwnerEmail:securityToken if
+that is the first project from that owner they have joined.
+Thereafter they can join subsequent projects by using either the
+projectOwnerEmail:securityToken or projectOwnerEmail:projectID
+
+<h2>Changing the Key</h2>
+The securityToken can never be changed.
+The projectID can be changed, and the server will tell any clients to
+amend to use the new projectID.
+The projectOwnerEmail can be changed if the new projectOwnerEmail
+concatenated with the securityToken is unique; its highly probable.
+Any clients with the old projectOwnerEmail are told to amend to use
+the new projectOwnerEmail.
+
 <h1>Synchronization Model</h1>
 
 The following is a conceptual description of the Synchronization Model.
@@ -60,7 +95,8 @@ On the client side the following data is persisted on disk
 	<li>may be null (no projects yet)
 	<li>may be projects not known on the server yet
 </ul>	
-<li>LastFetch<code>{JSON array of projects with e/s/t tree data}</code> for each project in the ProjectList
+<li>LastFetch<code>{JSON array of projects with e/s/t tree data}</code>
+for each project in the ProjectList
 <ul>
 	<li>may be null (never been online before)
 </ul>
