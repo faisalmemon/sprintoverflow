@@ -13,6 +13,13 @@
 
 @implementation soConstants
 
+NSString *const ksoOnePairJson = @"{\"%@\" : \"%@\"} ";
+NSString *const ksoTwoPairsJson = @"{\"%@\" : \"%@\", \"%@\" : \"%@\"} ";
+NSString *const ksoThreePairsJson = @"{\"%@\" : \"%@\", \"%@\" : \"%@\", \"%@\" : \"%@\"} ";
+NSString *const ksoFourPairsJson = @"{\"%@\" : \"%@\", \"%@\" : \"%@\", \"%@\" : \"%@\", \"%@\" : \"%@\"} ";
+
+NSString *const ksoTwoDictionaries = @"[ \"%@\" : %@, \"%@\" : %@ ]";
+
 /*
  These constants must match the symbolic names of the server-side enumerations in Request.java
  because that file, together with Response.java, is the official definition of the client-server
@@ -24,8 +31,10 @@ NSString *const ksoClientVersion = @"ClientVersion";
 NSString *const ksoCreateProject = @"CreateProject";
 NSString *const ksoEpic = @"Epic";
 NSString *const ksoMode = @"Mode";
-NSString *const ksoPending =@"Pending";
+NSString *const ksoPending = @"Pending";
+NSString *const ksoPendingQueue = @"PendingQueue";
 NSString *const ksoProjectId = @"ProjectId";
+NSString *const ksoProjectList = @"ProjectList";
 NSString *const ksoProjectOwnerEmail = @"ProjectOwnerEmail";
 NSString *const ksoSecurityToken = @"SecurityToken";
 NSString *const ksoSprint = @"Sprint";

@@ -40,9 +40,12 @@ public class SprintOverflowServlet extends HttpServlet {
 		resp.setContentType("application/json");
 		
 		String modeValue = req.getParameter(Request.Mode.toString());
+		String jsonValue = req.getParameter(Request.Json.toString());
 		
 		if (modeValue != null) {
 			handleModeQuery(modeValue, req, resp);
+		} else if (jsonValue != null) {
+			handleJsonPost(jsonValue, req, resp);
 		} else {
 			supplyDefaultResponse(resp);
 		}
@@ -89,6 +92,13 @@ public class SprintOverflowServlet extends HttpServlet {
 		}
 	}
 	
+	private void handleJsonPost(String jsonValue, HttpServletRequest req,
+			HttpServletResponse resp) throws IOException {
+		String returnString;
+
+		returnString = theGson.toJson(DefaultScenario.theDefaultScenario);
+		resp.getWriter().println(returnString);
+	}
 	private void supplyDefaultResponse(HttpServletResponse resp) throws IOException {
 		String returnString = theGson.toJson(JohnSmithDemo.JohnSmith);
 		resp.getWriter().println(returnString);

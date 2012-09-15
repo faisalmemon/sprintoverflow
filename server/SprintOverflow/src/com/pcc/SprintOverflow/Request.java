@@ -73,6 +73,11 @@ public enum Request {
 	AddProject,
 	Pending,
 	
+	/** Upload phase of Data Synchronization */
+	Json,
+	ProjectList,
+	PendingQueue,
+	
 	/** Debug */
 	PostTest,
 }

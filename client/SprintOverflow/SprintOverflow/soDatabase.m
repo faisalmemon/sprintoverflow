@@ -206,34 +206,50 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     });
 }
 
--(int)getNextFreePendingQueueItemNumber
+
+-(BOOL) addToProjectListProjectOwner:(NSString*)project_owner_email WithID:(NSString*)project_id WithSecurityToken:(NSString*)security_token
 {
-    NSManagedObjectContext* mocp = [self managedObjectContext];
-    if (nil == mocp) {
-        return 0;
-    }
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"PendingQueue" inManagedObjectContext:mocp]; // Not NSLocalizedString
-    [request setEntity:entity];
+    NSError *error;
+    soModel *model = [soModel sharedInstance];
+
+    NSString *addedProjectJson = [NSString stringWithFormat:
+                                  ksoThreePairsJson,
+                                  ksoProjectOwnerEmail, project_owner_email,
+                                  ksoProjectId, project_id,
+                                  ksoSecurityToken, security_token];
+
+    NSDictionary *dict = [soUtil DictionaryFromJson:addedProjectJson UpdateError:&error];
     
-    // Order the events by fetch date, most recent first.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"itemNumber" ascending:NO]; // Not NSLocalizedString
-    
-    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
-    [request setSortDescriptors:sortDescriptors];
-    
-    // Execute the fetch -- create a mutable copy of the result.
-    NSError *error = nil;
-    NSMutableArray *mutableFetchResults = [[mocp executeFetchRequest:request error:&error] mutableCopy];
-    if (mutableFetchResults == nil || 0 >= [mutableFetchResults count]) {
-        return 0;  // We have no items in the pending queue
+    if (!error) {
+        [[model projects] insertObject:dict atIndex:0];
+        return [self saveMemoryToDisk];
     } else {
-        PendingQueue *pq = [mutableFetchResults objectAtIndex:0];
-        return 1 + [[pq itemNumber] intValue];
+        return NO;
     }
 }
 
--(BOOL) addToProjectListProjectOwner:(NSString*)project_owner_email WithID:(NSString*)project_id WithSecurityToken:(NSString*)security_token
+- (BOOL)pendingQueueNewProjectOwnerEmail:(NSString*)project_owner_email WithID:(NSString*)project_id WithSecurityToken:(NSString*)security_token
+{
+    NSError *error;
+    soModel* model = [soModel sharedInstance];
+    
+    NSString *addedProjectJson = [NSString stringWithFormat:
+                                  ksoFourPairsJson,
+                                  ksoMode, ksoCreateProject,
+                                  ksoProjectOwnerEmail, project_owner_email,
+                                  ksoProjectId, project_id,
+                                  ksoSecurityToken, security_token];
+    
+    NSDictionary *dict = [soUtil DictionaryFromJson:addedProjectJson UpdateError:&error];
+    if (!error) {
+        [[model pendingQueue] insertObject:dict atIndex:[[model pendingQueue] count]];
+        return [self saveMemoryToDisk];
+    } else {
+        return NO;
+    }
+}
+
+-(BOOL)saveMemoryToDisk
 {
     NSError *error;
     soModel *model = [soModel sharedInstance];
@@ -242,69 +258,32 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
         return NO;
     }
 
-    NSString *addedProjectJson = [NSString stringWithFormat:
-                                  @"{\"%@\" : \"%@\", \"%@\" : \"%@\", \"%@\" : \"%@\"} ", // Not NSLocalizedString
-                                  ksoProjectOwnerEmail, project_owner_email,
-                                  ksoProjectId, project_id,
-                                  ksoSecurityToken, security_token];
-    
-
-    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:[NSData dataWithBytes:[addedProjectJson UTF8String] length:[addedProjectJson length]] options:NSJSONReadingMutableContainers error:&error];
-    
-    [[model projects] insertObject:dict atIndex:0];
-    
-    JsonModel *jsonModel;
-    jsonModel = (JsonModel*)[NSEntityDescription insertNewObjectForEntityForName:@"ProjectList" inManagedObjectContext:mocp]; // Not NSLocalizedString
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"JsonModel" inManagedObjectContext:mocp]; // Not NSLocalizedString
     [request setEntity:entity];
     NSMutableArray *mutableFetchResults = [[mocp executeFetchRequest:request error:&error] mutableCopy];
     
-    JsonModel *projectList;
+    JsonModel *jsonModel;
     
     if ([mutableFetchResults count] == 0) {
-        projectList = (JsonModel*)[NSEntityDescription insertNewObjectForEntityForName:@"JsonModel" inManagedObjectContext:mocp]; // Not NSLocalizedString
+        jsonModel = (JsonModel*)[NSEntityDescription insertNewObjectForEntityForName:@"JsonModel" inManagedObjectContext:mocp]; // Not NSLocalizedString
     } else {
-        projectList = [mutableFetchResults objectAtIndex:0];
+        jsonModel = [mutableFetchResults objectAtIndex:0];
     }
-
     
-    NSData *revisedProjectList = [NSJSONSerialization dataWithJSONObject:[model projects]options:NSJSONWritingPrettyPrinted error:&error];
+    NSData *revisedPendingQueue = [NSJSONSerialization dataWithJSONObject:[model pendingQueue] options:NSJSONWritingPrettyPrinted error:&error];
+    
+    NSString *revisedPendingQueueAsString = [NSString stringWithUTF8String:[revisedPendingQueue bytes]];
+    
+    [jsonModel setPendingQueue:revisedPendingQueueAsString];
+    
+    NSData *revisedProjectList = [NSJSONSerialization dataWithJSONObject:[model projects] options:NSJSONWritingPrettyPrinted error:&error];
     
     NSString *revisedProjectListAsString = [NSString stringWithUTF8String:[revisedProjectList bytes]];
-
-    [projectList setProjectList:revisedProjectListAsString];    
+    
+    [jsonModel setProjectList:revisedProjectListAsString];
     [mocp save:&error];
-    return YES;  // newly added to the project interest list
-    
-   
-}
-
-- (BOOL)pendingQueueNewProjectOwnerEmail:(NSString*)project_owner_email WithID:(NSString*)project_id WithSecurityToken:(NSString*)security_token
-{
-    NSManagedObjectContext* mocp = [self managedObjectContext];
-    if (nil == mocp) {
-        return NO;
-    }
-    int nextFreePendingQueueItemNumber = [self getNextFreePendingQueueItemNumber];
-    NSLog(@"next free pending queue item number is %d", nextFreePendingQueueItemNumber);
-    NSString *urlString =
-    [NSString stringWithFormat:ksoCreateNewProjectUrl,
-     [[soModel sharedInstance ] serverUrlPrefix],
-     [soUtil safeWebStringFromString:project_owner_email],
-     [soUtil safeWebStringFromString:project_id],
-     [soUtil safeWebStringFromString:security_token]];
-    PendingQueue *pendingQueue;
-    NSError *error = nil;
-    pendingQueue = (PendingQueue*)[NSEntityDescription insertNewObjectForEntityForName:@"PendingQueue" inManagedObjectContext:mocp]; // Not NSLocalizedString
-    
-    [pendingQueue setItemNumber:[NSNumber numberWithInt:nextFreePendingQueueItemNumber] ];
-    [pendingQueue setPendingUrl:urlString];
-    [pendingQueue setAction:NSLocalizedString(@"Add a new project", @"Description used when the user is reviewing what pending actions are present")];
-    [pendingQueue setOutcome:ksoPending];
-    
-    [mocp save:&error];
-    return YES;
+    return YES;  // newly updated the persistent store
 }
 
 -(BOOL)syncWithServer
@@ -322,16 +301,24 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     NSError *error = nil;
     NSMutableArray *mutableFetchResults = [[mocp executeFetchRequest:request error:&error] mutableCopy];
     
-    NSString *projectList = [mutableFetchResults objectAtIndex:0];
+    JsonModel *jsonModel;
+    if ([mutableFetchResults count] > 0) {
+        jsonModel = [mutableFetchResults objectAtIndex:0];
+    } else {
+        jsonModel = nil;
+    }
     
-    NSData *projectListAsJson = [NSJSONSerialization dataWithJSONObject:projectList options:NSJSONWritingPrettyPrinted error:&error];
+    /*
+     TODO Need to add null checking for jsonModel, and for its members, projectList, pendingQueue, so no
+     bad query goes to server.
+     */
+    NSString *jsonPacket = [NSString stringWithFormat:
+                                 ksoTwoDictionaries,
+                                 ksoProjectList, [jsonModel projectList],
+                                 ksoPendingQueue, [jsonModel pendingQueue]
+                                 ];
     
-    NSMutableArray *result = [NSJSONSerialization JSONObjectWithData:projectListAsJson options:NSJSONReadingMutableContainers error:&error];
-    
-    // In body data for the 'application/x-www-form-urlencoded' content type,
-    // form fields are separated by an ampersand. Note the absence of a
-    // leading ampersand or question mark.
-    NSString *bodyData = @"Mode=PostTest";
+    NSString *bodyData = [NSString stringWithFormat: @"Json=%@", [soUtil safeWebStringFromString:jsonPacket]];
   
     NSMutableURLRequest *postRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[model serverUrlPrefix]] cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:20];
 
@@ -341,8 +328,16 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     [postRequest setHTTPBody:[NSData dataWithBytes:[bodyData UTF8String] length:[bodyData length]]];
     
     void (^handler)(NSURLResponse *, NSData *, NSError *) = ^(NSURLResponse *resp, NSData *data, NSError *error) {
-        NSString* fromServer = [NSString stringWithUTF8String:[data bytes]];
-        NSLog(@"Server responded with %@", fromServer);
+        if (nil != error) {
+            if ([error code] == -1004) {
+                NSLog(@"Could not connect to the server (-1004)");
+            } else {
+                NSLog(@"Error connecting to server not seen before %d", [error code]);
+            }
+        } else {
+            NSString* fromServer = [NSString stringWithUTF8String:[data bytes]];
+            NSLog(@"Server responded with %@", fromServer);
+        }
     };
     [NSURLConnection sendAsynchronousRequest:postRequest queue:[self networkQueue] completionHandler:handler];
 
@@ -437,35 +432,3 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
 
 }
 @end
-
-#ifdef USE_OLD_CODE_FRAGMENT_TO_TALK_TO_SERVER
-NSString *urlString =
-[NSString stringWithFormat:ksoCreateNewProjectUrl,
- [[soModel sharedInstance ] serverUrlPrefix],
- [soUtil safeWebStringFromString:project_owner_email],
- [soUtil safeWebStringFromString:project_id],
- [soUtil safeWebStringFromString:security_token]];
-NSString *serverResponse = ksoServerNotRespondedYet;
-
-// Store the request in the local cache
-LocalModelCache *cache;
-NSError *error = nil;
-cache = (LocalModelCache *)[NSEntityDescription insertNewObjectForEntityForName:@"LocalModelCache" inManagedObjectContext:mocp]; // Not NSLocalizedString
-
-[cache setUrl:urlString];
-[cache setTime:[NSDate date]];
-[cache setServerResponse:serverResponse];
-[mocp save:&error];
-NSLog(@"Saving a local model cache, error object is %@", error);
-
-NSURL *url = [NSURL URLWithString:urlString];
-NSString *response;
-if (simulateFailure == soDatabase_saveSecurityToken_NoFailureSimulation) {
-    response = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
-} else {
-    response = ksoServerDidNotRespond;
-}
-[cache setServerResponse:response];
-[mocp save:&error];
-return TRUE;
-#endif

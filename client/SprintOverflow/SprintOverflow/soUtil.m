@@ -21,19 +21,29 @@
 
 + (NSString*)safeWebStringFromString:(NSString*)unsafeString
 {
-    CFStringRef preprocessedString =
-    CFURLCreateStringByReplacingPercentEscapesUsingEncoding(
-                                                            kCFAllocatorDefault,
-                                                            (__bridge CFStringRef)(unsafeString),
-                                                            CFSTR(""),
-                                                            kCFStringEncodingUTF8);
+    CFStringRef preprocessedString
+    = CFURLCreateStringByReplacingPercentEscapesUsingEncoding
+    (
+     kCFAllocatorDefault,
+     (__bridge CFStringRef)(unsafeString),
+     CFSTR(""),
+     kCFStringEncodingUTF8);
     
-    NSString * encodedString = (__bridge NSString *)CFURLCreateStringByAddingPercentEscapes(
-                                                                                   NULL,
-                                                                                   preprocessedString,
-                                                                                   NULL,
-                                                                                   (CFStringRef)@"!*'();:@&=+$,/?%#[]", // Not NSLocalizedString
-                                                                                   kCFStringEncodingUTF8 );
+    NSString * encodedString
+    = (__bridge NSString *)CFURLCreateStringByAddingPercentEscapes
+    (
+     NULL,
+     preprocessedString,
+     NULL,
+     (CFStringRef)@"!*'();:@&=+$,/?%#[]", // Not NSLocalizedString
+     kCFStringEncodingUTF8);
     return encodedString;
+}
+
+//+    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:[NSData dataWithBytes:[addedProjectJson UTF8String] length:[addedProjectJson length]] options:NSJSONReadingMutableContainers error:&error];
+
++ (NSDictionary*)DictionaryFromJson:(NSString*)json UpdateError:(NSError **)error_description
+{
+    return [NSJSONSerialization JSONObjectWithData:[NSData dataWithBytes:[json UTF8String] length:[json length]] options:NSJSONReadingMutableContainers error:error_description];
 }
 @end

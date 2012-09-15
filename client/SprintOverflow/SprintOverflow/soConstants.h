@@ -11,6 +11,15 @@
 @interface soConstants : NSObject
 
 /*
+ Convenience strings used to build up a JSON dictionary of key:values
+ */
+extern NSString *const ksoOnePairJson;
+extern NSString *const ksoTwoPairsJson;
+extern NSString *const ksoThreePairsJson;
+extern NSString *const ksoFourPairsJson;
+extern NSString *const ksoTwoDictionaries;
+
+/*
  Request Protocol
  */
 extern NSString *const ksoClientVersion;
@@ -18,13 +27,16 @@ extern NSString *const ksoCreateProject;
 extern NSString *const ksoEpic;
 extern NSString *const ksoMode;
 extern NSString *const ksoPending;
+extern NSString *const ksoPendingQueue;
 extern NSString *const ksoProjectId;
+extern NSString *const ksoProjectList;
 extern NSString *const ksoProjectOwnerEmail;
 extern NSString *const ksoSecurityToken;
 extern NSString *const ksoSprint;
 extern NSString *const ksoStory;
 extern NSString *const ksoTask;
 extern NSString *const ksoVersion;
+
 
 extern NSString *const ksoCreateNewProjectUrl;
 
