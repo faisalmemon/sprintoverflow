@@ -12,6 +12,7 @@
 #import "soConstants.h"
 #import "ProjectList.h"
 #import "PendingQueue.h"
+#import "JsonModel.h"
 
 const int soDatabase_fetchEpicData_NoFailureSimulation = 0;
 const int soDatabase_fetchEpicData_SimulateNetworkDown = 1;
@@ -79,10 +80,20 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     self = [super init];
     if (self) {
         [self dispatchQueue];
+        [self networkQueue];
     }
     return self;
 }
 
+-(NSOperationQueue*) networkQueue
+{
+    @synchronized(self) {
+        if (NULL == _networkQueue) {
+            _networkQueue = [NSOperationQueue new];
+        }
+    }
+    return _networkQueue;
+}
 - (dispatch_queue_t) dispatchQueue
 {
     @synchronized(self) {
@@ -178,10 +189,10 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
                      ForProjectOwnerEmail:(NSString *)project_owner_email
                                 WithToken:(NSString*)security_token
 {
-    [self saveAsyncSecurityCodeForProjectID:project_id ForProjectOwnerEmail:project_owner_email WithToken:security_token SimulateFailure:soDatabase_saveSecurityToken_NoFailureSimulation];
+    [self createNewProjectForProjectID:project_id ForProjectOwnerEmail:project_owner_email WithToken:security_token SimulateFailure:soDatabase_saveSecurityToken_NoFailureSimulation];
 }
 
-- (void)saveAsyncSecurityCodeForProjectID:(NSString*)project_id
+- (void)createNewProjectForProjectID:(NSString*)project_id
                      ForProjectOwnerEmail:(NSString *)project_owner_email
                                 WithToken:(NSString*)security_token
                           SimulateFailure:(int)simulate_failure
@@ -191,7 +202,7 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     }
     
     dispatch_async(queue, ^{
-        [soDatabase saveSecurityCodeForProjectID:project_id ForProjectOwnerEmail:project_owner_email WithToken:security_token SimulateFailure:simulate_failure];
+        [soDatabase createNewProject:project_id ForProjectOwnerEmail:project_owner_email WithToken:security_token SimulateFailure:simulate_failure];
     });
 }
 
@@ -224,39 +235,49 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
 
 -(BOOL) addToProjectListProjectOwner:(NSString*)project_owner_email WithID:(NSString*)project_id WithSecurityToken:(NSString*)security_token
 {
+    NSError *error;
+    soModel *model = [soModel sharedInstance];
     NSManagedObjectContext* mocp = [self managedObjectContext];
     if (nil == mocp) {
         return NO;
     }
 
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"ProjectList" inManagedObjectContext:mocp]; // Not NSLocalizedString
-    [request setEntity:entity];
+    NSString *addedProjectJson = [NSString stringWithFormat:
+                                  @"{\"%@\" : \"%@\", \"%@\" : \"%@\", \"%@\" : \"%@\"} ", // Not NSLocalizedString
+                                  ksoProjectOwnerEmail, project_owner_email,
+                                  ksoProjectId, project_id,
+                                  ksoSecurityToken, security_token];
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(securityToken == %@) and (projectOwnerEmail == %@)", security_token, project_owner_email]; // Not NSLocalizedString
-    
-    [request setPredicate:predicate];
-    
-    // Execute the fetch -- create a mutable copy of the result.
-    NSError *error = nil;
-    NSMutableArray *mutableFetchResults = [[mocp executeFetchRequest:request error:&error] mutableCopy];
-    if (mutableFetchResults == nil || 0 >= [mutableFetchResults count]) {
-        // The project has not been seen
-        NSLog(@"The project %@ %@ has not been on the project interest list", project_owner_email, project_id);
 
-        ProjectList *projectList;
-        NSError *error = nil;
-        projectList = (ProjectList*)[NSEntityDescription insertNewObjectForEntityForName:@"ProjectList" inManagedObjectContext:mocp]; // Not NSLocalizedString
-        
-        [projectList setProjectOwnerEmail:project_owner_email];
-        [projectList setProjectID:project_id];
-        [projectList setSecurityToken:security_token];
-        
-        [mocp save:&error];
-        
-        return YES;  // newly added to the project interest list
+    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:[NSData dataWithBytes:[addedProjectJson UTF8String] length:[addedProjectJson length]] options:NSJSONReadingMutableContainers error:&error];
+    
+    [[model projects] insertObject:dict atIndex:0];
+    
+    JsonModel *jsonModel;
+    jsonModel = (JsonModel*)[NSEntityDescription insertNewObjectForEntityForName:@"ProjectList" inManagedObjectContext:mocp]; // Not NSLocalizedString
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"JsonModel" inManagedObjectContext:mocp]; // Not NSLocalizedString
+    [request setEntity:entity];
+    NSMutableArray *mutableFetchResults = [[mocp executeFetchRequest:request error:&error] mutableCopy];
+    
+    JsonModel *projectList;
+    
+    if ([mutableFetchResults count] == 0) {
+        projectList = (JsonModel*)[NSEntityDescription insertNewObjectForEntityForName:@"JsonModel" inManagedObjectContext:mocp]; // Not NSLocalizedString
+    } else {
+        projectList = [mutableFetchResults objectAtIndex:0];
     }
-    return NO; // already on the project interest list    
+
+    
+    NSData *revisedProjectList = [NSJSONSerialization dataWithJSONObject:[model projects]options:NSJSONWritingPrettyPrinted error:&error];
+    
+    NSString *revisedProjectListAsString = [NSString stringWithUTF8String:[revisedProjectList bytes]];
+
+    [projectList setProjectList:revisedProjectListAsString];    
+    [mocp save:&error];
+    return YES;  // newly added to the project interest list
+    
+   
 }
 
 - (BOOL)pendingQueueNewProjectOwnerEmail:(NSString*)project_owner_email WithID:(NSString*)project_id WithSecurityToken:(NSString*)security_token
@@ -288,71 +309,47 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
 
 -(BOOL)syncWithServer
 {
+    soModel *model = [soModel sharedInstance];
+    NSManagedObjectContext* mocp = [self managedObjectContext];
+    if (nil == mocp) {
+        return NO;
+    }
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"JsonModel" inManagedObjectContext:mocp]; // Not NSLocalizedString
+    [request setEntity:entity];
+    
+    NSError *error = nil;
+    NSMutableArray *mutableFetchResults = [[mocp executeFetchRequest:request error:&error] mutableCopy];
+    
+    NSString *projectList = [mutableFetchResults objectAtIndex:0];
+    
+    NSData *projectListAsJson = [NSJSONSerialization dataWithJSONObject:projectList options:NSJSONWritingPrettyPrinted error:&error];
+    
+    NSMutableArray *result = [NSJSONSerialization JSONObjectWithData:projectListAsJson options:NSJSONReadingMutableContainers error:&error];
+    
     // In body data for the 'application/x-www-form-urlencoded' content type,
     // form fields are separated by an ampersand. Note the absence of a
-    // leading ampersand.
-    NSString *bodyData = @"name=Jane+Doe&address=123+Main+St";
-    
-    NSMutableURLRequest *postRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"https://www.apple.com"]];
-    
-    // Set the request's content type to application/x-www-form-urlencoded
+    // leading ampersand or question mark.
+    NSString *bodyData = @"Mode=PostTest";
+  
+    NSMutableURLRequest *postRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[model serverUrlPrefix]] cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:20];
+
     [postRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     
-    // Designate the request a POST request and specify its body data
     [postRequest setHTTPMethod:@"POST"];
     [postRequest setHTTPBody:[NSData dataWithBytes:[bodyData UTF8String] length:[bodyData length]]];
-     
-     // Initialize the NSURLConnection and proceed as usual
-    NSURLConnection *theConnection=[[NSURLConnection alloc] initWithRequest:postRequest delegate:self];
-    if (theConnection) {
-        // Create the NSMutableData to hold the received data.
-        // receivedData is an instance variable declared elsewhere.
-        receivedData = [NSMutableData data];
-    } else {
-        // Inform the user that the connection failed.
-    }
-
     
+    void (^handler)(NSURLResponse *, NSData *, NSError *) = ^(NSURLResponse *resp, NSData *data, NSError *error) {
+        NSString* fromServer = [NSString stringWithUTF8String:[data bytes]];
+        NSLog(@"Server responded with %@", fromServer);
+    };
+    [NSURLConnection sendAsynchronousRequest:postRequest queue:[self networkQueue] completionHandler:handler];
+
     return YES;
 }
 
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
-    // This method is called when the server has determined that it
-    // has enough information to create the NSURLResponse.
-    
-    // It can be called multiple times, for example in the case of a
-    // redirect, so each time we reset the data.
-    
-    // receivedData is an instance variable declared elsewhere.
-    [receivedData setLength:0];
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
-    // Append the new data to receivedData.
-    // receivedData is an instance variable declared elsewhere.
-    [receivedData appendData:data];
-}
-
-- (void)connection:(NSURLConnection *)connection
-  didFailWithError:(NSError *)error
-{
-    // inform the user
-    NSLog(@"Connection failed! Error - %@ %@",
-          [error localizedDescription],
-          [[error userInfo] objectForKey:NSURLErrorFailingURLStringErrorKey]);
-}
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-    // do something with the data
-    // receivedData is declared as a method instance elsewhere
-    NSLog(@"Succeeded! Received %d bytes of data",[receivedData length]);
-}
-
-
-+(BOOL)saveSecurityCodeForProjectID:(NSString*)project_id ForProjectOwnerEmail:(NSString*)project_owner_email WithToken:(NSString*)security_token SimulateFailure:(int)simulateFailure
++(BOOL)createNewProject:(NSString*)project_id ForProjectOwnerEmail:(NSString*)project_owner_email WithToken:(NSString*)security_token SimulateFailure:(int)simulateFailure
 {
     soDatabase *instance = [soDatabase sharedInstance];
     

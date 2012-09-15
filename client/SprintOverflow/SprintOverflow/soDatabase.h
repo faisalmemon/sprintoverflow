@@ -34,6 +34,7 @@ extern const int soDatabase_saveSecurityToken_NoFailureSimulation;
     NSManagedObjectContext *managedObjectContext;
     NSPersistentStoreCoordinator *persistentStoreCoordinator;
     dispatch_queue_t queue;
+    NSOperationQueue *_networkQueue;
     NSMutableData   *receivedData;
 }
 
@@ -46,7 +47,7 @@ extern const int soDatabase_saveSecurityToken_NoFailureSimulation;
                      ForProjectOwnerEmail:(NSString *)project_owner_email
                                 WithToken:(NSString*)security_token;
 
-- (void)saveAsyncSecurityCodeForProjectID:(NSString*)project_id
+- (void)createNewProjectForProjectID:(NSString*)project_id
                      ForProjectOwnerEmail:(NSString *)project_owner_email
                                 WithToken:(NSString*)security_token
                           SimulateFailure:(int)simulate_failure;

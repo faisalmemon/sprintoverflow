@@ -15,6 +15,7 @@ import java.io.IOException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
 import com.google.gson.*;
@@ -46,6 +47,12 @@ public class SprintOverflowServlet extends HttpServlet {
 			supplyDefaultResponse(resp);
 		}
 	}
+	
+	public void doPost(HttpServletRequest request,
+			HttpServletResponse response)
+					throws ServletException, IOException {
+		doGet(request, response);
+	}
 
 	private void handleModeQuery(String modeValue, HttpServletRequest req,
 			HttpServletResponse resp) throws IOException {
@@ -76,6 +83,9 @@ public class SprintOverflowServlet extends HttpServlet {
 				returnString = theGson.toJson(Response.VersionNotSupported);
 				resp.getWriter().println(returnString);
 			}
+		} else if (modeValue.equals(Request.PostTest.toString())) {
+			returnString = "GoodPostTest";
+			resp.getWriter().println(returnString);
 		}
 	}
 	

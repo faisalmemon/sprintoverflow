@@ -28,15 +28,22 @@
     BOOL isDebug;
     BOOL isLocalServer;
     NSMutableArray *_projects;
+    NSMutableArray *_lastFetch;
+    NSMutableArray *_pendingQueue;
     NSMutableArray *_epics;
     NSMutableDictionary *_securityCodes;
 }
+
+@property (nonatomic, retain) NSMutableArray *projects;
+@property (nonatomic, retain) NSMutableArray *lastFetch;
+@property (nonatomic, retain) NSMutableArray *pendingQueue;
+
+
 
 + (id)sharedInstance;
 -(NSString*)serverUrlPrefix;
 -(BOOL)isDebug;
 -(void)bootstrapFromServer:(NSString *)modelAsJsonString;
--(void)addProject:(soProject *)project;
 -(void)addEpic:(soEpic*)epic toProject:(soProject*)project;
 -(void)dumpEpics;
 -(NSString*)securityCodeFromId:(NSString*)project_id FromOwner:(NSString*)owner_email;

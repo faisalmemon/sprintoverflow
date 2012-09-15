@@ -17,6 +17,7 @@
 #import "soProject.h"
 
 @implementation soModel
+@synthesize projects=_projects, lastFetch=_lastFetch, pendingQueue=_pendingQueue;
 
 + (id)sharedInstance
 {
@@ -27,6 +28,7 @@
         if (master == nil) {
             master = [self new];
             [master initFromEnvironment];
+            [master createPlaceholders];
         }
             
     }
@@ -53,6 +55,13 @@
     }
 }
 
+-(void)createPlaceholders
+{
+    _pendingQueue = [[NSMutableArray alloc]init];
+    _projects = [[NSMutableArray alloc]init];
+    _lastFetch = [[NSMutableArray alloc]init];
+}
+
 -(NSString*)serverUrlPrefix
 {
     if (isLocalServer) {
@@ -76,14 +85,7 @@
     [project addEpic:epic];
 }
 
--(void)addProject:(soProject *)project
-{
-    if (_projects == nil) {
-        _projects = [NSMutableArray new];
-    }
-    
-    [_projects addObject:project];
-}
+
 
 -(void)bootstrapFromServer:(NSString *)modelAsJsonString
 {
@@ -125,7 +127,7 @@
     if (nil == securityCode) {
         securityCode = [soSecurity createSecurityCode];
         soDatabase* database = [soDatabase sharedInstance];
-        [database saveAsyncSecurityCodeForProjectID:project_id ForProjectOwnerEmail:owner_email WithToken:securityCode SimulateFailure:soDatabase_saveSecurityToken_NoFailureSimulation];
+        [database createNewProjectForProjectID:project_id ForProjectOwnerEmail:owner_email WithToken:securityCode SimulateFailure:soDatabase_saveSecurityToken_NoFailureSimulation];
         [_securityCodes setObject:securityCode forKey:key];
     }
     return securityCode;
