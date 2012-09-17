@@ -60,6 +60,7 @@ public enum Request {
 	ProjectOwnerEmail, 
 	ProjectId, 
 	SecurityToken,
+	Token,
 	
 	/** Version mode protocol
 	 * <code> ?Mode=Version&ClientVersion=1 </code>
@@ -76,7 +77,8 @@ public enum Request {
 	/** Upload phase of Data Synchronization */
 	Json,
 	ProjectList,
-	PendingQueue,
+	LastFetch,
+	NextPush,
 	
 	/** Debug */
 	PostTest,

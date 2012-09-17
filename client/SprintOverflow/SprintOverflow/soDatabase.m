@@ -85,7 +85,7 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     return self;
 }
 
--(NSOperationQueue*) networkQueue
+-(NSOperationQueue*)networkQueue
 {
     @synchronized(self) {
         if (NULL == _networkQueue) {
@@ -94,7 +94,7 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     }
     return _networkQueue;
 }
-- (dispatch_queue_t) dispatchQueue
+- (dispatch_queue_t)dispatchQueue
 {
     @synchronized(self) {
         if (NULL == queue) {
@@ -124,6 +124,26 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     return managedObjectModel;
 }
 
+- (void)persistentStoreProblem
+{
+    NSDictionary *userInfo =
+    [NSDictionary dictionaryWithObject: NSLocalizedString(@"Local Persistent Store Problem.  This application has problems accessing its local data store.  The server will however have the official copy.  This can occur during faulty client or server upgrades or system failures.  The resolution is to uninstall and reinstall this application whilst good network access and battery levels are present.", @"Error message displayed when system could not access its internal local data store.")
+                                forKey:NSLocalizedDescriptionKey];
+    NSError *error = [NSError errorWithDomain:@"ApplicationCoreData" code:SO_CORE_DATA_ERROR userInfo:userInfo]; // Not NSLocalizedString
+    [self handleError:error];
+    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+}
+
+- (void)jsonProblem
+{
+    NSDictionary *userInfo =
+    [NSDictionary dictionaryWithObject: NSLocalizedString(@"Json Serialization Problem.  This application has problems performaing a data conversion.  This can occur when unacceptable character codes are seen as passed in from the user interface but were not validated, or caught, due to a bug in this program.  The resolution is to revise any recent text data updates.", @"Error message displayed when system could not process text from the user unexpectedly.")
+                                forKey:NSLocalizedDescriptionKey];
+    NSError *error = [NSError errorWithDomain:@"ApplicationJsonSerialization" code:SO_JSON_ERROR userInfo:userInfo]; // Not NSLocalizedString
+    [self handleError:error];
+    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+}
+
 /**
  Returns the persistent store coordinator for the application.
  If the coordinator doesn't already exist, it is created and the application's store added to it.
@@ -140,12 +160,7 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     NSError *error = nil;
     persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
     if (![persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeUrl options:nil error:&error]) {
-        NSDictionary *userInfo =
-        [NSDictionary dictionaryWithObject: NSLocalizedString(@"Local Persistent Store Problem.  This application has problems accessing its local data store.  The server will however have the official copy.  This can occur during faulty client or server upgrades or system failures.  The resolution is to uninstall and reinstall this application whilst good network access and battery levels are present.", @"Error message displayed when system could not access its internal local data store.")
-                                    forKey:NSLocalizedDescriptionKey];
-        NSError *error = [NSError errorWithDomain:@"ApplicationCoreData" code:SO_CORE_DATA_ERROR userInfo:userInfo]; // Not NSLocalizedString
-        [self handleError:error];
-		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        [self persistentStoreProblem];
         persistentStoreCoordinator = nil;
     }
 	
@@ -206,29 +221,7 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     });
 }
 
-
--(BOOL) addToProjectListProjectOwner:(NSString*)project_owner_email WithID:(NSString*)project_id WithSecurityToken:(NSString*)security_token
-{
-    NSError *error;
-    soModel *model = [soModel sharedInstance];
-
-    NSString *addedProjectJson = [NSString stringWithFormat:
-                                  ksoThreePairsJson,
-                                  ksoProjectOwnerEmail, project_owner_email,
-                                  ksoProjectId, project_id,
-                                  ksoSecurityToken, security_token];
-
-    NSDictionary *dict = [soUtil DictionaryFromJson:addedProjectJson UpdateError:&error];
-    
-    if (!error) {
-        [[model projects] insertObject:dict atIndex:0];
-        return [self saveMemoryToDisk];
-    } else {
-        return NO;
-    }
-}
-
-- (BOOL)pendingQueueNewProjectOwnerEmail:(NSString*)project_owner_email WithID:(NSString*)project_id WithSecurityToken:(NSString*)security_token
+- (BOOL)updateNextPushWithNewProjectOwnerEmail:(NSString*)project_owner_email WithID:(NSString*)project_id WithSecurityToken:(NSString*)security_token
 {
     NSError *error;
     soModel* model = [soModel sharedInstance];
@@ -242,7 +235,7 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     
     NSDictionary *dict = [soUtil DictionaryFromJson:addedProjectJson UpdateError:&error];
     if (!error) {
-        [[model pendingQueue] insertObject:dict atIndex:[[model pendingQueue] count]];
+        [[model nextPush] insertObject:dict atIndex:[[model projects] count]];
         return [self saveMemoryToDisk];
     } else {
         return NO;
@@ -251,7 +244,7 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
 
 -(BOOL)saveMemoryToDisk
 {
-    NSError *error;
+    NSError *error = nil;
     soModel *model = [soModel sharedInstance];
     NSManagedObjectContext* mocp = [self managedObjectContext];
     if (nil == mocp) {
@@ -262,7 +255,10 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"JsonModel" inManagedObjectContext:mocp]; // Not NSLocalizedString
     [request setEntity:entity];
     NSMutableArray *mutableFetchResults = [[mocp executeFetchRequest:request error:&error] mutableCopy];
-    
+    if (nil != error) {
+        [self persistentStoreProblem];
+        return NO;
+    }
     JsonModel *jsonModel;
     
     if ([mutableFetchResults count] == 0) {
@@ -271,18 +267,30 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
         jsonModel = [mutableFetchResults objectAtIndex:0];
     }
     
-    NSData *revisedPendingQueue = [NSJSONSerialization dataWithJSONObject:[model pendingQueue] options:NSJSONWritingPrettyPrinted error:&error];
-    
-    NSString *revisedPendingQueueAsString = [NSString stringWithUTF8String:[revisedPendingQueue bytes]];
-    
-    [jsonModel setPendingQueue:revisedPendingQueueAsString];
-    
     NSData *revisedProjectList = [NSJSONSerialization dataWithJSONObject:[model projects] options:NSJSONWritingPrettyPrinted error:&error];
     
     NSString *revisedProjectListAsString = [NSString stringWithUTF8String:[revisedProjectList bytes]];
     
     [jsonModel setProjectList:revisedProjectListAsString];
+    
+    NSData *lastFetchData = [NSJSONSerialization dataWithJSONObject:[model lastFetch] options:NSJSONWritingPrettyPrinted error:&error];
+    
+    NSString *lastFetchDataAsString = [NSString stringWithUTF8String:[lastFetchData bytes]];
+    
+    [jsonModel setLastFetch:lastFetchDataAsString];
+
+    NSData *nextPushData = [NSJSONSerialization dataWithJSONObject:[model nextPush] options:NSJSONWritingPrettyPrinted error:&error];
+    
+    NSString *nextPushDataAsString = [NSString stringWithUTF8String:[nextPushData bytes]];
+    
+    [jsonModel setNextPush:nextPushDataAsString];
+
+    
     [mocp save:&error];
+    if (nil != error) {
+        [self persistentStoreProblem];
+        return NO;
+    }
     return YES;  // newly updated the persistent store
 }
 
@@ -300,6 +308,10 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     
     NSError *error = nil;
     NSMutableArray *mutableFetchResults = [[mocp executeFetchRequest:request error:&error] mutableCopy];
+    if (nil != error) {
+        [self persistentStoreProblem];
+        return NO;
+    }
     
     JsonModel *jsonModel;
     if ([mutableFetchResults count] > 0) {
@@ -308,14 +320,11 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
         jsonModel = nil;
     }
     
-    /*
-     TODO Need to add null checking for jsonModel, and for its members, projectList, pendingQueue, so no
-     bad query goes to server.
-     */
     NSString *jsonPacket = [NSString stringWithFormat:
-                                 ksoTwoDictionaries,
+                                 ksoThreeDictionaries,
                                  ksoProjectList, [jsonModel projectList],
-                                 ksoPendingQueue, [jsonModel pendingQueue]
+                                 ksoLastFetch, [jsonModel lastFetch],
+                                 ksoNextPush, [jsonModel nextPush]
                                  ];
     
     NSString *bodyData = [NSString stringWithFormat: @"Json=%@", [soUtil safeWebStringFromString:jsonPacket]];
@@ -353,10 +362,7 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
         return NO;
     }
     
-    [instance addToProjectListProjectOwner:project_owner_email WithID:project_id WithSecurityToken:security_token];
-    
-    [instance pendingQueueNewProjectOwnerEmail:project_owner_email WithID:project_id WithSecurityToken:security_token];
-    
+    [instance updateNextPushWithNewProjectOwnerEmail:project_owner_email WithID:project_id WithSecurityToken:security_token];
     [instance syncWithServer];
     
     return YES;

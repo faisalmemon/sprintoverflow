@@ -17,7 +17,7 @@
 #import "soProject.h"
 
 @implementation soModel
-@synthesize projects=_projects, lastFetch=_lastFetch, pendingQueue=_pendingQueue;
+@synthesize projects=_projects, lastFetch=_lastFetch, nextPush=_nextPush, resolveList=_resolveList;
 
 + (id)sharedInstance
 {
@@ -57,9 +57,11 @@
 
 -(void)createPlaceholders
 {
-    _pendingQueue = [[NSMutableArray alloc]init];
+    _nextPush = [[NSMutableArray alloc]init];
     _projects = [[NSMutableArray alloc]init];
     _lastFetch = [[NSMutableArray alloc]init];
+    _resolveList = [[NSMutableArray alloc]init];
+
 }
 
 -(NSString*)serverUrlPrefix

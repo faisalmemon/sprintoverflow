@@ -18,6 +18,7 @@ extern NSString *const ksoTwoPairsJson;
 extern NSString *const ksoThreePairsJson;
 extern NSString *const ksoFourPairsJson;
 extern NSString *const ksoTwoDictionaries;
+extern NSString *const ksoThreeDictionaries;
 
 /*
  Request Protocol
@@ -25,9 +26,10 @@ extern NSString *const ksoTwoDictionaries;
 extern NSString *const ksoClientVersion;
 extern NSString *const ksoCreateProject;
 extern NSString *const ksoEpic;
+extern NSString *const ksoLastFetch;
 extern NSString *const ksoMode;
+extern NSString *const ksoNextPush;
 extern NSString *const ksoPending;
-extern NSString *const ksoPendingQueue;
 extern NSString *const ksoProjectId;
 extern NSString *const ksoProjectList;
 extern NSString *const ksoProjectOwnerEmail;
@@ -35,6 +37,8 @@ extern NSString *const ksoSecurityToken;
 extern NSString *const ksoSprint;
 extern NSString *const ksoStory;
 extern NSString *const ksoTask;
+extern NSString *const ksoToken;
+
 extern NSString *const ksoVersion;
 
 

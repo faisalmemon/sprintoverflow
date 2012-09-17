@@ -19,6 +19,8 @@ NSString *const ksoThreePairsJson = @"{\"%@\" : \"%@\", \"%@\" : \"%@\", \"%@\" 
 NSString *const ksoFourPairsJson = @"{\"%@\" : \"%@\", \"%@\" : \"%@\", \"%@\" : \"%@\", \"%@\" : \"%@\"} ";
 
 NSString *const ksoTwoDictionaries = @"[ \"%@\" : %@, \"%@\" : %@ ]";
+NSString *const ksoThreeDictionaries = @"[ \"%@\" : %@, \"%@\" : %@, \"%@\" : %@ ]";
+
 
 /*
  These constants must match the symbolic names of the server-side enumerations in Request.java
@@ -30,7 +32,9 @@ NSString *const ksoTwoDictionaries = @"[ \"%@\" : %@, \"%@\" : %@ ]";
 NSString *const ksoClientVersion = @"ClientVersion";
 NSString *const ksoCreateProject = @"CreateProject";
 NSString *const ksoEpic = @"Epic";
+NSString *const ksoLastFetch = @"LastFetch";
 NSString *const ksoMode = @"Mode";
+NSString *const ksoNextPush = @"NextPush";
 NSString *const ksoPending = @"Pending";
 NSString *const ksoPendingQueue = @"PendingQueue";
 NSString *const ksoProjectId = @"ProjectId";
@@ -40,6 +44,7 @@ NSString *const ksoSecurityToken = @"SecurityToken";
 NSString *const ksoSprint = @"Sprint";
 NSString *const ksoStory = @"Story";
 NSString *const ksoTask = @"Task";
+NSString *const ksoToken = @"Token";
 NSString *const ksoVersion = @"Version";
 
 // Creating a new project request url is built from the above constants and should be kept in sync with them

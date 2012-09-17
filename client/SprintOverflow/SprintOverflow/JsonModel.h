@@ -2,7 +2,7 @@
 //  JsonModel.h
 //  SprintOverflow
 //
-//  Created by Faisal Memon on 15/09/2012.
+//  Created by Faisal Memon on 17/09/2012.
 //
 //
 
@@ -14,6 +14,7 @@
 
 @property (nonatomic, retain) NSString * projectList;
 @property (nonatomic, retain) NSString * lastFetch;
-@property (nonatomic, retain) NSString * pendingQueue;
+@property (nonatomic, retain) NSString * nextPush;
+@property (nonatomic, retain) NSString * resolveList;
 
 @end

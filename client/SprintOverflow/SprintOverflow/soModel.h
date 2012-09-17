@@ -27,16 +27,17 @@
 @interface soModel : NSObject {
     BOOL isDebug;
     BOOL isLocalServer;
-    NSMutableArray *_projects;
     NSMutableArray *_lastFetch;
-    NSMutableArray *_pendingQueue;
-    NSMutableArray *_epics;
+    NSMutableArray *_nextPush;
+    NSMutableArray *_resolveList;
     NSMutableDictionary *_securityCodes;
 }
 
 @property (nonatomic, retain) NSMutableArray *projects;
 @property (nonatomic, retain) NSMutableArray *lastFetch;
-@property (nonatomic, retain) NSMutableArray *pendingQueue;
+@property (nonatomic, retain) NSMutableArray *nextPush;
+@property (nonatomic, retain) NSMutableArray *resolveList;
+
 
 
 
