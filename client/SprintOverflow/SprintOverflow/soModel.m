@@ -149,13 +149,18 @@
     NSDictionary *dict = [soUtil DictionaryFromJson:addedProjectJson UpdateError:&error];
     if (!error) {
         [[self nextPush] insertObject:dict atIndex:[[self nextPush] count]];
-        [[soDatabase sharedInstance] updateAgainstDiskAndServerSimulatingError:soDatabase_NoFailureSimulation];
+        [soDatabase updateAgainstDiskAndServerSimulatingError:soDatabase_NoFailureSimulation];
         return YES;
     } else {
         return NO;
     }
 }
 
+- (BOOL)bootstrap
+{
+    [soDatabase uploadFromDiskAndServerSimulatingError:soDatabase_fetchEpicData_NoFailureSimulation];
+    return YES;
+}
 
 -(void)dumpEpics
 {

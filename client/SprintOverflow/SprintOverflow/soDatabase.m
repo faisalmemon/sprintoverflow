@@ -179,38 +179,31 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     return nil;
 }
 
-- (void)updateAgainstDiskAndServerSimulatingError:(int)simulate_failure
++ (void)updateAgainstDiskAndServerSimulatingError:(int)simulate_failure
 {
-    if (![self dispatchQueue]) {
+    soDatabase* instance = [soDatabase sharedInstance];
+    if (![instance dispatchQueue]) {
         return;
     }
     
-    dispatch_async(queue, ^{
+    dispatch_async([instance dispatchQueue], ^{
         [soDatabase queuedUpdateDiskAndServerSimulatingFailure:simulate_failure];
     });
 
 }
 
-- (void)createNewProjectWithProjectOwnerEmail:(NSString*)project_owner_email
-                                WithProjectID:(NSString*)project_id
-                                    WithToken:(NSString*)security_token
++ (void)uploadFromDiskAndServerSimulatingError:(int)simulate_failure
 {
-    [self createNewProjectWithProjectOwnerEmail:project_owner_email WithProjectID:project_id WithToken:security_token SimulateFailure:soDatabase_fetchEpicData_NoFailureSimulation];
-}
-
-- (void)createNewProjectWithProjectOwnerEmail:(NSString*)project_owner_email
-                                WithProjectID:(NSString*)project_id
-                                    WithToken:(NSString*)security_token
-                              SimulateFailure:(int)simulate_failure
-{
-    if (![self dispatchQueue]) {
+    soDatabase* instance = [soDatabase sharedInstance];
+    if (![instance dispatchQueue]) {
         return;
     }
     
-    dispatch_async(queue, ^{
-        [soDatabase createNewProject:project_id ForProjectOwnerEmail:project_owner_email WithToken:security_token SimulateFailure:simulate_failure];
+    dispatch_async([instance dispatchQueue], ^{
+        [soDatabase queuedUploadFromDiskAndServerSimulatingError:simulate_failure];
     });
 }
+
 
 -(BOOL)saveMemoryToDisk
 {
@@ -258,25 +251,58 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     return YES;  // newly updated the persistent store
 }
 
-- (BOOL)updateNextPushWithNewProjectOwnerEmail:(NSString*)project_owner_email WithID:(NSString*)project_id WithSecurityToken:(NSString*)security_token
+-(BOOL)loadMemoryFromDisk
 {
-    NSError *error;
-    soModel* model = [soModel sharedInstance];
-    
-    NSString *addedProjectJson = [NSString stringWithFormat:
-                                  ksoFourPairsJson,
-                                  ksoMode, ksoCreateProject,
-                                  ksoProjectOwnerEmail, project_owner_email,
-                                  ksoProjectId, project_id,
-                                  ksoSecurityToken, security_token];
-    
-    NSDictionary *dict = [soUtil DictionaryFromJson:addedProjectJson UpdateError:&error];
-    if (!error) {
-        [[model nextPush] insertObject:dict atIndex:[[model nextPush] count]];
-        return [self saveMemoryToDisk];
-    } else {
+    NSError *error = nil;
+    soModel *model = [soModel sharedInstance];
+    NSManagedObjectContext* mocp = [self managedObjectContext];
+    if (nil == mocp) {
         return NO;
     }
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"JsonModel" inManagedObjectContext:mocp]; // Not NSLocalizedString
+    [request setEntity:entity];
+    NSMutableArray *mutableFetchResults = [[mocp executeFetchRequest:request error:&error] mutableCopy];
+    if (nil != error) {
+        [self persistentStoreProblem];
+        return NO;
+    }
+    JsonModel *jsonModel;
+    
+    if ([mutableFetchResults count] == 0) {
+        return YES; // There is no information on disk (first time use)
+    } else {
+        jsonModel = [mutableFetchResults objectAtIndex:0];
+    }
+    
+    if (nil == [jsonModel lastFetch]) {
+        [jsonModel setLastFetch:ksoEmptyList];
+    }
+    if (nil == [jsonModel nextPush]) {
+        [jsonModel setNextPush:ksoEmptyList];
+    }
+    if (nil == [jsonModel resolveList]) {
+        [jsonModel setResolveList:ksoEmptyList];
+    }
+    
+    [model setLastFetch:[soUtil ArrayFromJson:[jsonModel lastFetch] UpdateError:&error]];
+    if (nil != error) {
+        [self jsonProblem];
+        return NO;
+    }
+    [model setNextPush:[soUtil ArrayFromJson:[jsonModel nextPush] UpdateError:&error]];
+    if (nil != error) {
+        [self jsonProblem];
+        return NO;
+    }
+    [model setResolveList:[soUtil ArrayFromJson:[jsonModel resolveList] UpdateError:&error]];
+    if (nil != error) {
+        [self jsonProblem];
+        return NO;
+    }
+
+    return YES;
 }
 
 -(BOOL)syncWithServer
@@ -353,19 +379,21 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     return YES;
 }
 
-+(BOOL)createNewProject:(NSString*)project_id ForProjectOwnerEmail:(NSString*)project_owner_email WithToken:(NSString*)security_token SimulateFailure:(int)simulateFailure
++ (BOOL)queuedUploadFromDiskAndServerSimulatingError:(int)simulate_failure
 {
     soDatabase *instance = [soDatabase sharedInstance];
     
-    NSManagedObjectContext* mocp = [instance managedObjectContext];
-    if (nil == mocp) {
+    if (soDatabase_NoFailureSimulation != simulate_failure) {
         return NO;
     }
-    
-    [instance updateNextPushWithNewProjectOwnerEmail:project_owner_email WithID:project_id WithSecurityToken:security_token];
-    [instance syncWithServer];
-    
+    if (![instance loadMemoryFromDisk]) {
+        return NO;
+    }
+    if (![instance syncWithServer]) {
+        return NO;
+    }
     return YES;
 }
+
 
 @end

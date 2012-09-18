@@ -24,8 +24,9 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    database = [soDatabase sharedInstance];
-    // TODO FAISALMEMON add code to pull latest server data
+    
+    self->model = [soModel sharedInstance];
+    [model bootstrap];
     
     self.uinavControllerWelcome = [[UINavigationController alloc]init];
     

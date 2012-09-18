@@ -37,13 +37,11 @@
 @property (nonatomic, retain) NSMutableArray *nextPush;
 @property (nonatomic, retain) NSMutableArray *resolveList;
 
-
-
-
 + (id)sharedInstance;
+- (BOOL)bootstrap;
 -(NSString*)serverUrlPrefix;
 -(BOOL)isDebug;
--(void)bootstrapFromServer:(NSString *)modelAsJsonString;
+
 -(void)addEpic:(soEpic*)epic toProject:(soProject*)project;
 -(void)dumpEpics;
 -(NSString*)securityCodeFromId:(NSString*)project_id FromOwner:(NSString*)owner_email;

@@ -13,6 +13,7 @@
 
 @implementation soConstants
 
+NSString *const ksoEmptyList = @"[]";
 NSString *const ksoOnePairJson = @"{\"%@\" : \"%@\"} ";
 NSString *const ksoTwoPairsJson = @"{\"%@\" : \"%@\", \"%@\" : \"%@\"} ";
 NSString *const ksoThreePairsJson = @"{\"%@\" : \"%@\", \"%@\" : \"%@\", \"%@\" : \"%@\"} ";

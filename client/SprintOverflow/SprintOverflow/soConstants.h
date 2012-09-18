@@ -13,6 +13,7 @@
 /*
  Convenience strings used to build up a JSON dictionary of key:values
  */
+extern NSString *const ksoEmptyList;
 extern NSString *const ksoOnePairJson;
 extern NSString *const ksoTwoPairsJson;
 extern NSString *const ksoThreePairsJson;

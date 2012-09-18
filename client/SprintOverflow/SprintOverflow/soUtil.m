@@ -46,4 +46,10 @@
 {
     return [NSJSONSerialization JSONObjectWithData:[NSData dataWithBytes:[json UTF8String] length:[json length]] options:NSJSONReadingMutableContainers error:error_description];
 }
+
++ (NSMutableArray*)ArrayFromJson:(NSString*)json UpdateError:(NSError **)error_description
+{
+    return [NSJSONSerialization JSONObjectWithData:[NSData dataWithBytes:[json UTF8String] length:[json length]] options:NSJSONReadingMutableContainers error:error_description];
+}
+
 @end

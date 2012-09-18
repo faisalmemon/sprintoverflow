@@ -43,14 +43,7 @@ extern const int soDatabase_saveSecurityToken_NoFailureSimulation;
 
 + (id)                                  sharedInstance;
 
-- (void)updateAgainstDiskAndServerSimulatingError:(int)simulate_failure;
++ (void)updateAgainstDiskAndServerSimulatingError:(int)simulate_failure;
++ (void)uploadFromDiskAndServerSimulatingError:(int)simulate_failure;
 
-- (void)createNewProjectWithProjectOwnerEmail:(NSString*)project_owner_email
-                                WithProjectID:(NSString*)project_id
-                                    WithToken:(NSString*)security_token;
-
-- (void)createNewProjectWithProjectOwnerEmail:(NSString*)project_owner_email
-                                WithProjectID:(NSString*)project_id
-                                    WithToken:(NSString*)security_token
-                              SimulateFailure:(int)simulate_failure;
 @end
