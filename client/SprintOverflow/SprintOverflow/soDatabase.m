@@ -62,6 +62,7 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     }
 }
 
+
 - (void)dispatchQueueProblem
 {
     NSDictionary *userInfo =
@@ -254,6 +255,10 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
 -(BOOL)loadMemoryFromDisk
 {
     NSError *error = nil;
+    NSError *error1 = nil;
+    NSError *error2 = nil;
+    NSError *error3 = nil;
+
     soModel *model = [soModel sharedInstance];
     NSManagedObjectContext* mocp = [self managedObjectContext];
     if (nil == mocp) {
@@ -286,23 +291,43 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
         [jsonModel setResolveList:ksoEmptyList];
     }
     
-    [model setLastFetch:[soUtil ArrayFromJson:[jsonModel lastFetch] UpdateError:&error]];
-    if (nil != error) {
+    
+    [model setAltogetherLastFetch:[soUtil ArrayFromJson:[jsonModel lastFetch] UpdateError:&error1]
+                         NextPush:[soUtil ArrayFromJson:[jsonModel nextPush] UpdateError:&error2]
+                      ResolveList:[soUtil ArrayFromJson:[jsonModel resolveList] UpdateError:&error3]];
+    if (nil != error1 || nil != error2 || nil != error3) {
         [self jsonProblem];
         return NO;
     }
-    [model setNextPush:[soUtil ArrayFromJson:[jsonModel nextPush] UpdateError:&error]];
-    if (nil != error) {
-        [self jsonProblem];
-        return NO;
-    }
-    [model setResolveList:[soUtil ArrayFromJson:[jsonModel resolveList] UpdateError:&error]];
-    if (nil != error) {
-        [self jsonProblem];
-        return NO;
-    }
-
+    
     return YES;
+}
+
++ (void)processServerResponse:(NSURLResponse*)resp WithData:(NSData*)data WithError:(NSError*)error
+{
+    if (nil != error) {
+        if ([error code] == -1004) {
+            NSLog(@"Could not connect to the server (-1004)");
+        } else {
+            NSLog(@"Error connecting to server not seen before %d", [error code]);
+        }
+        return;
+    }
+    
+    NSString* fromServer = [NSString stringWithUTF8String:[data bytes]];
+    NSLog(@"Server responded with %@", fromServer);
+    
+    NSError *errorConvertingServerResponse = nil;
+    NSDictionary *dict = [soUtil DictionaryFromJson:fromServer UpdateError:&errorConvertingServerResponse];
+    if (nil != error) {
+        NSLog(@"Could not decode server response, got error %@", [errorConvertingServerResponse localizedDescription]);
+        return;
+    }
+    soModel *model = [soModel sharedInstance];
+    NSMutableArray *lastFetch = [dict objectForKey:ksoLastFetch];
+    NSMutableArray *resolveList = [dict objectForKey:ksoResolveList];
+    [model setAltogetherLastFetch:lastFetch NextPush:lastFetch ResolveList:resolveList];
+    [[soDatabase sharedInstance]saveMemoryToDisk];    
 }
 
 -(BOOL)syncWithServer
@@ -346,17 +371,9 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     [postRequest setHTTPMethod:@"POST"];
     [postRequest setHTTPBody:[NSData dataWithBytes:[bodyData UTF8String] length:[bodyData length]]];
     
-    void (^handler)(NSURLResponse *, NSData *, NSError *) = ^(NSURLResponse *resp, NSData *data, NSError *error) {
-        if (nil != error) {
-            if ([error code] == -1004) {
-                NSLog(@"Could not connect to the server (-1004)");
-            } else {
-                NSLog(@"Error connecting to server not seen before %d", [error code]);
-            }
-        } else {
-            NSString* fromServer = [NSString stringWithUTF8String:[data bytes]];
-            NSLog(@"Server responded with %@", fromServer);
-        }
+    void (^handler)(NSURLResponse *, NSData *, NSError *) =
+    ^(NSURLResponse *resp, NSData *data, NSError *error) {
+        [soDatabase processServerResponse:resp WithData:data WithError:error];
     };
     [NSURLConnection sendAsynchronousRequest:postRequest queue:[self networkQueue] completionHandler:handler];
 

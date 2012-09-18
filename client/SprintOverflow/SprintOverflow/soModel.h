@@ -25,17 +25,34 @@
  */
 
 @interface soModel : NSObject {
-    BOOL isDebug;
-    BOOL isLocalServer;
-    NSMutableArray *_lastFetch;
-    NSMutableArray *_nextPush;
-    NSMutableArray *_resolveList;
-    NSMutableDictionary *_securityCodes;
+    /*
+     Threading methodology:
+     All variables are marked with:
+        MT = Multi-thread access
+        ST = Single-thread access
+     
+     Any access to a group of MT variables must all be locked.
+     Any derived data calculation during an update must be locked, e.g. size of structure might change
+     
+     There is only one lock used, the @self, since the soModel is a system-wide singleton.
+     */
+    BOOL isDebug; // ST
+    BOOL isLocalServer;// ST
+    NSMutableArray *_lastFetch;  // MT
+    NSMutableArray *_nextPush; // MT
+    NSMutableArray *_resolveList;  // MT
+    NSMutableDictionary *_securityCodes; // ST
 }
 
 @property (nonatomic, retain) NSMutableArray *lastFetch;
 @property (nonatomic, retain) NSMutableArray *nextPush;
 @property (nonatomic, retain) NSMutableArray *resolveList;
+- (void)setAltogetherLastFetch:(NSMutableArray *)lastFetch
+                      NextPush:(NSMutableArray *)nextPush
+                   ResolveList:(NSMutableArray *)resolveList;
+- (void)getAltogetherLastFetch:(NSMutableArray **)lastFetch
+                      NextPush:(NSMutableArray **)nextPush
+                   ResolveList:(NSMutableArray **)resolveList;
 
 + (id)sharedInstance;
 - (BOOL)bootstrap;

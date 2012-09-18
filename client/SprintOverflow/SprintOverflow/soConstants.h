@@ -33,6 +33,7 @@ extern NSString *const ksoNextPush;
 extern NSString *const ksoPending;
 extern NSString *const ksoProjectId;
 extern NSString *const ksoProjectOwnerEmail;
+extern NSString *const ksoResolveList;
 extern NSString *const ksoSecurityToken;
 extern NSString *const ksoSprint;
 extern NSString *const ksoStory;

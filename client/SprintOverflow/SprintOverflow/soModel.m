@@ -19,7 +19,88 @@
 #import "soUtil.h"
 
 @implementation soModel
-@synthesize lastFetch=_lastFetch, nextPush=_nextPush, resolveList=_resolveList;
+
+- (NSMutableArray *)lastFetch
+{
+    @synchronized(self) {
+        return _lastFetch;
+    }
+}
+
+- (NSMutableArray *)nextPush
+{
+    @synchronized(self) {
+        return _nextPush;
+    }
+    
+}
+
+- (NSMutableArray *)resolveList
+{
+    @synchronized(self) {
+        return _resolveList;
+    }
+    
+}
+
+- (void)setLastFetch:(NSMutableArray *)lastFetch
+{
+    if (nil == lastFetch) {
+        NSLog(@"nil data entering lastFetch");
+    }
+    @synchronized(self) {
+        _lastFetch = lastFetch;
+    }
+}
+
+- (void)setNextPush:(NSMutableArray *)nextPush
+{
+    if (nil == nextPush) {
+        NSLog(@"nil data entering nextPush");
+    }
+    @synchronized(self) {
+        _nextPush = nextPush;
+    }
+}
+
+- (void)setResolveList:(NSMutableArray *)resolveList
+{
+    if (nil == resolveList) {
+        NSLog(@"nil data entering resolveList");
+    }
+    @synchronized(self) {
+        _resolveList = resolveList;
+    }
+}
+
+- (void)setAltogetherLastFetch:(NSMutableArray *)lastFetch
+                      NextPush:(NSMutableArray *)nextPush
+                   ResolveList:(NSMutableArray *)resolveList
+{
+    if (nil == lastFetch || nil == nextPush || nil == resolveList) {
+        NSLog(@"nil data entering model");
+    }
+    @synchronized(self) {
+        _lastFetch = lastFetch;
+        _nextPush = nextPush;
+        _resolveList = resolveList;
+    }
+}
+
+- (void)getAltogetherLastFetch:(NSMutableArray **)lastFetch
+                      NextPush:(NSMutableArray **)nextPush
+                   ResolveList:(NSMutableArray **)resolveList
+{
+    if (lastFetch == nil || nextPush == nil || resolveList == nil) {
+        NSLog(@"getAltogether passed nil args unexpectedly.  Ignoring");
+        return;
+    }
+    @synchronized(self) {
+        *lastFetch = _lastFetch;
+        *nextPush = _nextPush;
+        *resolveList = _resolveList;
+    }
+}
 
 + (id)sharedInstance
 {
@@ -148,7 +229,9 @@
     
     NSDictionary *dict = [soUtil DictionaryFromJson:addedProjectJson UpdateError:&error];
     if (!error) {
-        [[self nextPush] insertObject:dict atIndex:[[self nextPush] count]];
+        @synchronized(self) {
+            [[self nextPush] insertObject:dict atIndex:[[self nextPush] count]];
+        }
         [soDatabase updateAgainstDiskAndServerSimulatingError:soDatabase_NoFailureSimulation];
         return YES;
     } else {
