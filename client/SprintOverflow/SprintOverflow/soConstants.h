@@ -20,6 +20,8 @@ extern NSString *const ksoThreePairsJson;
 extern NSString *const ksoFourPairsJson;
 extern NSString *const ksoTwoDictionaries;
 extern NSString *const ksoThreeDictionaries;
+extern NSString *const ksoDictTwoArray;
+extern NSString *const ksoDictThreeArray;
 
 /*
  Request Protocol

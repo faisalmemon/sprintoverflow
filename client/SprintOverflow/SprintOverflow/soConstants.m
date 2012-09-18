@@ -22,6 +22,10 @@ NSString *const ksoFourPairsJson = @"{\"%@\" : \"%@\", \"%@\" : \"%@\", \"%@\" :
 NSString *const ksoTwoDictionaries = @"[ \"%@\" : %@, \"%@\" : %@ ]";
 NSString *const ksoThreeDictionaries = @"[ \"%@\" : %@, \"%@\" : %@, \"%@\" : %@ ]";
 
+NSString *const ksoDictTwoArray = @"{ \"%@\" : %@, \"%@\" : %@ }";
+NSString *const ksoDictThreeArray = @"{ \"%@\" : %@, \"%@\" : %@, \"%@\" : %@ }";
+
+
 
 /*
  These constants must match the symbolic names of the server-side enumerations in Request.java

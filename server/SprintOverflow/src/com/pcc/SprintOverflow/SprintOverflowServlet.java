@@ -95,7 +95,12 @@ public class SprintOverflowServlet extends HttpServlet {
 	private void handleJsonPost(String jsonValue, HttpServletRequest req,
 			HttpServletResponse resp) throws IOException {
 		String returnString;
-
+		/*
+		need to do something like
+		http://code.google.com/p/google-gson/source/browse/trunk/extras/src/main/java/com/google/gson/extras/examples/rawcollections/RawCollectionsExample.java
+		to get the passed in string into a proper data structure
+		which we can process
+		*/
 		returnString = theGson.toJson(DefaultScenario.theDefaultScenario);
 		resp.getWriter().println(returnString);
 	}

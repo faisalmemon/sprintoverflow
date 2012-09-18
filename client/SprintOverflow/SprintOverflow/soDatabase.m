@@ -326,6 +326,10 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     soModel *model = [soModel sharedInstance];
     NSMutableArray *lastFetch = [dict objectForKey:ksoLastFetch];
     NSMutableArray *resolveList = [dict objectForKey:ksoResolveList];
+    if (lastFetch == nil || resolveList == nil) {
+        NSLog(@"Server did not supply an answer for lastFetch and resolveList; ignoring server");
+        return;
+    }
     [model setAltogetherLastFetch:lastFetch NextPush:lastFetch ResolveList:resolveList];
     [[soDatabase sharedInstance]saveMemoryToDisk];    
 }
@@ -357,7 +361,7 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     }
     
     NSString *jsonPacket = [NSString stringWithFormat:
-                                 ksoTwoDictionaries,
+                                 ksoDictTwoArray,
                                  ksoLastFetch, [jsonModel lastFetch],
                                  ksoNextPush, [jsonModel nextPush]
                                  ];
