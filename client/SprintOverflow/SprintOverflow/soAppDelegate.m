@@ -25,7 +25,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     database = [soDatabase sharedInstance];
-    [database fetchEpicDataAsyncForUser:@"Faisal23" SimulateFailure:soDatabase_fetchEpicData_NoFailureSimulation]; // Not NSLocalizedString
+    // TODO FAISALMEMON add code to pull latest server data
     
     self.uinavControllerWelcome = [[UINavigationController alloc]init];
     

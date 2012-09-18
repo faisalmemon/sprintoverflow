@@ -38,7 +38,6 @@ NSString *const ksoNextPush = @"NextPush";
 NSString *const ksoPending = @"Pending";
 NSString *const ksoPendingQueue = @"PendingQueue";
 NSString *const ksoProjectId = @"ProjectId";
-NSString *const ksoProjectList = @"ProjectList";
 NSString *const ksoProjectOwnerEmail = @"ProjectOwnerEmail";
 NSString *const ksoSecurityToken = @"SecurityToken";
 NSString *const ksoSprint = @"Sprint";

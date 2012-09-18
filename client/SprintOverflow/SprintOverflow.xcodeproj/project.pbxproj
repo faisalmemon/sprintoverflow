@@ -11,7 +11,7 @@
 		3A253AF11602304C004AE0D0 /* LocalModelCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A253AF01602304C004AE0D0 /* LocalModelCache.m */; };
 		3A253AF41602304C004AE0D0 /* ProjectList.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A253AF31602304C004AE0D0 /* ProjectList.m */; };
 		3A253AFA16028BB0004AE0D0 /* PendingQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A253AF916028BB0004AE0D0 /* PendingQueue.m */; };
-		3A253B1016076D71004AE0D0 /* JsonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A253B0F16076D70004AE0D0 /* JsonModel.m */; };
+		3A253B1316088558004AE0D0 /* JsonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A253B1216088558004AE0D0 /* JsonModel.m */; };
 		3A2BDA0615AC3B5E00AB3F7B /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3A2BDA0415AC3B5E00AB3F7B /* Model.xcdatamodeld */; };
 		3A30C02015EE671300FE937C /* soCreateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A30C01E15EE671300FE937C /* soCreateViewController.m */; };
 		3A30C02515EECBE100FE937C /* soSecurity.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A30C02415EECBE100FE937C /* soSecurity.m */; };
@@ -59,8 +59,8 @@
 		3A253AF31602304C004AE0D0 /* ProjectList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectList.m; sourceTree = "<group>"; };
 		3A253AF816028BB0004AE0D0 /* PendingQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PendingQueue.h; sourceTree = "<group>"; };
 		3A253AF916028BB0004AE0D0 /* PendingQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PendingQueue.m; sourceTree = "<group>"; };
-		3A253B0E16076D70004AE0D0 /* JsonModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JsonModel.h; sourceTree = "<group>"; };
-		3A253B0F16076D70004AE0D0 /* JsonModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JsonModel.m; sourceTree = "<group>"; };
+		3A253B1116088557004AE0D0 /* JsonModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JsonModel.h; sourceTree = "<group>"; };
+		3A253B1216088558004AE0D0 /* JsonModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JsonModel.m; sourceTree = "<group>"; };
 		3A2BDA0515AC3B5E00AB3F7B /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		3A30C01D15EE671300FE937C /* soCreateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soCreateViewController.h; sourceTree = "<group>"; };
 		3A30C01E15EE671300FE937C /* soCreateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soCreateViewController.m; sourceTree = "<group>"; };
@@ -191,9 +191,9 @@
 			children = (
 				3A253AF816028BB0004AE0D0 /* PendingQueue.h */,
 				3A253AF916028BB0004AE0D0 /* PendingQueue.m */,
-				3A253B0E16076D70004AE0D0 /* JsonModel.h */,
-				3A253B0F16076D70004AE0D0 /* JsonModel.m */,
 				3A2BDA0415AC3B5E00AB3F7B /* Model.xcdatamodeld */,
+				3A253B1116088557004AE0D0 /* JsonModel.h */,
+				3A253B1216088558004AE0D0 /* JsonModel.m */,
 				3A253AF21602304C004AE0D0 /* ProjectList.h */,
 				3A253AF31602304C004AE0D0 /* ProjectList.m */,
 				3A253AEF1602304C004AE0D0 /* LocalModelCache.h */,
@@ -351,7 +351,7 @@
 				3A253AF11602304C004AE0D0 /* LocalModelCache.m in Sources */,
 				3A253AF41602304C004AE0D0 /* ProjectList.m in Sources */,
 				3A253AFA16028BB0004AE0D0 /* PendingQueue.m in Sources */,
-				3A253B1016076D71004AE0D0 /* JsonModel.m in Sources */,
+				3A253B1316088558004AE0D0 /* JsonModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

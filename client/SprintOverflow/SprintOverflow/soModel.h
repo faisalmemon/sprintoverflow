@@ -33,7 +33,6 @@
     NSMutableDictionary *_securityCodes;
 }
 
-@property (nonatomic, retain) NSMutableArray *projects;
 @property (nonatomic, retain) NSMutableArray *lastFetch;
 @property (nonatomic, retain) NSMutableArray *nextPush;
 @property (nonatomic, retain) NSMutableArray *resolveList;

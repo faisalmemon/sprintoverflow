@@ -3,7 +3,6 @@
     <entity name="JsonModel" representedClassName="JsonModel" syncable="YES">
         <attribute name="lastFetch" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="nextPush" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="projectList" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="resolveList" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="LastFetch" representedClassName="LastFetch" syncable="YES">
@@ -28,10 +27,10 @@
         <attribute name="securityToken" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="LocalModelCache" positionX="0" positionY="0" width="128" height="88"/>
-        <element name="ProjectList" positionX="0" positionY="18" width="128" height="88"/>
-        <element name="LastFetch" positionX="160" positionY="192" width="128" height="90"/>
-        <element name="PendingQueue" positionX="160" positionY="192" width="128" height="105"/>
-        <element name="JsonModel" positionX="160" positionY="192" width="128" height="105"/>
+        <element name="LocalModelCache" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="ProjectList" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="LastFetch" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="PendingQueue" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="JsonModel" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

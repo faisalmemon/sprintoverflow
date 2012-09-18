@@ -17,7 +17,7 @@
 #import "soProject.h"
 
 @implementation soModel
-@synthesize projects=_projects, lastFetch=_lastFetch, nextPush=_nextPush, resolveList=_resolveList;
+@synthesize lastFetch=_lastFetch, nextPush=_nextPush, resolveList=_resolveList;
 
 + (id)sharedInstance
 {
@@ -58,7 +58,6 @@
 -(void)createPlaceholders
 {
     _nextPush = [[NSMutableArray alloc]init];
-    _projects = [[NSMutableArray alloc]init];
     _lastFetch = [[NSMutableArray alloc]init];
     _resolveList = [[NSMutableArray alloc]init];
 
@@ -129,7 +128,7 @@
     if (nil == securityCode) {
         securityCode = [soSecurity createSecurityCode];
         soDatabase* database = [soDatabase sharedInstance];
-        [database createNewProjectForProjectID:project_id ForProjectOwnerEmail:owner_email WithToken:securityCode SimulateFailure:soDatabase_saveSecurityToken_NoFailureSimulation];
+        [database createNewProjectWithProjectOwnerEmail:owner_email WithProjectID:project_id WithToken:securityCode];
         [_securityCodes setObject:securityCode forKey:key];
     }
     return securityCode;

@@ -76,7 +76,6 @@ public enum Request {
 	
 	/** Upload phase of Data Synchronization */
 	Json,
-	ProjectList,
 	LastFetch,
 	NextPush,
 	
