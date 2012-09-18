@@ -14,6 +14,7 @@
 #import "PendingQueue.h"
 #import "JsonModel.h"
 
+const int soDatabase_NoFailureSimulation = 0;
 const int soDatabase_fetchEpicData_NoFailureSimulation = 0;
 const int soDatabase_fetchEpicData_SimulateNetworkDown = 1;
 const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
@@ -178,6 +179,18 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     return nil;
 }
 
+- (void)updateAgainstDiskAndServerSimulatingError:(int)simulate_failure
+{
+    if (![self dispatchQueue]) {
+        return;
+    }
+    
+    dispatch_async(queue, ^{
+        [soDatabase queuedUpdateDiskAndServerSimulatingFailure:simulate_failure];
+    });
+
+}
+
 - (void)createNewProjectWithProjectOwnerEmail:(NSString*)project_owner_email
                                 WithProjectID:(NSString*)project_id
                                     WithToken:(NSString*)security_token
@@ -321,6 +334,22 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     };
     [NSURLConnection sendAsynchronousRequest:postRequest queue:[self networkQueue] completionHandler:handler];
 
+    return YES;
+}
+
++ (BOOL)queuedUpdateDiskAndServerSimulatingFailure:(int)simulate_failure
+{
+    soDatabase *instance = [soDatabase sharedInstance];
+
+    if (soDatabase_NoFailureSimulation != simulate_failure) {
+        return NO;
+    }
+    if (![instance saveMemoryToDisk]) {
+        return NO;
+    }
+    if (![instance syncWithServer]) {
+        return NO;
+    }
     return YES;
 }
 

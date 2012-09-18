@@ -48,4 +48,8 @@
 -(void)dumpEpics;
 -(NSString*)securityCodeFromId:(NSString*)project_id FromOwner:(NSString*)owner_email;
 
+- (BOOL)addProjectOwnerEmail:(NSString*)project_owner_email
+                      WithID:(NSString*)project_id
+           WithSecurityToken:(NSString*)security_token;
+
 @end

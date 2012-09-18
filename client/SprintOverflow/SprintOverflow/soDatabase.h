@@ -27,6 +27,7 @@
 #define SO_CORE_DATA_ERROR              2
 #define SO_JSON_ERROR                   3
 
+extern const int soDatabase_NoFailureSimulation;
 extern const int soDatabase_fetchEpicData_NoFailureSimulation;
 extern const int soDatabase_fetchEpicData_SimulateNetworkDown;
 extern const int soDatabase_saveSecurityToken_NoFailureSimulation;
@@ -41,6 +42,8 @@ extern const int soDatabase_saveSecurityToken_NoFailureSimulation;
 }
 
 + (id)                                  sharedInstance;
+
+- (void)updateAgainstDiskAndServerSimulatingError:(int)simulate_failure;
 
 - (void)createNewProjectWithProjectOwnerEmail:(NSString*)project_owner_email
                                 WithProjectID:(NSString*)project_id

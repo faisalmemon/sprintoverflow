@@ -15,6 +15,8 @@
 #import "soSecurity.h"
 #import "soDatabase.h"
 #import "soProject.h"
+#import "soConstants.h"
+#import "soUtil.h"
 
 @implementation soModel
 @synthesize lastFetch=_lastFetch, nextPush=_nextPush, resolveList=_resolveList;
@@ -127,12 +129,33 @@
     NSString *securityCode = [_securityCodes valueForKey:key];
     if (nil == securityCode) {
         securityCode = [soSecurity createSecurityCode];
-        soDatabase* database = [soDatabase sharedInstance];
-        [database createNewProjectWithProjectOwnerEmail:owner_email WithProjectID:project_id WithToken:securityCode];
+        [self addProjectOwnerEmail:owner_email WithID:project_id WithSecurityToken:securityCode];
         [_securityCodes setObject:securityCode forKey:key];
     }
     return securityCode;
 }
+
+- (BOOL)addProjectOwnerEmail:(NSString*)project_owner_email
+                      WithID:(NSString*)project_id
+           WithSecurityToken:(NSString*)security_token
+{
+    NSError *error;    
+    NSString *addedProjectJson = [NSString stringWithFormat:
+                                  ksoThreePairsJson,
+                                  ksoProjectOwnerEmail, project_owner_email,
+                                  ksoProjectId, project_id,
+                                  ksoSecurityToken, security_token];
+    
+    NSDictionary *dict = [soUtil DictionaryFromJson:addedProjectJson UpdateError:&error];
+    if (!error) {
+        [[self nextPush] insertObject:dict atIndex:[[self nextPush] count]];
+        [[soDatabase sharedInstance] updateAgainstDiskAndServerSimulatingError:soDatabase_NoFailureSimulation];
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
 
 -(void)dumpEpics
 {
