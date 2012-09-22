@@ -12,7 +12,7 @@
     NSObject* currentlyEditing;
     NSString* lastSearchText;
     UIColor* ownerEmailAddressTextFieldOriginalColor;
-    UIInterfaceOrientation orientation;
+    UIInterfaceOrientation _orientation;
     CGPoint savedContentOffset;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *handleScrollView;

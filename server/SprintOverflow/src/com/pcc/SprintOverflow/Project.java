@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import com.google.appengine.api.datastore.Key;
+import com.google.gson.*;
 
 @Entity
 public class Project {
@@ -31,6 +32,17 @@ public class Project {
 		this.projectOwnerEmail = aOwner;
 		this.projectId = aId;
 		this.securityToken = aToken;
+		epics = new LinkedHashSet<Epic>();
+	}
+	
+	Project(JsonObject json) throws ProjectCreateException {
+		try {
+			this.projectOwnerEmail = json.get(Request.ProjectOwnerEmail.toString()).getAsString();
+			this.projectId =	json.get(Request.ProjectId.toString()).getAsString();
+			this.securityToken =	json.get(Request.SecurityToken.toString()).getAsString();
+		} catch (Exception e) {
+			throw new ProjectCreateException("Bad json data when creating project: " + json.toString());
+		}
 		epics = new LinkedHashSet<Epic>();
 	}
 	

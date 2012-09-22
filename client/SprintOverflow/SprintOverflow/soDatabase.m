@@ -377,6 +377,12 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     
     void (^handler)(NSURLResponse *, NSData *, NSError *) =
     ^(NSURLResponse *resp, NSData *data, NSError *error) {
+        if (!error) {
+            NSString* fromServer = [NSString stringWithUTF8String:[data bytes]];
+            NSLog(@"block handler has data showing BEGIN_STRING%@END_STRING", fromServer);
+        } else {
+            NSLog(@"Response from server yields error %@", error);
+        }
         [soDatabase processServerResponse:resp WithData:data WithError:error];
     };
     [NSURLConnection sendAsynchronousRequest:postRequest queue:[self networkQueue] completionHandler:handler];

@@ -17,7 +17,7 @@
 
 
 @implementation soJoinViewController
-
+@synthesize orientation=_orientation;
 @synthesize handleScrollView;
 @synthesize projectIdText;
 @synthesize projectOwnerEmailText;
@@ -62,7 +62,7 @@
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
                                 duration:(NSTimeInterval)duration {
-    orientation = toInterfaceOrientation;
+    [self setOrientation:toInterfaceOrientation];
 }
 
 

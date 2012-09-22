@@ -48,6 +48,7 @@
 		3AB5F5ED15A1D78A000D9A55 /* soModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AB5F5EC15A1D78A000D9A55 /* soModel.m */; };
 		3ABB585D15A2EDB1007A57A4 /* soStory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABB585C15A2EDB1007A57A4 /* soStory.m */; };
 		3AD7477E15A32D7A0034B799 /* soTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AD7477D15A32D7A0034B799 /* soTask.m */; };
+		3AE763D0160E6359000BDBA9 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AE763CF160E6359000BDBA9 /* Default-568h@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -121,6 +122,7 @@
 		3ABB585C15A2EDB1007A57A4 /* soStory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soStory.m; sourceTree = "<group>"; };
 		3AD7477C15A32D7A0034B799 /* soTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soTask.h; sourceTree = "<group>"; };
 		3AD7477D15A32D7A0034B799 /* soTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soTask.m; sourceTree = "<group>"; };
+		3AE763CF160E6359000BDBA9 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +163,7 @@
 		3A9EAC60159E155C0042030E = {
 			isa = PBXGroup;
 			children = (
+				3AE763CF160E6359000BDBA9 /* Default-568h@2x.png */,
 				3A48921015A1B78A00AAFF54 /* CoreData.framework */,
 				3A9EAC75159E155C0042030E /* SprintOverflow */,
 				3A9EAC6E159E155C0042030E /* Frameworks */,
@@ -315,6 +318,7 @@
 				3A30C03115EFD46000FE937C /* join.xib in Resources */,
 				3A30C03415EFD49C00FE937C /* soCreateViewController.xib in Resources */,
 				3A30C03015EFD33D00FE937C /* findMissingLocalizedStrings.sh in Resources */,
+				3AE763D0160E6359000BDBA9 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,7 +425,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -439,7 +443,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

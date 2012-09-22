@@ -14,71 +14,66 @@ package com.pcc.SprintOverflow;
 /**
  * Request parameters from the client
  * 
- * This class encapsulates all the different request types passed from the
+ * This class encapsulates all the different request types passed from
+ * the client.  See also @see Response for the repsonse types.
+ * 
+ * The names of the enumerations MUST NOT change due to their String
+ * equivalent being used as actual protocol strings sent from the
  * client.
  * 
- * The names of the enumerations MUST NOT change due to their String equivalent
- * being used as actual protocol strings sent from the client.
+ * The request and response protocol is based upon url encoded JSON
+ * data strings.  The purpose of the encoding is to avoid collisions
+ * with meta-data characters used by HTTP POST.  To avoid escaping out
+ * of the JSON data structure from bad or malicious data, we convert
+ * any double quote (") to single quote(') at the client.
  * 
- * The notation used here is URL request notation so it is clear the
- * mapping between the protocol and the URLs that represent them.
+ * The protocol starts with the client supplying the HTTP POST
+ * <code>
+ * Json=string
+ * </code>
+ * where string is a url-encoded JSON format string representing the
+ * dictionaries LastFetch, and NextPush.  LastFetch represents the
+ * last retrieve of data from the server for the given projects of
+ * interest at that time.  NextPush is the amended data based from
+ * LastFetch to be sent to the server.  The purpose of the client
+ * sending past data originated by the server is to allow the server
+ * to implement a merge algorithm to resolve changes in the client
+ * against the server.  We have:
+ * <code>
+ * BASE
+ * NEW
+ * MASTER
+ * </code>
+ * where BASE is LastFetch, NEW is NextPush, and MASTER is the value
+ * stored on the server in its persistent store.
  * 
- * <h1>Protocol Modes</h1>
- * The request protocol is divided at the top level into Modes.  Each mode
- * has its own set of attributes.
- * The supported modes are:
- * 	?Mode=Epic
- * 	?Mode=Sprint
- *  ?Mode=Story
- *  ?Mode=Task
- *  ?Mode=SaveToken
- *  ?Mode=Version
- *  
- * <h2>Version Mode</h2>
- * The client can specify the highest protocol version it supports and the
- * server then can respond if that version is understood or not.
- * ?Mode=Version&ClientVersion=2
- *  
- * @author faisalmemon
+ * The server does a resolve of the request.  This is documented in
+ * @see Model
+ * 
+ * Once resolved, the server persists the newly updated MASTER for the
+ * projects listed in NextPush.  Then it replies with
+ * <code>
+ * ReplyJson=string
+ * </code>
  *
+ * The ReplyJson is a JSON array of two dictionaries, ReturnedProjects
+ * and ResolveList.
+ * 
+ * @author faisalmemon
  */
 public enum Request {
-	/** Mode selection
-	 * <code> ?Mode=Epic </code> or
-	 * <code> ?Mode=Sprint </code> or
-	 * <code> ?Mode=Story </code> or
-	 * <code> ?Mode=Task </code> or
-	 * <code> ?Mode=CreateProject </code> or
-	 * <code> ?Mode=Version </code>
-	 */
-	Mode,
-	Epic, Sprint, Story, Task, CreateProject, Version,
-	
-	/** CreateProject mode
-	 * <code>?Mode=CreateProject&ProjectOwnerEmail=john@example.com&ProjectId=df23&SecurityToken=jk3424jee</code> 
-	 */
 	ProjectOwnerEmail, 
-	ProjectId, 
+	ProjectId,
+	
+	Epic, Sprint, Story, Task,
+	
+	Version,
+	ClientVersion,
+	
 	SecurityToken,
 	Token,
 	
-	/** Version mode protocol
-	 * <code> ?Mode=Version&ClientVersion=1 </code>
-	 */
-	ClientVersion,
-	
-	/** Upload of PendingQueue protocol
-	 * <code> ?PendingItem=AddProject&ProjectOwnerEmail=john@example.com&ProjectId=df23&SecurityToken=jk3424jee</code>
-	 */
-	PendingItem,
-	AddProject,
-	Pending,
-	
-	/** Upload phase of Data Synchronization */
 	Json,
 	LastFetch,
 	NextPush,
-	
-	/** Debug */
-	PostTest,
 }
