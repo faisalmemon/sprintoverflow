@@ -26,6 +26,7 @@
 #define SO_QUEUE_ERROR                  1
 #define SO_CORE_DATA_ERROR              2
 #define SO_JSON_ERROR                   3
+#define SO_MEMORY_MODEL_ERROR           4
 
 extern const int soDatabase_NoFailureSimulation;
 extern const int soDatabase_fetchEpicData_NoFailureSimulation;

@@ -90,8 +90,8 @@ public class Model {
 		Iterator<Project>projItr = newModel.iterator();
 		while (projItr.hasNext()) {
 			Project p = projItr.next();
-			// CONTINUE HERE
-			//String securityToken = p.
+			String securityToken = p.getSecurityToken();
+			String projectOwnerEmail = p.getProjectOwnerEmail();
 		}
 		return false;
 	}

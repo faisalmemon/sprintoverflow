@@ -73,6 +73,17 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
 }
 
+- (void)inMemoryConsistencyProblem
+{
+    NSDictionary *userInfo =
+    [NSDictionary dictionaryWithObject: NSLocalizedString(@"Local Memory Store Problem.  This application has problems validating its memory store when saving to persistent storage.  The server will however have the official copy.  This can occur during faulty client or server upgrades or system failures.  The resolution is to uninstall and reinstall this application whilst good network access and battery levels are present.", @"Error message displayed when system could not validate its in memory store when attempting to save it to persistent store.")
+                                forKey:NSLocalizedDescriptionKey];
+    NSError *error = [NSError errorWithDomain:@"ApplicationCoreData" code:SO_MEMORY_MODEL_ERROR userInfo:userInfo]; // Not NSLocalizedString
+    [self handleError:error];
+    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+
+    
+}
 - (void)persistentStoreProblem
 {
     NSDictionary *userInfo =
@@ -233,12 +244,22 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     
     NSData *lastFetchData = [NSJSONSerialization dataWithJSONObject:[model lastFetch] options:NSJSONWritingPrettyPrinted error:&error];
     
+    if ([lastFetchData length] <=0 || error != nil) {
+        NSLog(@"Programming error since last fetch data should never be nil or have serialization problems.");
+        [self inMemoryConsistencyProblem];
+        return NO;
+    }
     NSString *lastFetchDataAsString = [NSString stringWithUTF8String:[lastFetchData bytes]];
     
     [jsonModel setLastFetch:lastFetchDataAsString];
 
     NSData *nextPushData = [NSJSONSerialization dataWithJSONObject:[model nextPush] options:NSJSONWritingPrettyPrinted error:&error];
     
+    if ([nextPushData length] <= 0 || error != nil) {
+        NSLog(@"Programming error since push data should never be nil or have serialization problems.");
+        [self inMemoryConsistencyProblem];
+        return NO;
+    }
     NSString *nextPushDataAsString = [NSString stringWithUTF8String:[nextPushData bytes]];
     
     [jsonModel setNextPush:nextPushDataAsString];
@@ -314,6 +335,10 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
         return;
     }
     
+    if ([data length] <= 0) {
+        NSLog(@"Server response was nil.  Consider this a non-responsive server.");
+        return;
+    }
     NSString* fromServer = [NSString stringWithUTF8String:[data bytes]];
     NSLog(@"Server responded with %@", fromServer);
     
