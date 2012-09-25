@@ -6,6 +6,35 @@ import java.util.List;
 
 import com.google.gson.*;
 
+/*
+ * Server-side Model for projects of interest for a given client.
+ * 
+ * This class looks at the state of the client in terms of its data
+ * and the changes it desires to be made, and resolves these against
+ * the server persistent record, resolving differences and generating
+ * revised data for the client.
+ * 
+ * This file is based upon merging semantics.  From the client 
+ * perspective, there are three aspects to merge data:
+ * <ul>
+ * <li>NEW MODEL</li>
+ * <li>BASE MODEL</li>
+ * <li>MASTER MODEL</li>
+ * 
+ * Hereafter, we abbreviate to N, B, M.
+ * 
+ * B is the data the client last got from the server (potentially
+ * null) for a given project.  That is, the Base from which changes
+ * are proposed.  N is the modified version of the project data, thus
+ * the New data.  M is the data in the server not seen by the client
+ * necessarily due to the round trip time getting B, there could have
+ * been further updates to the server from another client, particularly
+ * if the client has been offline for some time.
+ * 
+ * There is a matrix of possibilities, and this leads to the resolution
+ * done on the data to arrive at the new data that has to be persisted
+ * by the master.
+ */
 public class Model {
 	private List<Project> newModel;
 	private List<Project> baseModel;
