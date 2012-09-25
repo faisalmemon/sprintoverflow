@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 import com.google.gson.*;
 
 /*
@@ -78,39 +80,32 @@ public class Model {
 	private List<Project> masterModel;
 	private List<String>  resolveList;
 	private boolean dataValid;
+	enum State { Init, LoadedClientData, LoadedMasterData, ResolvedData };
+	State currentState;
 
 	public Model() {
 		newModel = new ArrayList<Project>();
 		baseModel = new ArrayList<Project>();
 		masterModel = new ArrayList<Project>();
-		setDataValidity(false);
-	}
-	
-	public boolean isDataValid() {
-		return dataValid;
-	}
-	
-	private void setDataValidity(boolean setting) {
-		this.dataValid = setting;
+		currentState = State.Init;
 	}
 	
 	public boolean uploadData(JsonElement nextPushJson, JsonElement lastFetchJson) {
 		JsonArray projectNextArray = null;
 		JsonArray projectBaseArray = null;
 		
-		setDataValidity(false);
 		try {
 			if (nextPushJson.isJsonArray()) {
 				projectNextArray = nextPushJson.getAsJsonArray();
 			} else {	
 				System.out.println("next push is not a json array");
-				return isDataValid();
+				return false;
 			}
 			if (lastFetchJson.isJsonArray()) {
 				projectBaseArray = nextPushJson.getAsJsonArray();
 			} else {
 				System.out.println("last fetch is not a json array");
-				return isDataValid();
+				return false;
 			}
 			Iterator<JsonElement> pnaItr = projectNextArray.iterator();
 			Iterator<JsonElement> pbaItr = projectBaseArray.iterator();
@@ -132,24 +127,42 @@ public class Model {
 			}
 		} catch (ProjectCreateException cpe) {
 			System.out.println("Could not create project data cpe: " + cpe);
-			return isDataValid();
+			return false;
 		} catch (ClassCastException cce) {
 			System.out.println("Could not create project data cce: " + cce);
-			return isDataValid();
+			return false;
 		} catch (IllegalStateException ise) {
 			System.out.println("Could not create project data ise: " + ise);
-			return isDataValid();
+			return false;
 		} catch (Exception e) {
 			System.out.println("Programming error: Unexpected exception e: " + e);
-			return isDataValid();
+			return false;
 		}
 		
-		setDataValidity(true);
-		return isDataValid();
+		currentState = State.LoadedClientData;
+		return true;
 	}
 	
-	public boolean resolveModel() {
-		if (!isDataValid()) {
+	public Project fetchProject(String aProjectOwnerEmail, String aSecurityToken) {
+		Project project = null;
+		EntityManager em = null;
+		try {
+			em = SingletonEntityManager.get().createEntityManager();
+			project = (Project) em.createQuery(
+					"select p from project p" +
+					" where p.projectOwnerEmail=:supplied_email" +
+					" and p.securityToken=:supplied_securityToken")
+					.setParameter("supplied_email", aProjectOwnerEmail)
+					.setParameter("supplied_securityToken", aSecurityToken)
+					.getSingleResult();
+		} finally {
+			em.close();
+		}
+		return project;
+	}
+	
+	public boolean loadMasterData() {
+		if (currentState != State.LoadedClientData) {
 			return false;
 		}
 		
@@ -158,7 +171,34 @@ public class Model {
 			Project p = projItr.next();
 			String securityToken = p.getSecurityToken();
 			String projectOwnerEmail = p.getProjectOwnerEmail();
+			Project masterProject = fetchProject(projectOwnerEmail, securityToken);
+			if (null != masterProject) {
+				masterModel.add(masterProject);
+			} else {
+				System.out.println("new Model has project not seen before " + projectOwnerEmail + " " + securityToken);
+			}
 		}
-		return false;
+		currentState = State.LoadedMasterData;
+		return true;
+	}
+	
+	/*
+	 * * CASE 0 B!=M, B!=N, N!=M
+ * CASE 1 B!=M, B!=N, N==M
+ * CASE 2 B!=M, B==N, N!=M
+ * CASE 3 B==M, B!=N, N!=M
+ * CASE 4 B==M, B==N, N==M
+ * 
+	 */
+	public void threeWayResolve(String baseItem, String newItem, String masterItem, ResolveCallback callback) {
+		
+	}
+	public boolean resolveModel() {
+		if (currentState != State.LoadedMasterData) {
+			return false;
+		}		
+		
+		currentState = State.ResolvedData;
+		return true;
 	}
 }
