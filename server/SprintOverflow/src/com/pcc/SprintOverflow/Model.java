@@ -79,8 +79,14 @@ public class Model {
 	private List<Project> baseModel;
 	private List<Project> masterModel;
 	private List<String>  resolveList;
-	private boolean dataValid;
 	enum State { Init, LoadedClientData, LoadedMasterData, ResolvedData };
+	enum Situation {
+		updateStaleDataDivergeServer,
+		updateStaleDataConvergeServer,
+		clientCatchupNeeded,
+		clientPushNeeded,
+		noChange
+	};
 	State currentState;
 
 	public Model() {
@@ -188,9 +194,30 @@ public class Model {
  * CASE 2 B!=M, B==N, N!=M
  * CASE 3 B==M, B!=N, N!=M
  * CASE 4 B==M, B==N, N==M
- * 
+ * * Case									   Resolution
+ * 0 update-stale-data-diverge-server		M, report that N was rejected.
+ * 1	 update-stale-data-converge-server  M.
+ * 2 client-catchup-needed					M.
+ * 3 client-push-needed						N.
+ * 4 no-change								B.
 	 */
 	public void threeWayResolve(String baseItem, String newItem, String masterItem, ResolveCallback callback) {
+		Situation s = Situation.noChange;
+		if (baseItem.equals(masterItem)) {
+			
+		} else {
+			if (baseItem.equals(newItem)) {
+				s = Situation.clientCatchupNeeded;
+			} else {
+				if (newItem.equals(masterItem)) {
+					s = Situation.updateStaleDataConvergeServer;
+				}
+				else {
+					s = Situation.updateStaleDataDivergeServer;
+				}
+			}
+		}
+		
 		
 	}
 	public boolean resolveModel() {
