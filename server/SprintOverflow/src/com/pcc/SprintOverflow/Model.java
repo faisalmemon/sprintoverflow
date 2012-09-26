@@ -1,8 +1,11 @@
 package com.pcc.SprintOverflow;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 
@@ -17,18 +20,17 @@ import com.google.gson.*;
  * revised data for the client.
  */
 public class Model implements Resolver<String> {
-	private List<Project> newModel;
-	private List<Project> baseModel;
-	private List<Project> masterModel;
-	private List<String>  resolveList;
-	enum State { Init, LoadedClientData, LoadedMasterData, ResolvedData };
+	private Map<String, Project> newModel;
+	private Map<String, Project> baseModel;
+	private Map<String, Project> masterModel;
+	enum State { Init, LoadedClientData, LoadedMasterData, ResolvedData, PersistedUpdatedMaster };
 	
 	State currentState;
 
 	public Model() {
-		newModel = new ArrayList<Project>();
-		baseModel = new ArrayList<Project>();
-		masterModel = new ArrayList<Project>();
+		newModel = new LinkedHashMap<String, Project>();
+		baseModel = new LinkedHashMap<String, Project>();
+		masterModel = new LinkedHashMap<String, Project>();
 		currentState = State.Init;
 	}
 	
@@ -56,7 +58,7 @@ public class Model implements Resolver<String> {
 				JsonObject e = pnaItr.next().getAsJsonObject();
 				Project p = new Project(e);
 				if (p != null) {
-					newModel.add(p);
+					newModel.put(p.getProjectKey(), p);
 				}
 			}
 
@@ -64,7 +66,7 @@ public class Model implements Resolver<String> {
 				JsonObject e = pbaItr.next().getAsJsonObject();
 				Project p = new Project(e);
 				if (p != null) {
-					baseModel.add(p);
+					baseModel.put(p.getProjectKey(), p);
 				}
 			}
 		} catch (ProjectCreateException cpe) {
@@ -101,6 +103,19 @@ public class Model implements Resolver<String> {
 			em.close();
 		}
 		return project;
+	}
+	
+	public void storeProject(Project p) {
+		EntityManager em = null;
+		if (null == p) {
+			throw new NullPointerException("Cannot store a project which is null");
+		}
+		try {
+			em = SingletonEntityManager.get().createEntityManager();
+			em.persist(p);
+		} finally {
+			em.close();
+		}
 	}
 	
 	@Override
@@ -157,18 +172,23 @@ public class Model implements Resolver<String> {
 			return false;
 		}
 		
-		Iterator<Project>projItr = newModel.iterator();
+		Iterator<Project>projItr = newModel.values().iterator();
 		while (projItr.hasNext()) {
 			Project p = projItr.next();
 			String securityToken = p.getSecurityToken();
 			String projectOwnerEmail = p.getProjectOwnerEmail();
+			String projectId = p.getProjectId();
 			Project masterProject = fetchProject(projectOwnerEmail, securityToken);
 			if (null != masterProject) {
-				masterModel.add(masterProject);
+				masterModel.put(p.getProjectKey(), masterProject);
 			} else {
 				System.out.println("new Model has project not seen before " + projectOwnerEmail + " " + securityToken);
-				// CONTINUE HERE
-				// need to auto-create the project in master.
+				if (null == projectOwnerEmail || null == projectId || null == securityToken) {
+					throw new NullPointerException("newModel presents a project for add which has nulls");
+				}
+				p = new Project(projectOwnerEmail, projectId, securityToken);
+				storeProject(p);
+				masterModel.put(p.getProjectKey(), p);
 			}
 		}
 		currentState = State.LoadedMasterData;
@@ -180,12 +200,40 @@ public class Model implements Resolver<String> {
 			return false;
 		}		
 		
-		Iterator<Project>projItr = newModel.iterator();
+		Iterator<Project>projItr = newModel.values().iterator();
 		while (projItr.hasNext()) {
-			Project p = projItr.next();
-			
+			Project newProject = projItr.next();
+			Project masterProject = masterModel.get(newProject.getProjectKey());
+			Project baseProject = baseModel.get(newProject.getProjectKey());
+			Project.resolveProject(baseProject, newProject, masterProject, this);		
 		}
 		currentState = State.ResolvedData;
+		return true;
+	}
+	
+	public boolean persistUpdatedMaster() {
+		if (currentState != State.ResolvedData) {
+			return false;
+		}
+		EntityManager em = null;
+		Iterator<Project>projItr = masterModel.values().iterator();
+		if (!projItr.hasNext()) {
+			return false;
+		}
+		Project p = null;
+		while (projItr.hasNext()) {
+			p = projItr.next();
+			if (null == p) {
+				throw new NullPointerException("Cannot store a project which is null");
+			}
+			try {
+				em = SingletonEntityManager.get().createEntityManager();
+				em.persist(p);
+			} finally {
+				em.close();
+			}
+		}
+		currentState = State.PersistedUpdatedMaster;
 		return true;
 	}
 }

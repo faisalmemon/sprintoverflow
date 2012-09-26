@@ -64,6 +64,9 @@ package com.pcc.SprintOverflow;
 public enum Request {
 	ProjectOwnerEmail, 
 	ProjectId,
+	SoftDelete,
+	NO,
+	YES,
 	
 	Epic, Sprint, Story, Task,
 	

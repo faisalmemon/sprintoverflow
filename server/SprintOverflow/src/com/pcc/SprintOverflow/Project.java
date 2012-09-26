@@ -20,6 +20,7 @@ public class Project {
 	private String projectOwnerEmail;
 	private String projectId;
 	private String securityToken;
+	private String softDelete;
 	private Set<Epic> epics;
 	private List<String> resolutions;
 	
@@ -39,8 +40,20 @@ public class Project {
 	 */
 	private static Project NullProject = new Project();
 	
+	public String getProjectKey() {
+		return getProjectOwnerEmail() + getSecurityToken();
+	}
+	
 	public Set<Epic> getEpics() {
 		return epics;
+	}
+	
+	public String getSoftDelete() {
+		return softDelete;
+	}
+	
+	public void setSoftDelete(String aSoftDelete) {
+		softDelete = aSoftDelete;
 	}
 	
 	public List<String> getResolutions() {
@@ -79,6 +92,7 @@ public class Project {
 		setProjectId(aId);
 		setSecurityToken(aToken);
 		setEpics(new LinkedHashSet<Epic>());
+		setSoftDelete(Request.NO.toString());
 	}
 	
 	Project(JsonObject json) throws ProjectCreateException {
@@ -86,6 +100,8 @@ public class Project {
 			setProjectOwnerEmail(json.get(Request.ProjectOwnerEmail.toString()).getAsString());
 			setProjectId(json.get(Request.ProjectId.toString()).getAsString());
 			setSecurityToken(json.get(Request.SecurityToken.toString()).getAsString());
+			setSoftDelete(json.get(Request.SoftDelete.toString()).getAsString());
+
 		} catch (Exception e) {
 			throw new ProjectCreateException("Bad json data when creating project: " + json.toString());
 		}
