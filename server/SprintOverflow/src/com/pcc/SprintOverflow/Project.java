@@ -144,7 +144,22 @@ public class Project {
 		if (null == newProject) {
 			throw new NullPointerException("The next project may not be null because it means we have a client asking to update the server but supplying no projects");
 		}
-		resolver.threeWayResolve(baseProject.getProjectId(), newProject.getProjectId(), masterProject.getProjectId(), masterProject.getResolutions());
+		
+		// The ProjectId is mutable.
+		resolver.threeWayResolve(
+				baseProject.getProjectId(),
+				newProject.getProjectId(),
+				masterProject.getProjectId(),
+				masterProject.getResolutions());
+		
+		// In practice, since the client does not offer an undelete option in its UI, in practice
+		// we will only advance SoftDelete from NO to YES, never YES to NO.
+		resolver.threeWayResolve(
+				baseProject.getSoftDelete(),
+				newProject.getSoftDelete(),
+				masterProject.getSoftDelete(),
+				masterProject.getResolutions());
+		
 		// Now need a public static in Epic to do the same and recurse downwards.
 		
 	}
