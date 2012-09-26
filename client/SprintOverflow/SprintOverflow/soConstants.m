@@ -40,20 +40,20 @@ NSString *const ksoEpic = @"Epic";
 NSString *const ksoLastFetch = @"LastFetch";
 NSString *const ksoMode = @"Mode";
 NSString *const ksoNextPush = @"NextPush";
+NSString *const ksoNO = @"NO";
 NSString *const ksoPending = @"Pending";
 NSString *const ksoPendingQueue = @"PendingQueue";
 NSString *const ksoProjectId = @"ProjectId";
 NSString *const ksoProjectOwnerEmail = @"ProjectOwnerEmail";
 NSString *const ksoResolveList = @"ResolveList";
 NSString *const ksoSecurityToken = @"SecurityToken";
+NSString *const ksoSoftDelete = @"SoftDelete";
 NSString *const ksoSprint = @"Sprint";
 NSString *const ksoStory = @"Story";
 NSString *const ksoTask = @"Task";
 NSString *const ksoToken = @"Token";
 NSString *const ksoVersion = @"Version";
-
-// Creating a new project request url is built from the above constants and should be kept in sync with them
-NSString *const ksoCreateNewProjectUrl = @"%@?Mode=CreateProject&ProjectOwnerEmail=%@&ProjectId=%@&SecurityToken=%@";
+NSString *const ksoYES = @"YES";
 
 /*
  These constants must match the symbolic names of the server-side enumerations in Response.java

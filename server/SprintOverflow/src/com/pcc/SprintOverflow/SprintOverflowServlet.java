@@ -89,10 +89,25 @@ public class SprintOverflowServlet extends HttpServlet {
 					+ e.toString());
 		}
 
-		boolean result;
 		Model model = new Model();
+		boolean result;
 		result = model.uploadData(nextPush, lastFetch);
-		System.out.println("uploadData result " + result);
+		// CONTINUE HERE
+		// Make the model class itself progress its state and return
+		// how it got on.
+		// Then allow access to a results object which comprises the
+		// masterModel as updated.
+		
+		if (result != false) {
+			result = model.loadMasterData();
+		}
+		if (result != false) {
+			result = model.resolveModel();
+		}
+		if (result != false) {
+			result = model.persistUpdatedMaster();
+		}
+		System.out.println("model processing result " + result);
 		if (!result) {
 			returnString = theGson.toJson(new ResolveList("Error in nextPush or lastFetch data"));
 			resp.getWriter().println(returnString);

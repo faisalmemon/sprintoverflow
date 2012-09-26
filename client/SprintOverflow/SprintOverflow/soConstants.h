@@ -32,15 +32,19 @@ extern NSString *const ksoEpic;
 extern NSString *const ksoLastFetch;
 extern NSString *const ksoMode;
 extern NSString *const ksoNextPush;
+extern NSString *const ksoNO;
 extern NSString *const ksoPending;
 extern NSString *const ksoProjectId;
 extern NSString *const ksoProjectOwnerEmail;
 extern NSString *const ksoResolveList;
 extern NSString *const ksoSecurityToken;
+extern NSString *const ksoSoftDelete;
 extern NSString *const ksoSprint;
 extern NSString *const ksoStory;
 extern NSString *const ksoTask;
 extern NSString *const ksoToken;
+extern NSString *const ksoYES;
+
 
 extern NSString *const ksoVersion;
 
