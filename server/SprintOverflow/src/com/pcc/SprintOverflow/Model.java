@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 
 import com.google.gson.*;
 
@@ -72,7 +73,7 @@ public class Model implements Resolver<String> {
 			throw new IllegalStateException("Tried to get updated master before it was persisted, instead we are in state " + currentState.toString());
 		}
 		Project[] updatedProjects = null;
-		masterModel.values().toArray(updatedProjects);
+		updatedProjects = masterModel.values().toArray(new Project[0]);
 		return SingletonManager.getTheGson().toJson(updatedProjects);
 	}
 	
@@ -133,18 +134,33 @@ public class Model implements Resolver<String> {
 		return true;
 	}
 	
+	/**
+	 * Fetch the specified project by its key or return null.
+	 * 
+	 * @param aProjectOwnerEmail
+	 * @param aSecurityToken
+	 * @return specified project, or null
+	 * @note Should there be more than one project matching the key,
+	 *       we only return the first.  This should not happen but we
+	 *       are lenient in this area in case we want to re-populate
+	 *       the data with deleting the old data.
+	 */
 	private Project fetchProject(String aProjectOwnerEmail, String aSecurityToken) {
 		Project project = null;
 		EntityManager em = null;
 		try {
 			em = SingletonManager.getEntityManagerFactory().createEntityManager();
-			project = (Project) em.createQuery(
-					"select p from Project p" +
-					" where p.projectOwnerEmail=:supplied_email" +
-					" and p.securityToken=:supplied_securityToken")
-					.setParameter("supplied_email", aProjectOwnerEmail)
-					.setParameter("supplied_securityToken", aSecurityToken)
-					.getSingleResult();
+			try {
+				project = (Project) em.createQuery(
+						"select p from Project p" +
+								" where p.projectOwnerEmail=:supplied_email" +
+						" and p.securityToken=:supplied_securityToken")
+						.setParameter("supplied_email", aProjectOwnerEmail)
+						.setParameter("supplied_securityToken", aSecurityToken)
+						.getSingleResult();
+			} catch (NoResultException nre) {
+				return null;
+			}
 		} finally {
 			em.close();
 		}
@@ -158,7 +174,11 @@ public class Model implements Resolver<String> {
 		}
 		try {
 			em = SingletonManager.getEntityManagerFactory().createEntityManager();
-			em.persist(p);
+			if (em.contains(p)) {
+				System.out.println("em already manages " + p + " so storeProject has no more work to do");
+			} else {
+				em.persist(p);
+			}
 		} finally {
 			em.close();
 		}
@@ -228,7 +248,7 @@ public class Model implements Resolver<String> {
 			if (null != masterProject) {
 				masterModel.put(p.getProjectKey(), masterProject);
 			} else {
-				System.out.println("new Model has project not seen before " + projectOwnerEmail + " " + securityToken);
+				System.out.println("newModel has project not seen before " + projectOwnerEmail + " " + securityToken);
 				if (null == projectOwnerEmail || null == projectId || null == securityToken) {
 					throw new NullPointerException("newModel presents a project for add which has nulls");
 				}
@@ -274,7 +294,11 @@ public class Model implements Resolver<String> {
 			}
 			try {
 				em = SingletonManager.getEntityManagerFactory().createEntityManager();
-				em.persist(p);
+				if (em.contains(p)) {
+					System.out.println("em already managing " + p + " so no more work to do");
+				} else {
+					em.persist(p);
+				}
 			} finally {
 				em.close();
 			}

@@ -357,6 +357,7 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
         return;
     }
     soModel *model = [soModel sharedInstance];
+    //CONTINUE HERE TO HANDLE JUST THE PROJECTS COMING BACK
     NSMutableArray *lastFetch = [dict objectForKey:ksoLastFetch];
     NSMutableArray *resolveList = [dict objectForKey:ksoResolveList];
     if (lastFetch == nil || resolveList == nil) {
