@@ -36,18 +36,6 @@ import com.google.gson.*;
 @SuppressWarnings("serial")
 public class SprintOverflowServlet extends HttpServlet {
 	
-	/** Gson parent class.
-	 * 
-	 * The Gson parent class embodying the configuration of how we 
-	 * want JSON serialization to work.  We specify upper camel casing
-	 * which means fields like resolveList get mapped to ResolveList.
-	 */
-	private static Gson theGson =  
-			new GsonBuilder()
-			.setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
-			.create(); 
-	private static JsonParser theParser = new JsonParser();
-	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 		resp.setContentType("application/json");
@@ -68,11 +56,11 @@ public class SprintOverflowServlet extends HttpServlet {
 	
 	private void handleJsonPost(String jsonValue, HttpServletRequest req,
 			HttpServletResponse resp) throws IOException {
-		String returnString;		
+		String returnString = null;		
 		JsonElement nextPush = JsonNull.INSTANCE;
 		JsonElement lastFetch = JsonNull.INSTANCE;
 		try {
-			JsonObject jsonObject = theParser.parse(jsonValue).getAsJsonObject();
+			JsonObject jsonObject = SingletonManager.getTheJsonParser().parse(jsonValue).getAsJsonObject();
 			nextPush = jsonObject.get(Request.NextPush.toString());
 			lastFetch = jsonObject.get(Request.LastFetch.toString());
 		} catch (ClassCastException cce) {
@@ -91,34 +79,19 @@ public class SprintOverflowServlet extends HttpServlet {
 
 		Model model = new Model();
 		boolean result;
-		result = model.uploadData(nextPush, lastFetch);
-		// CONTINUE HERE
-		// Make the model class itself progress its state and return
-		// how it got on.
-		// Then allow access to a results object which comprises the
-		// masterModel as updated.
-		
-		if (result != false) {
-			result = model.loadMasterData();
-		}
-		if (result != false) {
-			result = model.resolveModel();
-		}
-		if (result != false) {
-			result = model.persistUpdatedMaster();
-		}
-		System.out.println("model processing result " + result);
+		result = model.resolveClientData(nextPush, lastFetch);		
+		System.out.println("model processed with result " + result);
 		if (!result) {
-			returnString = theGson.toJson(new ResolveList("Error in nextPush or lastFetch data"));
+			returnString = SingletonManager.getTheGson().toJson(new ResolveList("Error in nextPush or lastFetch data"));
 			resp.getWriter().println(returnString);
 			return;
 		}
-		returnString = theGson.toJson(new ResolveList("Experiment in serialization of resolve list"));
+		returnString = model.getUpdatedMasterAsJsonString();
 		resp.getWriter().println(returnString);
 		return;
 	}
 	private void supplyDefaultResponse(HttpServletResponse resp) throws IOException {
-		String returnString = theGson.toJson(JohnSmithDemo.JohnSmith);
+		String returnString = SingletonManager.getTheGson().toJson(new ResolveList("Error in client data"));
 		resp.getWriter().println(returnString);
 	}
 

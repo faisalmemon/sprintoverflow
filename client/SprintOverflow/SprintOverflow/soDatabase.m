@@ -327,8 +327,16 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
 + (void)processServerResponse:(NSURLResponse*)resp WithData:(NSData*)data WithError:(NSError*)error
 {
     if (nil != error) {
+        /*
+         The reason for enumerating each error with a logged report is so that we can establish
+         exactly what errors have been seen during development and testing, and what errors are
+         unexpected from a development point of view, in case there are new types of failure mode
+         we need to account for.
+         */
         if ([error code] == -1004) {
             NSLog(@"Could not connect to the server (-1004)");
+        } else if ([error code] == -1001) {
+            NSLog(@"The request timed out (-1001)");
         } else {
             NSLog(@"Error connecting to server not seen before %d", [error code]);
         }

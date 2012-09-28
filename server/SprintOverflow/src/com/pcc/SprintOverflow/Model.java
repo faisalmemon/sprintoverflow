@@ -1,7 +1,5 @@
 package com.pcc.SprintOverflow;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -23,9 +21,9 @@ public class Model implements Resolver<String> {
 	private Map<String, Project> newModel;
 	private Map<String, Project> baseModel;
 	private Map<String, Project> masterModel;
-	enum State { Init, LoadedClientData, LoadedMasterData, ResolvedData, PersistedUpdatedMaster };
+	private enum State { Init, LoadedClientData, LoadedMasterData, ResolvedData, PersistedUpdatedMaster };
 	
-	State currentState;
+	private State currentState;
 
 	public Model() {
 		newModel = new LinkedHashMap<String, Project>();
@@ -34,9 +32,57 @@ public class Model implements Resolver<String> {
 		currentState = State.Init;
 	}
 	
-	public boolean uploadData(JsonElement nextPushJson, JsonElement lastFetchJson) {
+	public void reset() {
+		// Throw away old data, so it can be GC'ed
+		newModel = null;
+		baseModel = null;
+		masterModel = null;
+
+		// Start with fresh data
+		newModel = new LinkedHashMap<String, Project>();
+		baseModel = new LinkedHashMap<String, Project>();
+		masterModel = new LinkedHashMap<String, Project>();
+		currentState = State.Init;
+	}
+	
+	public boolean resolveClientData(JsonElement nextPushJson, JsonElement lastFetchJson) {
+		boolean progress;
+		
+		progress = uploadData(nextPushJson, lastFetchJson);
+		if (!progress) {
+			return false;
+		}
+		
+		progress = loadMasterData();
+		if (!progress) {
+			return false;
+		}
+		
+		progress = resolveModel();
+		if (!progress) {
+			return false;
+		}
+		
+		progress = persistUpdatedMaster();
+		return progress;	
+	}
+	
+	public String getUpdatedMasterAsJsonString() {
+		if (currentState != State.PersistedUpdatedMaster) {
+			throw new IllegalStateException("Tried to get updated master before it was persisted, instead we are in state " + currentState.toString());
+		}
+		Project[] updatedProjects = null;
+		masterModel.values().toArray(updatedProjects);
+		return SingletonManager.getTheGson().toJson(updatedProjects);
+	}
+	
+	private boolean uploadData(JsonElement nextPushJson, JsonElement lastFetchJson) {
 		JsonArray projectNextArray = null;
 		JsonArray projectBaseArray = null;
+		
+		if (currentState != State.Init) {
+			return false;
+		}
 		
 		try {
 			if (nextPushJson.isJsonArray()) {
@@ -87,13 +133,13 @@ public class Model implements Resolver<String> {
 		return true;
 	}
 	
-	public Project fetchProject(String aProjectOwnerEmail, String aSecurityToken) {
+	private Project fetchProject(String aProjectOwnerEmail, String aSecurityToken) {
 		Project project = null;
 		EntityManager em = null;
 		try {
-			em = SingletonEntityManager.get().createEntityManager();
+			em = SingletonManager.getEntityManagerFactory().createEntityManager();
 			project = (Project) em.createQuery(
-					"select p from project p" +
+					"select p from Project p" +
 					" where p.projectOwnerEmail=:supplied_email" +
 					" and p.securityToken=:supplied_securityToken")
 					.setParameter("supplied_email", aProjectOwnerEmail)
@@ -105,13 +151,13 @@ public class Model implements Resolver<String> {
 		return project;
 	}
 	
-	public void storeProject(Project p) {
+	private void storeProject(Project p) {
 		EntityManager em = null;
 		if (null == p) {
 			throw new NullPointerException("Cannot store a project which is null");
 		}
 		try {
-			em = SingletonEntityManager.get().createEntityManager();
+			em = SingletonManager.getEntityManagerFactory().createEntityManager();
 			em.persist(p);
 		} finally {
 			em.close();
@@ -167,7 +213,7 @@ public class Model implements Resolver<String> {
 		}		
 	}
 
-	public boolean loadMasterData() {
+	private boolean loadMasterData() {
 		if (currentState != State.LoadedClientData) {
 			return false;
 		}
@@ -195,7 +241,7 @@ public class Model implements Resolver<String> {
 		return true;
 	}
 	
-	public boolean resolveModel() {
+	private boolean resolveModel() {
 		if (currentState != State.LoadedMasterData) {
 			return false;
 		}		
@@ -211,7 +257,7 @@ public class Model implements Resolver<String> {
 		return true;
 	}
 	
-	public boolean persistUpdatedMaster() {
+	private boolean persistUpdatedMaster() {
 		if (currentState != State.ResolvedData) {
 			return false;
 		}
@@ -227,7 +273,7 @@ public class Model implements Resolver<String> {
 				throw new NullPointerException("Cannot store a project which is null");
 			}
 			try {
-				em = SingletonEntityManager.get().createEntityManager();
+				em = SingletonManager.getEntityManagerFactory().createEntityManager();
 				em.persist(p);
 			} finally {
 				em.close();

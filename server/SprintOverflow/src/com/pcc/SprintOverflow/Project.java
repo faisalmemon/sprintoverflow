@@ -100,8 +100,15 @@ public class Project {
 			setProjectOwnerEmail(json.get(Request.ProjectOwnerEmail.toString()).getAsString());
 			setProjectId(json.get(Request.ProjectId.toString()).getAsString());
 			setSecurityToken(json.get(Request.SecurityToken.toString()).getAsString());
-			setSoftDelete(json.get(Request.SoftDelete.toString()).getAsString());
-
+			
+			/* PROTOCOL DATA COMPATIBILITY.
+			 * If SoftDelete is absent, assume it is NO.
+			 */
+			if (json.get(Request.SoftDelete.toString()) != null) {
+				setSoftDelete(json.get(Request.SoftDelete.toString()).getAsString());
+			} else {
+				setSoftDelete(Request.NO.toString());
+			}
 		} catch (Exception e) {
 			throw new ProjectCreateException("Bad json data when creating project: " + json.toString());
 		}
