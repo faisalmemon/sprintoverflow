@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JSON/JSON.h"
 
 #import "soModel.h"
 

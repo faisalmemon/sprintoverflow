@@ -7,11 +7,9 @@
 //
 
 #import "soDatabase.h"
-#import "LocalModelCache.h"
 #import "soUtil.h"
 #import "soConstants.h"
 #import "ProjectList.h"
-#import "PendingQueue.h"
 #import "JsonModel.h"
 
 const int soDatabase_NoFailureSimulation = 0;

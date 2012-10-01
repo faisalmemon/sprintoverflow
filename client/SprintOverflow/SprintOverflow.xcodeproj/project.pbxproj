@@ -7,10 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3A253AED1602304C004AE0D0 /* LastFetch.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A253AEC1602304C004AE0D0 /* LastFetch.m */; };
-		3A253AF11602304C004AE0D0 /* LocalModelCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A253AF01602304C004AE0D0 /* LocalModelCache.m */; };
 		3A253AF41602304C004AE0D0 /* ProjectList.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A253AF31602304C004AE0D0 /* ProjectList.m */; };
-		3A253AFA16028BB0004AE0D0 /* PendingQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A253AF916028BB0004AE0D0 /* PendingQueue.m */; };
 		3A2BDA0615AC3B5E00AB3F7B /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3A2BDA0415AC3B5E00AB3F7B /* Model.xcdatamodeld */; };
 		3A30C02015EE671300FE937C /* soCreateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A30C01E15EE671300FE937C /* soCreateViewController.m */; };
 		3A30C02515EECBE100FE937C /* soSecurity.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A30C02415EECBE100FE937C /* soSecurity.m */; };
@@ -18,12 +15,6 @@
 		3A30C03115EFD46000FE937C /* join.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A30C03315EFD46000FE937C /* join.xib */; };
 		3A30C03415EFD49C00FE937C /* soCreateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A30C03615EFD49C00FE937C /* soCreateViewController.xib */; };
 		3A32968B15FA41B500D0501C /* soProject.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A32968A15FA41B500D0501C /* soProject.m */; };
-		3A48920615A1B17B00AAFF54 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4891FB15A1B17B00AAFF54 /* NSObject+SBJSON.m */; };
-		3A48920715A1B17B00AAFF54 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4891FD15A1B17B00AAFF54 /* NSString+SBJSON.m */; };
-		3A48920815A1B17B00AAFF54 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A4891FF15A1B17B00AAFF54 /* SBJSON.m */; };
-		3A48920915A1B17B00AAFF54 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A48920115A1B17B00AAFF54 /* SBJsonBase.m */; };
-		3A48920A15A1B17B00AAFF54 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A48920315A1B17B00AAFF54 /* SBJsonParser.m */; };
-		3A48920B15A1B17B00AAFF54 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A48920515A1B17B00AAFF54 /* SBJsonWriter.m */; };
 		3A48920E15A1B48C00AAFF54 /* soDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A48920D15A1B48C00AAFF54 /* soDatabase.m */; };
 		3A48921115A1B78A00AAFF54 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A48921015A1B78A00AAFF54 /* CoreData.framework */; };
 		3A6117BF15F4C20F00C155AD /* soConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6117BE15F4C20F00C155AD /* soConstants.m */; };
@@ -52,14 +43,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3A253AEB1602304C004AE0D0 /* LastFetch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LastFetch.h; sourceTree = "<group>"; };
-		3A253AEC1602304C004AE0D0 /* LastFetch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LastFetch.m; sourceTree = "<group>"; };
-		3A253AEF1602304C004AE0D0 /* LocalModelCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalModelCache.h; sourceTree = "<group>"; };
-		3A253AF01602304C004AE0D0 /* LocalModelCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalModelCache.m; sourceTree = "<group>"; };
 		3A253AF21602304C004AE0D0 /* ProjectList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectList.h; sourceTree = "<group>"; };
 		3A253AF31602304C004AE0D0 /* ProjectList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectList.m; sourceTree = "<group>"; };
-		3A253AF816028BB0004AE0D0 /* PendingQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PendingQueue.h; sourceTree = "<group>"; };
-		3A253AF916028BB0004AE0D0 /* PendingQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PendingQueue.m; sourceTree = "<group>"; };
 		3A2BDA0515AC3B5E00AB3F7B /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		3A30C01D15EE671300FE937C /* soCreateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soCreateViewController.h; sourceTree = "<group>"; };
 		3A30C01E15EE671300FE937C /* soCreateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soCreateViewController.m; sourceTree = "<group>"; };
@@ -70,19 +55,6 @@
 		3A30C03515EFD49C00FE937C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/soCreateViewController.xib; sourceTree = "<group>"; };
 		3A32968915FA41B500D0501C /* soProject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soProject.h; sourceTree = "<group>"; };
 		3A32968A15FA41B500D0501C /* soProject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soProject.m; sourceTree = "<group>"; };
-		3A4891F915A1B17B00AAFF54 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
-		3A4891FA15A1B17B00AAFF54 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
-		3A4891FB15A1B17B00AAFF54 /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
-		3A4891FC15A1B17B00AAFF54 /* NSString+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SBJSON.h"; sourceTree = "<group>"; };
-		3A4891FD15A1B17B00AAFF54 /* NSString+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SBJSON.m"; sourceTree = "<group>"; };
-		3A4891FE15A1B17B00AAFF54 /* SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJSON.h; sourceTree = "<group>"; };
-		3A4891FF15A1B17B00AAFF54 /* SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJSON.m; sourceTree = "<group>"; };
-		3A48920015A1B17B00AAFF54 /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonBase.h; sourceTree = "<group>"; };
-		3A48920115A1B17B00AAFF54 /* SBJsonBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonBase.m; sourceTree = "<group>"; };
-		3A48920215A1B17B00AAFF54 /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
-		3A48920315A1B17B00AAFF54 /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
-		3A48920415A1B17B00AAFF54 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
-		3A48920515A1B17B00AAFF54 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
 		3A48920D15A1B48C00AAFF54 /* soDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soDatabase.m; sourceTree = "<group>"; };
 		3A48920F15A1B4F200AAFF54 /* soDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soDatabase.h; sourceTree = "<group>"; };
 		3A48921015A1B78A00AAFF54 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -140,24 +112,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3A4891F815A1B17B00AAFF54 /* JSON */ = {
+		3A786DC81619E20E006A7E73 /* secondViewController */ = {
 			isa = PBXGroup;
 			children = (
-				3A4891F915A1B17B00AAFF54 /* JSON.h */,
-				3A4891FA15A1B17B00AAFF54 /* NSObject+SBJSON.h */,
-				3A4891FB15A1B17B00AAFF54 /* NSObject+SBJSON.m */,
-				3A4891FC15A1B17B00AAFF54 /* NSString+SBJSON.h */,
-				3A4891FD15A1B17B00AAFF54 /* NSString+SBJSON.m */,
-				3A4891FE15A1B17B00AAFF54 /* SBJSON.h */,
-				3A4891FF15A1B17B00AAFF54 /* SBJSON.m */,
-				3A48920015A1B17B00AAFF54 /* SBJsonBase.h */,
-				3A48920115A1B17B00AAFF54 /* SBJsonBase.m */,
-				3A48920215A1B17B00AAFF54 /* SBJsonParser.h */,
-				3A48920315A1B17B00AAFF54 /* SBJsonParser.m */,
-				3A48920415A1B17B00AAFF54 /* SBJsonWriter.h */,
-				3A48920515A1B17B00AAFF54 /* SBJsonWriter.m */,
+				3A9EAC88159E155C0042030E /* soSecondViewController.h */,
+				3A9EAC89159E155C0042030E /* soSecondViewController.m */,
+				3A9EAC92159E155C0042030E /* soSecondViewController.xib */,
 			);
-			path = JSON;
+			name = secondViewController;
+			sourceTree = "<group>";
+		};
+		3A786DC91619E29D006A7E73 /* joinViewController */ = {
+			isa = PBXGroup;
+			children = (
+				3AA9E40F15C851D9006A4704 /* soJoinViewController.h */,
+				3AA9E41015C851D9006A4704 /* soJoinViewController.m */,
+				3A30C03315EFD46000FE937C /* join.xib */,
+			);
+			name = joinViewController;
+			sourceTree = "<group>";
+		};
+		3A786DCA1619E2BD006A7E73 /* createViewController */ = {
+			isa = PBXGroup;
+			children = (
+				3A30C01D15EE671300FE937C /* soCreateViewController.h */,
+				3A30C01E15EE671300FE937C /* soCreateViewController.m */,
+				3A30C03615EFD49C00FE937C /* soCreateViewController.xib */,
+			);
+			name = createViewController;
 			sourceTree = "<group>";
 		};
 		3A9EAC60159E155C0042030E = {
@@ -192,17 +174,11 @@
 		3A9EAC75159E155C0042030E /* SprintOverflow */ = {
 			isa = PBXGroup;
 			children = (
-				3A253AF816028BB0004AE0D0 /* PendingQueue.h */,
-				3A253AF916028BB0004AE0D0 /* PendingQueue.m */,
 				3A786DB81618D90C006A7E73 /* JsonModel.h */,
 				3A786DB91618D90C006A7E73 /* JsonModel.m */,
 				3A2BDA0415AC3B5E00AB3F7B /* Model.xcdatamodeld */,
 				3A253AF21602304C004AE0D0 /* ProjectList.h */,
 				3A253AF31602304C004AE0D0 /* ProjectList.m */,
-				3A253AEF1602304C004AE0D0 /* LocalModelCache.h */,
-				3A253AF01602304C004AE0D0 /* LocalModelCache.m */,
-				3A253AEB1602304C004AE0D0 /* LastFetch.h */,
-				3A253AEC1602304C004AE0D0 /* LastFetch.m */,
 				3ABB585B15A2EDB1007A57A4 /* soStory.h */,
 				3ABB585C15A2EDB1007A57A4 /* soStory.m */,
 				3AB5F5EB15A1D78A000D9A55 /* soModel.h */,
@@ -219,7 +195,6 @@
 				3AB5F5E815A1D2AD000D9A55 /* soEpic.m */,
 				3A48920F15A1B4F200AAFF54 /* soDatabase.h */,
 				3A48920D15A1B48C00AAFF54 /* soDatabase.m */,
-				3A4891F815A1B17B00AAFF54 /* JSON */,
 				3A9EAC7E159E155C0042030E /* soAppDelegate.h */,
 				3A9EAC7F159E155C0042030E /* soAppDelegate.m */,
 				3A9EAC81159E155C0042030E /* soWelcomeViewController.h */,
@@ -227,19 +202,13 @@
 				3A9EAC8F159E155C0042030E /* welcome.xib */,
 				3A9EAC84159E155C0042030E /* first.png */,
 				3A9EAC86159E155C0042030E /* first@2x.png */,
-				3A9EAC88159E155C0042030E /* soSecondViewController.h */,
-				3A9EAC89159E155C0042030E /* soSecondViewController.m */,
-				3A9EAC92159E155C0042030E /* soSecondViewController.xib */,
+				3A786DC81619E20E006A7E73 /* secondViewController */,
 				3A9EAC8B159E155C0042030E /* second.png */,
 				3A9EAC8D159E155C0042030E /* second@2x.png */,
-				3AA9E40F15C851D9006A4704 /* soJoinViewController.h */,
-				3AA9E41015C851D9006A4704 /* soJoinViewController.m */,
-				3A30C03315EFD46000FE937C /* join.xib */,
-				3A30C01D15EE671300FE937C /* soCreateViewController.h */,
-				3A30C01E15EE671300FE937C /* soCreateViewController.m */,
+				3A786DC91619E29D006A7E73 /* joinViewController */,
+				3A786DCA1619E2BD006A7E73 /* createViewController */,
 				3A6117C015F4C44600C155AD /* soUtil.h */,
 				3A6117C115F4C44600C155AD /* soUtil.m */,
-				3A30C03615EFD49C00FE937C /* soCreateViewController.xib */,
 				3A9EAC76159E155C0042030E /* Supporting Files */,
 			);
 			path = SprintOverflow;
@@ -333,12 +302,6 @@
 				3A9EAC80159E155C0042030E /* soAppDelegate.m in Sources */,
 				3A9EAC83159E155C0042030E /* soWelcomeViewController.m in Sources */,
 				3A9EAC8A159E155C0042030E /* soSecondViewController.m in Sources */,
-				3A48920615A1B17B00AAFF54 /* NSObject+SBJSON.m in Sources */,
-				3A48920715A1B17B00AAFF54 /* NSString+SBJSON.m in Sources */,
-				3A48920815A1B17B00AAFF54 /* SBJSON.m in Sources */,
-				3A48920915A1B17B00AAFF54 /* SBJsonBase.m in Sources */,
-				3A48920A15A1B17B00AAFF54 /* SBJsonParser.m in Sources */,
-				3A48920B15A1B17B00AAFF54 /* SBJsonWriter.m in Sources */,
 				3A48920E15A1B48C00AAFF54 /* soDatabase.m in Sources */,
 				3AB5F5E915A1D2AD000D9A55 /* soEpic.m in Sources */,
 				3AB5F5ED15A1D78A000D9A55 /* soModel.m in Sources */,
@@ -351,10 +314,7 @@
 				3A6117BF15F4C20F00C155AD /* soConstants.m in Sources */,
 				3A6117C215F4C44600C155AD /* soUtil.m in Sources */,
 				3A32968B15FA41B500D0501C /* soProject.m in Sources */,
-				3A253AED1602304C004AE0D0 /* LastFetch.m in Sources */,
-				3A253AF11602304C004AE0D0 /* LocalModelCache.m in Sources */,
 				3A253AF41602304C004AE0D0 /* ProjectList.m in Sources */,
-				3A253AFA16028BB0004AE0D0 /* PendingQueue.m in Sources */,
 				3A786DBA1618D90C006A7E73 /* JsonModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

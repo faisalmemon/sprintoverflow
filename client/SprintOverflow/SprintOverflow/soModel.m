@@ -6,8 +6,6 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "JSON/JSON.h"
-
 #import "soModel.h"
 #import "soEpic.h"
 #import "soStory.h"
@@ -144,38 +142,6 @@
 -(void)addEpic:(soEpic*)epic toProject:(soProject*)project
 {
     [project addEpic:epic];
-}
-
-
-
--(void)bootstrapFromServer:(NSString *)modelAsJsonString
-{
-    NSDictionary *top = [modelAsJsonString JSONValue];
-    NSDictionary *p = [top objectForKey:@"project"]; // Not NSLocalizedString
-    soProject *soproject;
-    soproject = [[soProject alloc] initWithOwner:[p objectForKey:@"projectOwnerEmail"] withProjectId:[p objectForKey:@"projectId"] withSecurityToken:[p objectForKey:@"securityToken"]]; // Not NSLocalizedString
-    NSArray *epics = [p objectForKey:@"epics"]; // Not NSLocalizedString
-    for (NSDictionary *e in epics)
-    {
-        soEpic *soepic;
-        soepic = [[soEpic alloc] initWithName:[e objectForKey:@"epicName"] withId:[e objectForKey:@"epicId"]]; // Not NSLocalizedString
-        NSArray *stories = [e objectForKey:@"stories"]; // Not NSLocalizedString
-        for (NSDictionary *d in stories)
-        {
-            soStory *sostory;
-            sostory = [[soStory alloc] initWithName:[d objectForKey:@"storyName"] withId:[d objectForKey:@"storyId"] ]; // Not NSLocalizedString
-            NSArray *tasks = [d objectForKey:@"tasks"]; // Not NSLocalizedString
-            for (NSDictionary *d1 in tasks)
-            {
-                soTask *sotask;
-                sotask = [[soTask alloc] initWithName:[d1 objectForKey:@"taskName"] withId:[d1 objectForKey:@"taskId"] withStatus:[d1 objectForKey:@"status"]]; // Not NSLocalizedString
-                [sostory addTask:sotask];
-            }
-            [soepic addStory:sostory];
-        }
-        [soproject addEpic:soepic];
-    }
-    [soproject dumpProject];
 }
 
 -(NSString*)securityCodeFromId:(NSString*)project_id FromOwner:(NSString*)owner_email

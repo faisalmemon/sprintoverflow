@@ -17,7 +17,6 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-#import "JSON.h"
 
 #import "soModel.h"
 
