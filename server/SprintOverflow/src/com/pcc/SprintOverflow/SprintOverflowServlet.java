@@ -38,7 +38,9 @@ public class SprintOverflowServlet extends HttpServlet {
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
-		resp.setContentType("application/json");
+		resp.setContentType("application/json"); // application/x-www-form-urlencoded
+		//resp.setContentType("application/x-www-form-urlencoded");
+		resp.setCharacterEncoding("UTF-8");
 		
 		String jsonValue = req.getParameter(Request.Json.toString());
 		if (jsonValue != null) {
@@ -88,6 +90,7 @@ public class SprintOverflowServlet extends HttpServlet {
 		}
 		returnString = model.getUpdatedMasterAsJsonString();
 		resp.getWriter().println(returnString);
+		System.out.println("Supplying the client with the data " + returnString);
 		return;
 	}
 	private void supplyDefaultResponse(HttpServletResponse resp) throws IOException {

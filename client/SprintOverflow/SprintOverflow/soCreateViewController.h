@@ -35,6 +35,7 @@ enum soCreateActions {
 @property (weak, nonatomic) IBOutlet UILabel *handleSecurityTokenExplanation;
 @property (weak, nonatomic) IBOutlet UILabel *handleSecurityToken;
 @property (weak, nonatomic) IBOutlet UIButton *handleCreateProjectButton;
+- (IBAction)clickedCreateButton:(id)sender;
 @property (nonatomic) UIInterfaceOrientation orientation;
 
 @end

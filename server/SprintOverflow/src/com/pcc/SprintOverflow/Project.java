@@ -1,5 +1,6 @@
 package com.pcc.SprintOverflow;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -11,18 +12,19 @@ import javax.persistence.Id;
 
 import com.google.appengine.api.datastore.Key;
 import com.google.gson.*;
+import com.google.gson.annotations.Expose;
 
 @Entity
 public class Project {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Key key;
-	private String projectOwnerEmail;
-	private String projectId;
-	private String securityToken;
-	private String softDelete;
-	private Set<Epic> epics;
-	private List<String> resolutions;
+	@Expose private String projectOwnerEmail;
+	@Expose private String projectId;
+	@Expose private String securityToken;
+	@Expose private String softDelete;
+	@Expose private Set<Epic> epics;
+	@Expose private List<String> resolutions;
 	
 	/**
 	 * No-arg public constructor as required by the Java Persistence API.
@@ -93,6 +95,7 @@ public class Project {
 		setSecurityToken(aToken);
 		setEpics(new LinkedHashSet<Epic>());
 		setSoftDelete(Request.NO.toString());
+		resolutions = new ArrayList<String>();
 	}
 	
 	Project(JsonObject json) throws ProjectCreateException {
@@ -113,6 +116,7 @@ public class Project {
 			throw new ProjectCreateException("Bad json data when creating project: " + json.toString());
 		}
 		setEpics(new LinkedHashSet<Epic>());
+		resolutions = new ArrayList<String>();
 	}
 	
 	/** Add a epic to the project.

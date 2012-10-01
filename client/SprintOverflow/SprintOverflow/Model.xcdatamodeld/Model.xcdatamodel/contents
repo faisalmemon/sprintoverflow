@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1487" systemVersion="12B19" minimumToolsVersion="Xcode 4.1" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1810" systemVersion="12C54" minimumToolsVersion="Xcode 4.1" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="JsonModel" representedClassName="JsonModel" syncable="YES">
         <attribute name="lastFetch" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="nextPush" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="resolveList" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="LastFetch" representedClassName="LastFetch" syncable="YES">
         <attribute name="jsonData" optional="YES" attributeType="String" syncable="YES"/>
@@ -27,10 +26,10 @@
         <attribute name="securityToken" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="LocalModelCache" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="ProjectList" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="LastFetch" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="PendingQueue" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="JsonModel" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="JsonModel" positionX="0" positionY="0" width="128" height="75"/>
+        <element name="LastFetch" positionX="0" positionY="0" width="128" height="90"/>
+        <element name="LocalModelCache" positionX="0" positionY="0" width="128" height="90"/>
+        <element name="PendingQueue" positionX="0" positionY="0" width="128" height="105"/>
+        <element name="ProjectList" positionX="0" positionY="0" width="128" height="90"/>
     </elements>
 </model>

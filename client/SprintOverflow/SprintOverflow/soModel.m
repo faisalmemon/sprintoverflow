@@ -35,14 +35,6 @@
     
 }
 
-- (NSMutableArray *)resolveList
-{
-    @synchronized(self) {
-        return _resolveList;
-    }
-    
-}
-
 - (void)setLastFetch:(NSMutableArray *)lastFetch
 {
     if (nil == lastFetch) {
@@ -63,42 +55,29 @@
     }
 }
 
-- (void)setResolveList:(NSMutableArray *)resolveList
-{
-    if (nil == resolveList) {
-        NSLog(@"nil data entering resolveList");
-    }
-    @synchronized(self) {
-        _resolveList = resolveList;
-    }
-}
 
 - (void)setAltogetherLastFetch:(NSMutableArray *)lastFetch
                       NextPush:(NSMutableArray *)nextPush
-                   ResolveList:(NSMutableArray *)resolveList
 {
-    if (nil == lastFetch || nil == nextPush || nil == resolveList) {
+    if (nil == lastFetch || nil == nextPush) {
         NSLog(@"nil data entering model");
     }
     @synchronized(self) {
         _lastFetch = lastFetch;
         _nextPush = nextPush;
-        _resolveList = resolveList;
     }
 }
 
 - (void)getAltogetherLastFetch:(NSMutableArray **)lastFetch
                       NextPush:(NSMutableArray **)nextPush
-                   ResolveList:(NSMutableArray **)resolveList
 {
-    if (lastFetch == nil || nextPush == nil || resolveList == nil) {
+    if (lastFetch == nil || nextPush == nil ) {
         NSLog(@"getAltogether passed nil args unexpectedly.  Ignoring");
         return;
     }
     @synchronized(self) {
         *lastFetch = _lastFetch;
         *nextPush = _nextPush;
-        *resolveList = _resolveList;
     }
 }
 
@@ -142,8 +121,6 @@
 {
     _nextPush = [[NSMutableArray alloc]init];
     _lastFetch = [[NSMutableArray alloc]init];
-    _resolveList = [[NSMutableArray alloc]init];
-
 }
 
 -(NSString*)serverUrlPrefix
@@ -210,7 +187,6 @@
     NSString *securityCode = [_securityCodes valueForKey:key];
     if (nil == securityCode) {
         securityCode = [soSecurity createSecurityCode];
-        [self addProjectOwnerEmail:owner_email WithID:project_id WithSecurityToken:securityCode];
         [_securityCodes setObject:securityCode forKey:key];
     }
     return securityCode;

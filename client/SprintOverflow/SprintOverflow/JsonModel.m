@@ -2,7 +2,7 @@
 //  JsonModel.m
 //  SprintOverflow
 //
-//  Created by Faisal Memon on 18/09/2012.
+//  Created by Faisal Memon on 30/09/2012.
 //
 //
 
@@ -13,6 +13,5 @@
 
 @dynamic lastFetch;
 @dynamic nextPush;
-@dynamic resolveList;
 
 @end

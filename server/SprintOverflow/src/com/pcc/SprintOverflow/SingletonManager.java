@@ -35,6 +35,7 @@ public final class SingletonManager {
 	private static final Gson theGson =  
 			new GsonBuilder()
 			.setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
+			.excludeFieldsWithoutExposeAnnotation()
 			.create(); 
 	private static final JsonParser theParser = new JsonParser();
 	

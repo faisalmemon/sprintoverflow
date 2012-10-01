@@ -284,7 +284,14 @@ public class Model implements Resolver<String> {
 		EntityManager em = null;
 		Iterator<Project>projItr = masterModel.values().iterator();
 		if (!projItr.hasNext()) {
-			return false;
+			/*
+			 * When the client supplies an empty list of projects,
+			 * there is no persisting needed.  But it is not an error
+			 * to do no work, it just represents a cold start situation
+			 * at the client.
+			 */
+			currentState = State.PersistedUpdatedMaster;
+			return true;
 		}
 		Project p = null;
 		while (projItr.hasNext()) {

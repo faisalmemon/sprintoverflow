@@ -40,7 +40,6 @@
     BOOL isLocalServer;// ST
     NSMutableArray *_lastFetch;  // MT
     NSMutableArray *_nextPush; // MT
-    NSMutableArray *_resolveList;  // MT
     NSMutableDictionary *_securityCodes; // ST
 }
 
@@ -48,11 +47,9 @@
 @property (nonatomic, retain) NSMutableArray *nextPush;
 @property (nonatomic, retain) NSMutableArray *resolveList;
 - (void)setAltogetherLastFetch:(NSMutableArray *)lastFetch
-                      NextPush:(NSMutableArray *)nextPush
-                   ResolveList:(NSMutableArray *)resolveList;
+                      NextPush:(NSMutableArray *)nextPush;
 - (void)getAltogetherLastFetch:(NSMutableArray **)lastFetch
-                      NextPush:(NSMutableArray **)nextPush
-                   ResolveList:(NSMutableArray **)resolveList;
+                      NextPush:(NSMutableArray **)nextPush;
 
 + (id)sharedInstance;
 - (BOOL)bootstrap;

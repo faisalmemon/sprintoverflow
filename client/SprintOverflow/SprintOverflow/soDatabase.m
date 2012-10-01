@@ -242,28 +242,35 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
         jsonModel = [mutableFetchResults objectAtIndex:0];
     }
     
-    NSData *lastFetchData = [NSJSONSerialization dataWithJSONObject:[model lastFetch] options:NSJSONWritingPrettyPrinted error:&error];
-    
-    if ([lastFetchData length] <=0 || error != nil) {
-        NSLog(@"Programming error since last fetch data should never be nil or have serialization problems.");
-        [self inMemoryConsistencyProblem];
-        return NO;
+    if ([model lastFetch] != nil) {
+        NSData *lastFetchData = [NSJSONSerialization dataWithJSONObject:[model lastFetch] options:NSJSONWritingPrettyPrinted error:&error];
+        
+        if ([lastFetchData length] <=0 || error != nil) {
+            NSLog(@"Programming error since last fetch data should never be nil or have serialization problems.");
+            [self inMemoryConsistencyProblem];
+            return NO;
+        }
+        NSString *lastFetchDataAsString = [NSString stringWithUTF8String:[lastFetchData bytes]];
+        
+        [jsonModel setLastFetch:lastFetchDataAsString];
+    } else {
+        [jsonModel setLastFetch:ksoEmptyList];
     }
-    NSString *lastFetchDataAsString = [NSString stringWithUTF8String:[lastFetchData bytes]];
-    
-    [jsonModel setLastFetch:lastFetchDataAsString];
 
-    NSData *nextPushData = [NSJSONSerialization dataWithJSONObject:[model nextPush] options:NSJSONWritingPrettyPrinted error:&error];
-    
-    if ([nextPushData length] <= 0 || error != nil) {
-        NSLog(@"Programming error since push data should never be nil or have serialization problems.");
-        [self inMemoryConsistencyProblem];
-        return NO;
+    if ([model nextPush] != nil) {
+        NSData *nextPushData = [NSJSONSerialization dataWithJSONObject:[model nextPush] options:NSJSONWritingPrettyPrinted error:&error];
+        
+        if ([nextPushData length] <= 0 || error != nil) {
+            NSLog(@"Programming error since push data should never be nil or have serialization problems.");
+            [self inMemoryConsistencyProblem];
+            return NO;
+        }
+        NSString *nextPushDataAsString = [NSString stringWithUTF8String:[nextPushData bytes]];
+        
+        [jsonModel setNextPush:nextPushDataAsString];
+    } else {
+        [jsonModel setNextPush:ksoEmptyList];
     }
-    NSString *nextPushDataAsString = [NSString stringWithUTF8String:[nextPushData bytes]];
-    
-    [jsonModel setNextPush:nextPushDataAsString];
-
     
     [mocp save:&error];
     if (nil != error) {
@@ -308,14 +315,9 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     if (nil == [jsonModel nextPush]) {
         [jsonModel setNextPush:ksoEmptyList];
     }
-    if (nil == [jsonModel resolveList]) {
-        [jsonModel setResolveList:ksoEmptyList];
-    }
-    
-    
+  
     [model setAltogetherLastFetch:[soUtil ArrayFromJson:[jsonModel lastFetch] UpdateError:&error1]
-                         NextPush:[soUtil ArrayFromJson:[jsonModel nextPush] UpdateError:&error2]
-                      ResolveList:[soUtil ArrayFromJson:[jsonModel resolveList] UpdateError:&error3]];
+                         NextPush:[soUtil ArrayFromJson:[jsonModel nextPush] UpdateError:&error2]];
     if (nil != error1 || nil != error2 || nil != error3) {
         [self jsonProblem];
         return NO;
@@ -341,30 +343,32 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
             NSLog(@"Error connecting to server not seen before %d", [error code]);
         }
         return;
-    }
-    
-    if ([data length] <= 0) {
-        NSLog(@"Server response was nil.  Consider this a non-responsive server.");
+    }    
+    NSError *errorConvertingToString = nil;
+    NSString *fromServer = [soUtil getUtf8StringFromNsData:data UpdateError:&errorConvertingToString];
+
+    if (errorConvertingToString != nil) {
+        NSLog(@"We got a data conversion error from the server %@", [errorConvertingToString localizedDescription]);
         return;
     }
-    NSString* fromServer = [NSString stringWithUTF8String:[data bytes]];
+    if (nil == fromServer) {
+        NSLog(@"We got nothing back from the server.");
+        return;
+    }
     NSLog(@"Server responded with %@", fromServer);
     
     NSError *errorConvertingServerResponse = nil;
-    NSDictionary *dict = [soUtil DictionaryFromJson:fromServer UpdateError:&errorConvertingServerResponse];
+    NSMutableArray *lastFetch = [soUtil ArrayFromJson:fromServer UpdateError:&errorConvertingServerResponse];
     if (nil != error) {
         NSLog(@"Could not decode server response, got error %@", [errorConvertingServerResponse localizedDescription]);
         return;
     }
-    soModel *model = [soModel sharedInstance];
-    //CONTINUE HERE TO HANDLE JUST THE PROJECTS COMING BACK
-    NSMutableArray *lastFetch = [dict objectForKey:ksoLastFetch];
-    NSMutableArray *resolveList = [dict objectForKey:ksoResolveList];
-    if (lastFetch == nil || resolveList == nil) {
-        NSLog(@"Server did not supply an answer for lastFetch and resolveList; ignoring server");
+    if (nil == lastFetch || [lastFetch count] <= 0) {
+        NSLog(@"The server responded with an empty list of projects.  This can happen in a COLD START situation in the client.");
         return;
     }
-    [model setAltogetherLastFetch:lastFetch NextPush:lastFetch ResolveList:resolveList];
+    soModel *model = [soModel sharedInstance];
+    [model setLastFetch:lastFetch];
     [[soDatabase sharedInstance]saveMemoryToDisk];    
 }
 
@@ -387,18 +391,30 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
         return NO;
     }
     
-    JsonModel *jsonModel;
+    NSString *jsonPacket;
+    
+    /*
+     Do we have stored data for projects, or are we doing a COLD START?
+     */
     if ([mutableFetchResults count] > 0) {
+        JsonModel *jsonModel;
         jsonModel = [mutableFetchResults objectAtIndex:0];
+        jsonPacket = [NSString stringWithFormat:
+                      ksoDictTwoArray,
+                      ksoLastFetch, [jsonModel lastFetch],
+                      ksoNextPush, [jsonModel nextPush]
+                      ];
     } else {
-        jsonModel = nil;
+        jsonPacket = [NSString stringWithFormat:
+                      ksoDictTwoArray,
+                      ksoLastFetch, ksoEmptyList,
+                      ksoNextPush, ksoEmptyList
+                      ];
     }
     
-    NSString *jsonPacket = [NSString stringWithFormat:
-                                 ksoDictTwoArray,
-                                 ksoLastFetch, [jsonModel lastFetch],
-                                 ksoNextPush, [jsonModel nextPush]
-                                 ];
+    if (jsonPacket == nil) {
+        return NO;
+    }
     
     NSString *bodyData = [NSString stringWithFormat: @"Json=%@", [soUtil safeWebStringFromString:jsonPacket]];
   
@@ -411,12 +427,6 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     
     void (^handler)(NSURLResponse *, NSData *, NSError *) =
     ^(NSURLResponse *resp, NSData *data, NSError *error) {
-        if (!error) {
-            NSString* fromServer = [NSString stringWithUTF8String:[data bytes]];
-            NSLog(@"block handler has data showing BEGIN_STRING%@END_STRING", fromServer);
-        } else {
-            NSLog(@"Response from server yields error %@", error);
-        }
         [soDatabase processServerResponse:resp WithData:data WithError:error];
     };
     [NSURLConnection sendAsynchronousRequest:postRequest queue:[self networkQueue] completionHandler:handler];
