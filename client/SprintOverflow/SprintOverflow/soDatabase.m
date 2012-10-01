@@ -250,9 +250,13 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
             [self inMemoryConsistencyProblem];
             return NO;
         }
-        NSString *lastFetchDataAsString = [NSString stringWithUTF8String:[lastFetchData bytes]];
-        
-        [jsonModel setLastFetch:lastFetchDataAsString];
+        NSString *lastFetchDataAsString = [soUtil getUtf8StringFromNsData:lastFetchData UpdateError:&error];
+        if (nil != lastFetchDataAsString && nil == error) {
+            [jsonModel setLastFetch:lastFetchDataAsString];
+        }
+        else {
+            [jsonModel setLastFetch:ksoEmptyList];
+        }
     } else {
         [jsonModel setLastFetch:ksoEmptyList];
     }
@@ -265,9 +269,12 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
             [self inMemoryConsistencyProblem];
             return NO;
         }
-        NSString *nextPushDataAsString = [NSString stringWithUTF8String:[nextPushData bytes]];
-        
-        [jsonModel setNextPush:nextPushDataAsString];
+        NSString *nextPushDataAsString = [soUtil getUtf8StringFromNsData:nextPushData UpdateError:&error];
+        if (nil != nextPushDataAsString && nil == error) {
+            [jsonModel setNextPush:nextPushDataAsString];
+        } else {
+            [jsonModel setNextPush:ksoEmptyList];
+        }
     } else {
         [jsonModel setNextPush:ksoEmptyList];
     }

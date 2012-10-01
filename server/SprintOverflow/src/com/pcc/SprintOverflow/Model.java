@@ -303,8 +303,8 @@ public class Model implements Resolver<String> {
 				em = SingletonManager.getEntityManagerFactory().createEntityManager();
 				if (em.contains(p)) {
 					System.out.println("em already managing " + p + " so no more work to do");
-				} else {
-					em.persist(p);
+				}  else {
+					em.merge(p);
 				}
 			} finally {
 				em.close();
