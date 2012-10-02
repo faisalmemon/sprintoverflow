@@ -61,14 +61,14 @@
     [super viewDidUnload];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+- (NSUInteger)supportedInterfaceOrientations
 {
-    return TRUE;
+    return UIInterfaceOrientationMaskAll;
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
                                 duration:(NSTimeInterval)duration {
-    orientation = toInterfaceOrientation;
+    [self setOrientation:toInterfaceOrientation];
 }
 
 - (void)updateStateMachine:(enum soCreateActions)action

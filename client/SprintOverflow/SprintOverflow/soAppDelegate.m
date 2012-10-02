@@ -23,7 +23,13 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
+    
+    /*
+     There is a problem at initial launch, the application does not know what orientation it is in.
+     Subsequent changes are tracked ok, however.  To solve this problem, we make the initial orientation
+     the same as the status bar's orientation.
+     */
+    UIInterfaceOrientation startingOrientation = [[UIApplication sharedApplication] statusBarOrientation];
     
     self->model = [soModel sharedInstance];
     [model bootstrap];
@@ -32,7 +38,9 @@
     
     self.uinavControllerMilestone = [[UINavigationController alloc]init];
 
-    UIViewController *welcomeViewController = [[soWelcomeViewController alloc] initWithNibName:@"welcome" bundle:nil]; // Not NSLocalizedString
+    soWelcomeViewController *welcomeViewController = [[soWelcomeViewController alloc] initWithNibName:@"welcome" bundle:nil]; // Not NSLocalizedString
+    [welcomeViewController setOrientation:startingOrientation];
+    
     UIViewController *viewController2 = [[soSecondViewController alloc] initWithNibName:@"soSecondViewController" bundle:nil]; // Not NSLocalizedString
     
     [uinavControllerWelcome pushViewController:welcomeViewController animated:NO];

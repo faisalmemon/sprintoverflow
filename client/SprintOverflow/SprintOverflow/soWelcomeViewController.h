@@ -9,9 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @interface soWelcomeViewController : UIViewController {
-    UIInterfaceOrientation orientation;
+    UIInterfaceOrientation _orientation;
 }
 
--(IBAction) drillIntoJoin:(UIButton*)sender;
+@property (nonatomic) UIInterfaceOrientation orientation;
+
+- (IBAction)drillIntoJoin:(UIButton*)sender;
 - (IBAction)drillIntoStartProject:(id)sender;
+- (IBAction)drillIntoCurrentProjects:(id)sender;
+
 @end

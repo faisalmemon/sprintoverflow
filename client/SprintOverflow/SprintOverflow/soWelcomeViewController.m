@@ -9,12 +9,15 @@
 #import "soWelcomeViewController.h"
 #import "soJoinViewController.h"
 #import "soCreateViewController.h"
+#import "soCurrentProjectsViewController.h"
 
 @interface soWelcomeViewController ()
 
 @end
 
 @implementation soWelcomeViewController
+
+@synthesize orientation = _orientation;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,7 +32,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
 }
 
 - (void)viewDidUnload
@@ -38,14 +40,14 @@
     // Release any retained subviews of the main view.
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+- (NSUInteger)supportedInterfaceOrientations
 {
-    return TRUE;
+    return UIInterfaceOrientationMaskAll;
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
                                 duration:(NSTimeInterval)duration {
-    orientation = toInterfaceOrientation;
+    _orientation = toInterfaceOrientation;
 }
 
 
@@ -55,15 +57,25 @@
     joinvc = [[soJoinViewController alloc] initWithNibName:@"join" bundle:nil]; // Not NSLocalizedString
     
     joinvc.title = NSLocalizedString(@"Join", @"Screen where you Join a project; join here means to participate in the project");
-    joinvc.orientation = orientation;
+    joinvc.orientation = _orientation;
     [self.navigationController pushViewController: joinvc animated:YES];
+}
+
+- (IBAction)drillIntoCurrentProjects:(id)sender
+{
+    soCurrentProjectsViewController *currentprojvc;
+    currentprojvc = [[soCurrentProjectsViewController alloc] initWithNibName:@"soCurrentProjectsViewController" bundle:nil]; // Not NSLocalizedString
+    
+    currentprojvc.title = NSLocalizedString(@"Current Projects", @"Screen where you look at the projects you are currently using");
+    [currentprojvc setOrientation:[self orientation]];
+    [self.navigationController pushViewController:currentprojvc animated:YES];
 }
 
 - (IBAction)drillIntoStartProject:(id)sender {
     soCreateViewController *createvc;
     createvc = [[soCreateViewController alloc] initWithNibName:@"soCreateViewController" bundle:nil] ; // Not NSLocalizedString
     createvc.title = NSLocalizedString(@"Create", @"Screen where you Create a project");
-    createvc.orientation = orientation;
+    createvc.orientation = _orientation;
     [self.navigationController pushViewController: createvc animated:YES];
 }
 

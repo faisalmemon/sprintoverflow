@@ -22,6 +22,8 @@
 		3A786DBA1618D90C006A7E73 /* JsonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A786DB91618D90C006A7E73 /* JsonModel.m */; };
 		3A786DD7161B3BCB006A7E73 /* soEpicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A786DD5161B3BCA006A7E73 /* soEpicViewController.m */; };
 		3A786DD8161B3BCB006A7E73 /* soEpicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A786DD6161B3BCA006A7E73 /* soEpicViewController.xib */; };
+		3A786DDE161B50A6006A7E73 /* soCurrentProjectsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A786DDC161B50A5006A7E73 /* soCurrentProjectsViewController.m */; };
+		3A786DDF161B50A6006A7E73 /* soCurrentProjectsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A786DDD161B50A6006A7E73 /* soCurrentProjectsViewController.xib */; };
 		3A9EAC70159E155C0042030E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A9EAC6F159E155C0042030E /* UIKit.framework */; };
 		3A9EAC72159E155C0042030E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A9EAC71159E155C0042030E /* Foundation.framework */; };
 		3A9EAC74159E155C0042030E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A9EAC73159E155C0042030E /* CoreGraphics.framework */; };
@@ -69,6 +71,9 @@
 		3A786DD4161B3BCA006A7E73 /* soEpicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soEpicViewController.h; sourceTree = "<group>"; };
 		3A786DD5161B3BCA006A7E73 /* soEpicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soEpicViewController.m; sourceTree = "<group>"; };
 		3A786DD6161B3BCA006A7E73 /* soEpicViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = soEpicViewController.xib; sourceTree = "<group>"; };
+		3A786DDB161B50A5006A7E73 /* soCurrentProjectsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soCurrentProjectsViewController.h; sourceTree = "<group>"; };
+		3A786DDC161B50A5006A7E73 /* soCurrentProjectsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soCurrentProjectsViewController.m; sourceTree = "<group>"; };
+		3A786DDD161B50A6006A7E73 /* soCurrentProjectsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = soCurrentProjectsViewController.xib; sourceTree = "<group>"; };
 		3A9EAC6B159E155C0042030E /* SprintOverflow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SprintOverflow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A9EAC6F159E155C0042030E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3A9EAC71159E155C0042030E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -167,39 +172,21 @@
 			name = welcomeViewController;
 			sourceTree = "<group>";
 		};
-		3A9EAC60159E155C0042030E = {
+		3A786DE0161B7F60006A7E73 /* currentProjectsViewController */ = {
 			isa = PBXGroup;
 			children = (
-				3AE763CF160E6359000BDBA9 /* Default-568h@2x.png */,
-				3A48921015A1B78A00AAFF54 /* CoreData.framework */,
-				3A9EAC75159E155C0042030E /* SprintOverflow */,
-				3A9EAC6E159E155C0042030E /* Frameworks */,
-				3A9EAC6C159E155C0042030E /* Products */,
+				3A786DDB161B50A5006A7E73 /* soCurrentProjectsViewController.h */,
+				3A786DDC161B50A5006A7E73 /* soCurrentProjectsViewController.m */,
+				3A786DDD161B50A6006A7E73 /* soCurrentProjectsViewController.xib */,
 			);
+			name = currentProjectsViewController;
 			sourceTree = "<group>";
 		};
-		3A9EAC6C159E155C0042030E /* Products */ = {
+		3A786DE1161B7FD4006A7E73 /* model */ = {
 			isa = PBXGroup;
 			children = (
-				3A9EAC6B159E155C0042030E /* SprintOverflow.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		3A9EAC6E159E155C0042030E /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				3A9EAC6F159E155C0042030E /* UIKit.framework */,
-				3A9EAC71159E155C0042030E /* Foundation.framework */,
-				3A9EAC73159E155C0042030E /* CoreGraphics.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		3A9EAC75159E155C0042030E /* SprintOverflow */ = {
-			isa = PBXGroup;
-			children = (
-				3A786DD9161B3C66006A7E73 /* epicViewController */,
+				3A6117C115F4C44600C155AD /* soUtil.m */,
+				3A6117C015F4C44600C155AD /* soUtil.h */,
 				3A786DB81618D90C006A7E73 /* JsonModel.h */,
 				3A786DB91618D90C006A7E73 /* JsonModel.m */,
 				3A2BDA0415AC3B5E00AB3F7B /* Model.xcdatamodeld */,
@@ -221,8 +208,47 @@
 				3AB5F5E815A1D2AD000D9A55 /* soEpic.m */,
 				3A48920F15A1B4F200AAFF54 /* soDatabase.h */,
 				3A48920D15A1B48C00AAFF54 /* soDatabase.m */,
+			);
+			name = model;
+			sourceTree = "<group>";
+		};
+		3A9EAC60159E155C0042030E = {
+			isa = PBXGroup;
+			children = (
+				3AE763CF160E6359000BDBA9 /* Default-568h@2x.png */,
+				3A9EAC75159E155C0042030E /* SprintOverflow */,
+				3A9EAC6E159E155C0042030E /* Frameworks */,
+				3A9EAC6C159E155C0042030E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3A9EAC6C159E155C0042030E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3A9EAC6B159E155C0042030E /* SprintOverflow.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3A9EAC6E159E155C0042030E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3A48921015A1B78A00AAFF54 /* CoreData.framework */,
+				3A9EAC6F159E155C0042030E /* UIKit.framework */,
+				3A9EAC71159E155C0042030E /* Foundation.framework */,
+				3A9EAC73159E155C0042030E /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3A9EAC75159E155C0042030E /* SprintOverflow */ = {
+			isa = PBXGroup;
+			children = (
 				3A9EAC7E159E155C0042030E /* soAppDelegate.h */,
 				3A9EAC7F159E155C0042030E /* soAppDelegate.m */,
+				3A786DE1161B7FD4006A7E73 /* model */,
+				3A786DE0161B7F60006A7E73 /* currentProjectsViewController */,
+				3A786DD9161B3C66006A7E73 /* epicViewController */,
 				3A786DDA161B42D3006A7E73 /* welcomeViewController */,
 				3A9EAC84159E155C0042030E /* first.png */,
 				3A9EAC86159E155C0042030E /* first@2x.png */,
@@ -231,8 +257,6 @@
 				3A9EAC8D159E155C0042030E /* second@2x.png */,
 				3A786DC91619E29D006A7E73 /* joinViewController */,
 				3A786DCA1619E2BD006A7E73 /* createViewController */,
-				3A6117C015F4C44600C155AD /* soUtil.h */,
-				3A6117C115F4C44600C155AD /* soUtil.m */,
 				3A9EAC76159E155C0042030E /* Supporting Files */,
 			);
 			path = SprintOverflow;
@@ -313,6 +337,7 @@
 				3A30C03015EFD33D00FE937C /* findMissingLocalizedStrings.sh in Resources */,
 				3AE763D0160E6359000BDBA9 /* Default-568h@2x.png in Resources */,
 				3A786DD8161B3BCB006A7E73 /* soEpicViewController.xib in Resources */,
+				3A786DDF161B50A6006A7E73 /* soCurrentProjectsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,6 +367,7 @@
 				3A253AF41602304C004AE0D0 /* ProjectList.m in Sources */,
 				3A786DBA1618D90C006A7E73 /* JsonModel.m in Sources */,
 				3A786DD7161B3BCB006A7E73 /* soEpicViewController.m in Sources */,
+				3A786DDE161B50A6006A7E73 /* soCurrentProjectsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -36,9 +36,9 @@
     // Release any retained subviews of the main view.
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+- (NSUInteger)supportedInterfaceOrientations
 {
-    return TRUE;
+    return UIInterfaceOrientationMaskAll;
 }
 
 @end
