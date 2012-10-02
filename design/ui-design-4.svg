@@ -24,16 +24,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.5"
-     inkscape:cx="171.42858"
-     inkscape:cy="905.79863"
+     inkscape:zoom="1.2484974"
+     inkscape:cx="299.82967"
+     inkscape:cy="824.81893"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1090"
-     inkscape:window-height="713"
-     inkscape:window-x="305"
-     inkscape:window-y="43"
+     inkscape:window-width="1316"
+     inkscape:window-height="779"
+     inkscape:window-x="110"
+     inkscape:window-y="76"
      inkscape:window-maximized="0" />
   <metadata
      id="metadata8820">
@@ -43,7 +43,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -137,5 +137,158 @@
          id="tspan9359"
          x="60.193745"
          y="38.40892">project_info</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="368.4429"
+       y="38.343224"
+       id="text4083"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4085"
+         x="368.4429"
+         y="38.343224">current_projects</tspan></text>
+    <rect
+       y="54.765072"
+       x="366.09943"
+       height="271.42859"
+       width="251.42859"
+       id="rect4089"
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+    <rect
+       style="fill:none;fill-opacity:0.83921568999999985;stroke:#000000;stroke-opacity:1"
+       id="rect4091"
+       width="206.64841"
+       height="223.46863"
+       x="392.4718"
+       y="88.803879" />
+    <g
+       transform="translate(-1.6019257,80.096284)"
+       id="g4890">
+      <text
+         sodipodi:linespacing="125%"
+         id="text4892"
+         y="117.63854"
+         x="406.08817"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+         xml:space="preserve"><tspan
+           y="117.63854"
+           x="406.08817"
+           id="tspan4894"
+           sodipodi:role="line">project_id_text</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text4896"
+         y="134.45876"
+         x="418.90356"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+         xml:space="preserve"><tspan
+           y="134.45876"
+           x="418.90356"
+           id="tspan4898"
+           sodipodi:role="line">project_owner_email</tspan><tspan
+           y="146.95876"
+           x="418.90356"
+           sodipodi:role="line"
+           id="tspan5866">security token</tspan><tspan
+           y="159.45876"
+           x="418.90356"
+           sodipodi:role="line"
+           id="tspan5868" /></text>
+      <path
+         inkscape:connector-curvature="0"
+         id="path4900"
+         d="m 557.47014,112.83277 13.61637,10.41251 -12.81541,9.61156"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="405.2872"
+       y="75.187515"
+       id="text5862"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5864"
+         x="405.2872"
+         y="75.187515">Current Projects</tspan></text>
+    <g
+       id="g5870"
+       transform="translate(-0.80096286,32.038513)">
+      <text
+         xml:space="preserve"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+         x="406.08817"
+         y="117.63854"
+         id="text5872"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan5874"
+           x="406.08817"
+           y="117.63854">project_id_text</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+         x="418.90356"
+         y="134.45876"
+         id="text5876"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan5878"
+           x="418.90356"
+           y="134.45876">project_owner_email</tspan><tspan
+           id="tspan5880"
+           sodipodi:role="line"
+           x="418.90356"
+           y="146.95876">security token</tspan><tspan
+           id="tspan5882"
+           sodipodi:role="line"
+           x="418.90356"
+           y="159.45876" /></text>
+      <path
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 557.47014,112.83277 13.61637,10.41251 -12.81541,9.61156"
+         id="path5884"
+         inkscape:connector-curvature="0" />
+    </g>
+    <g
+       transform="translate(-0.80096286,-12.815406)"
+       id="g5886">
+      <text
+         sodipodi:linespacing="125%"
+         id="text5888"
+         y="117.63854"
+         x="406.08817"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+         xml:space="preserve"><tspan
+           y="117.63854"
+           x="406.08817"
+           id="tspan5890"
+           sodipodi:role="line">project_id_text</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text5892"
+         y="134.45876"
+         x="418.90356"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+         xml:space="preserve"><tspan
+           y="134.45876"
+           x="418.90356"
+           id="tspan5894"
+           sodipodi:role="line">project_owner_email</tspan><tspan
+           y="146.95876"
+           x="418.90356"
+           sodipodi:role="line"
+           id="tspan5896">security token</tspan><tspan
+           y="159.45876"
+           x="418.90356"
+           sodipodi:role="line"
+           id="tspan5898" /></text>
+      <path
+         inkscape:connector-curvature="0"
+         id="path5900"
+         d="m 557.47014,112.83277 13.61637,10.41251 -12.81541,9.61156"
+         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    </g>
   </g>
 </svg>

@@ -7,6 +7,8 @@
 //
 
 #import "soCreateViewController.h"
+#import "soEpicViewController.h"
+
 #import "soConstants.h"
 #import "soUtil.h"
 
@@ -185,6 +187,17 @@
     NSString *security_code = [NSString stringWithString:handleSecurityToken.text];
 
     [[soModel sharedInstance] addProjectOwnerEmail:owner_email WithID:project_id WithSecurityToken:security_code ];
-
+    
+    soEpicViewController *epicvc;
+    NSString *epicViewTitle = [[NSString alloc] initWithFormat:@"%@ %@", project_id, NSLocalizedString(@"Epics", @"Screen where you manage the Epic task level for a  project")];
+    epicvc = [[ soEpicViewController alloc] initWithNibName:@"soEpicViewController" bundle:nil];
+    epicvc.title = epicViewTitle;
+    epicvc.orientation = orientation;
+    //[self.navigationController popToRootViewControllerAnimated:YES];
+    // CONTINUE HERE
+    // change code to use a protocol to get the root view controller to show and then to drill
+    // down to get to the new project.
+    [self.navigationController pushViewController:epicvc animated:YES];
 }
+
 @end

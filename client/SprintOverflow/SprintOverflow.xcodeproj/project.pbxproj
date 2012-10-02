@@ -20,6 +20,8 @@
 		3A6117BF15F4C20F00C155AD /* soConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6117BE15F4C20F00C155AD /* soConstants.m */; };
 		3A6117C215F4C44600C155AD /* soUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A6117C115F4C44600C155AD /* soUtil.m */; };
 		3A786DBA1618D90C006A7E73 /* JsonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A786DB91618D90C006A7E73 /* JsonModel.m */; };
+		3A786DD7161B3BCB006A7E73 /* soEpicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A786DD5161B3BCA006A7E73 /* soEpicViewController.m */; };
+		3A786DD8161B3BCB006A7E73 /* soEpicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A786DD6161B3BCA006A7E73 /* soEpicViewController.xib */; };
 		3A9EAC70159E155C0042030E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A9EAC6F159E155C0042030E /* UIKit.framework */; };
 		3A9EAC72159E155C0042030E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A9EAC71159E155C0042030E /* Foundation.framework */; };
 		3A9EAC74159E155C0042030E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A9EAC73159E155C0042030E /* CoreGraphics.framework */; };
@@ -64,6 +66,9 @@
 		3A6117C115F4C44600C155AD /* soUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soUtil.m; sourceTree = "<group>"; };
 		3A786DB81618D90C006A7E73 /* JsonModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JsonModel.h; sourceTree = "<group>"; };
 		3A786DB91618D90C006A7E73 /* JsonModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JsonModel.m; sourceTree = "<group>"; };
+		3A786DD4161B3BCA006A7E73 /* soEpicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soEpicViewController.h; sourceTree = "<group>"; };
+		3A786DD5161B3BCA006A7E73 /* soEpicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soEpicViewController.m; sourceTree = "<group>"; };
+		3A786DD6161B3BCA006A7E73 /* soEpicViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = soEpicViewController.xib; sourceTree = "<group>"; };
 		3A9EAC6B159E155C0042030E /* SprintOverflow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SprintOverflow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A9EAC6F159E155C0042030E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3A9EAC71159E155C0042030E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -142,6 +147,26 @@
 			name = createViewController;
 			sourceTree = "<group>";
 		};
+		3A786DD9161B3C66006A7E73 /* epicViewController */ = {
+			isa = PBXGroup;
+			children = (
+				3A786DD4161B3BCA006A7E73 /* soEpicViewController.h */,
+				3A786DD5161B3BCA006A7E73 /* soEpicViewController.m */,
+				3A786DD6161B3BCA006A7E73 /* soEpicViewController.xib */,
+			);
+			name = epicViewController;
+			sourceTree = "<group>";
+		};
+		3A786DDA161B42D3006A7E73 /* welcomeViewController */ = {
+			isa = PBXGroup;
+			children = (
+				3A9EAC81159E155C0042030E /* soWelcomeViewController.h */,
+				3A9EAC82159E155C0042030E /* soWelcomeViewController.m */,
+				3A9EAC8F159E155C0042030E /* welcome.xib */,
+			);
+			name = welcomeViewController;
+			sourceTree = "<group>";
+		};
 		3A9EAC60159E155C0042030E = {
 			isa = PBXGroup;
 			children = (
@@ -174,6 +199,7 @@
 		3A9EAC75159E155C0042030E /* SprintOverflow */ = {
 			isa = PBXGroup;
 			children = (
+				3A786DD9161B3C66006A7E73 /* epicViewController */,
 				3A786DB81618D90C006A7E73 /* JsonModel.h */,
 				3A786DB91618D90C006A7E73 /* JsonModel.m */,
 				3A2BDA0415AC3B5E00AB3F7B /* Model.xcdatamodeld */,
@@ -197,9 +223,7 @@
 				3A48920D15A1B48C00AAFF54 /* soDatabase.m */,
 				3A9EAC7E159E155C0042030E /* soAppDelegate.h */,
 				3A9EAC7F159E155C0042030E /* soAppDelegate.m */,
-				3A9EAC81159E155C0042030E /* soWelcomeViewController.h */,
-				3A9EAC82159E155C0042030E /* soWelcomeViewController.m */,
-				3A9EAC8F159E155C0042030E /* welcome.xib */,
+				3A786DDA161B42D3006A7E73 /* welcomeViewController */,
 				3A9EAC84159E155C0042030E /* first.png */,
 				3A9EAC86159E155C0042030E /* first@2x.png */,
 				3A786DC81619E20E006A7E73 /* secondViewController */,
@@ -288,6 +312,7 @@
 				3A30C03415EFD49C00FE937C /* soCreateViewController.xib in Resources */,
 				3A30C03015EFD33D00FE937C /* findMissingLocalizedStrings.sh in Resources */,
 				3AE763D0160E6359000BDBA9 /* Default-568h@2x.png in Resources */,
+				3A786DD8161B3BCB006A7E73 /* soEpicViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,6 +341,7 @@
 				3A32968B15FA41B500D0501C /* soProject.m in Sources */,
 				3A253AF41602304C004AE0D0 /* ProjectList.m in Sources */,
 				3A786DBA1618D90C006A7E73 /* JsonModel.m in Sources */,
+				3A786DD7161B3BCB006A7E73 /* soEpicViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

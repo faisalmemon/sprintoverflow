@@ -54,14 +54,14 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.7833757"
-     inkscape:cx="215.48806"
-     inkscape:cy="853.96751"
+     inkscape:cx="375.63257"
+     inkscape:cy="870.41099"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1488"
      inkscape:window-height="899"
-     inkscape:window-x="402"
-     inkscape:window-y="0"
+     inkscape:window-x="153"
+     inkscape:window-y="14"
      inkscape:window-maximized="0" />
   <metadata
      id="metadata4">
@@ -733,8 +733,8 @@
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
-       d="M 367.84173,95.188661 C 443.41469,129.25336 548.2547,142.34333 539.98717,236.49371 528.8996,324.30118 452.09254,323.90619 386.9067,339.1081"
+       style="fill:none;stroke:#000000;stroke-width:1.04425633px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+       d="M 367.84173,95.188661 C 450.25188,129.25336 564.57691,142.34333 555.5614,236.49371 543.47073,324.30118 459.71483,323.90619 388.63153,339.1081"
        id="path4441"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccc" />
@@ -744,5 +744,33 @@
        id="path4627"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccc" />
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="70.091797"
+       y="151.82283"
+       id="text4040"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4042"
+         x="70.091797"
+         y="151.82283">My current projects...</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.99921262;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow1Lend)"
+       d="m 179.99572,150.70136 20.74717,27.47598 c 19.93127,21.38892 17.87746,40.05148 19.06497,59.99858 -0.84851,39.36078 162.98679,1.86911 244.48018,2.80367"
+       id="path5152"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccc" />
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="469.33466"
+       y="242.66179"
+       id="text5858"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5860"
+         x="469.33466"
+         y="242.66179">current_projects</tspan></text>
   </g>
 </svg>
