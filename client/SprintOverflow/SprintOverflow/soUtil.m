@@ -40,6 +40,36 @@
     return encodedString;
 }
 
++ (BOOL) isSafeCharForJson:(unichar)c
+{
+    if (c <= 0x1f && c >= 0 )
+        return NO;
+    else if (c >= 0x7f && c <= 0x9f)
+        return NO;
+    else if (c == '"')
+        return NO;
+    else if (c == '\\')
+        return NO;
+    else return YES;
+}
+
++ (NSString*)jsonSafeStringFromUserInput:(NSString*)userInput
+{
+    NSMutableString *safeString;
+    int length = [userInput length];
+    unichar c;
+    for (int i = 0; i < length; i++) {
+        c = [userInput characterAtIndex:i];
+        // CONTINUE HERE
+    }
+    
+}
+
++ (NSString*)UserInputStringFromJsonSafeString:(NSString*)jsonSafeString
+{
+    
+}
+
 + (NSDictionary*)DictionaryFromJson:(NSString*)json UpdateError:(NSError **)error_description
 {
     return [NSJSONSerialization JSONObjectWithData:[NSData dataWithBytes:[json UTF8String] length:[json length]] options:NSJSONReadingMutableContainers error:error_description];
