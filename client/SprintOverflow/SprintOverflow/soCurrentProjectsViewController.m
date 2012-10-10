@@ -10,6 +10,7 @@
 #import "soModel.h"
 #import "soProject.h"
 #import "soConstants.h"
+#import "soUtil.h"
 
 @interface soCurrentProjectsViewController ()
 
@@ -92,8 +93,8 @@
                         ];
 
     }
-    cell.textLabel.text = [project valueForKey:ksoProjectId];
-    cell.detailTextLabel.text = subtitleText;
+    cell.textLabel.text = [soUtil userDisplayStringFromJsonSafeString:[project valueForKey:ksoProjectId] ];
+    cell.detailTextLabel.text = [soUtil userDisplayStringFromJsonSafeString:subtitleText];
     return cell;
 }
 

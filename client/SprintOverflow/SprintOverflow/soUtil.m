@@ -40,34 +40,81 @@
     return encodedString;
 }
 
-+ (BOOL) isSafeCharForJson:(unichar)c
+enum treatment_t { soAccept, soReject, soEscapeQuote, soEscapeBackquote };
+
++ (enum treatment_t) jsonTreatmentForChar:(unichar)c
 {
     if (c <= 0x1f && c >= 0 )
-        return NO;
+        return soReject;
     else if (c >= 0x7f && c <= 0x9f)
-        return NO;
+        return soReject;
     else if (c == '"')
-        return NO;
+        return soEscapeQuote;
     else if (c == '\\')
-        return NO;
-    else return YES;
+        return soEscapeBackquote;
+    else return soAccept;
 }
 
 + (NSString*)jsonSafeStringFromUserInput:(NSString*)userInput
 {
-    NSMutableString *safeString;
+    NSMutableString *safeString = [NSMutableString stringWithString:@""];
     int length = [userInput length];
     unichar c;
     for (int i = 0; i < length; i++) {
         c = [userInput characterAtIndex:i];
-        // CONTINUE HERE
+        switch ([self jsonTreatmentForChar:c])
+        {
+            case soAccept:
+                [safeString appendFormat:@"%C", c];
+                break;
+            case soReject:
+                break;
+            case soEscapeBackquote:
+                [safeString appendString:@"\\\\"];
+                break;
+            case soEscapeQuote:
+                [safeString appendString:@"\\\""];
+                break;
+            default:
+                break;
+        }
     }
-    
+    return safeString;
 }
 
-+ (NSString*)UserInputStringFromJsonSafeString:(NSString*)jsonSafeString
++ (NSString*)userDisplayStringFromJsonSafeString:(NSString*)jsonSafeString
 {
+    NSMutableString *userDisplayString = [NSMutableString stringWithString:@""];
+    int length = [jsonSafeString length];
+    if (length <= 0)
+        return nil;
+    else if (length == 1)
+        return jsonSafeString;
     
+    unichar c1 = 0;
+    for (int i = 0; i < length; i++) {
+        c1 = [jsonSafeString characterAtIndex:i];
+        if (i == length -1) {
+            if (c1 == '\\') {
+                // missing character after escape character; ignore
+                return userDisplayString;
+            } else {
+                [userDisplayString appendFormat:@"%C", c1];
+                return userDisplayString;
+            }
+        }
+        switch (c1) {
+            case '\\':
+                [userDisplayString appendFormat:@"%C", [jsonSafeString characterAtIndex:i+1]];
+                i++;
+                break;
+
+            default:
+                [userDisplayString appendFormat:@"%C", c1];
+                break;
+        }
+    }
+    return userDisplayString;
 }
 
 + (NSDictionary*)DictionaryFromJson:(NSString*)json UpdateError:(NSError **)error_description

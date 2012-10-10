@@ -17,5 +17,6 @@
 + (NSDictionary*)DictionaryFromJson:(NSString*)json UpdateError:(NSError **)error_description;
 + (NSMutableArray*)ArrayFromJson:(NSString*)json UpdateError:(NSError **)error_description;
 + (NSString*)getUtf8StringFromNsData:(NSData*)data UpdateError:(NSError **)error_description;
-
++ (NSString*)userDisplayStringFromJsonSafeString:(NSString*)jsonSafeString;
++ (NSString*)jsonSafeStringFromUserInput:(NSString*)userInput;
 @end
