@@ -162,14 +162,20 @@
                       WithID:(NSString*)project_id
            WithSecurityToken:(NSString*)security_token
 {
-    NSError *error;    
+    NSError *error;
+    NSString *safe_project_owner_email = [soUtil jsonSafeStringFromUserInput:project_owner_email];
+    NSString *safe_project_id = [soUtil jsonSafeStringFromUserInput:project_id];
+    NSString *safe_security_token = [soUtil jsonSafeStringFromUserInput:security_token];
+
     NSString *addedProjectJson = [NSString stringWithFormat:
                                   ksoThreePairsJson,
-                                  ksoProjectOwnerEmail, project_owner_email,
-                                  ksoProjectId, project_id,
-                                  ksoSecurityToken, security_token];
-    
+                                  ksoProjectOwnerEmail, safe_project_owner_email,
+                                  ksoProjectId, safe_project_id,
+                                  ksoSecurityToken, safe_security_token];
+
     NSDictionary *dict = [soUtil DictionaryFromJson:addedProjectJson UpdateError:&error];
+    [dict setValue:ksoNO forKey:ksoSoftDelete];
+    
     if (!error) {
         @synchronized(self) {
             [[self nextPush] insertObject:dict atIndex:[[self nextPush] count]];

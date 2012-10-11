@@ -182,8 +182,8 @@
 }
 
 - (IBAction)clickedCreateButton:(id)sender {
-    NSString *project_id = [soUtil jsonSafeStringFromUserInput:[NSString stringWithString:handleProjectId.text]];
-    NSString *owner_email = [soUtil jsonSafeStringFromUserInput: [NSString stringWithString:handleOwnerEmailAddress.text]];
+    NSString *project_id = [NSString stringWithString:handleProjectId.text];
+    NSString *owner_email = [NSString stringWithString:handleOwnerEmailAddress.text];
     NSString *security_code = [NSString stringWithString:handleSecurityToken.text];
 
     [[soModel sharedInstance] addProjectOwnerEmail:owner_email WithID:project_id WithSecurityToken:security_code ];

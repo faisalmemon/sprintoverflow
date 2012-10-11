@@ -40,18 +40,22 @@
     return encodedString;
 }
 
-enum treatment_t { soAccept, soReject, soEscapeQuote, soEscapeBackquote };
+enum treatment_t { soAccept, soReject, soEscapeQuote, soEscapeBackquote, soUnicodeEscape };
 
 + (enum treatment_t) jsonTreatmentForChar:(unichar)c
 {
-    if (c <= 0x1f && c >= 0 )
+    // See The Unicode 5.0 Standard, page 572 onwards
+    if (c <= 0x1f && c >= 0 ) // control codes
         return soReject;
-    else if (c >= 0x7f && c <= 0x9f)
+    else if (c >= 0x7f && c <= 0x9f) // control codes
         return soReject;
     else if (c == '"')
         return soEscapeQuote;
     else if (c == '\\')
         return soEscapeBackquote;
+    else if (c >= 0xa0) {
+        return soUnicodeEscape;
+    }
     else return soAccept;
 }
 
@@ -75,6 +79,8 @@ enum treatment_t { soAccept, soReject, soEscapeQuote, soEscapeBackquote };
             case soEscapeQuote:
                 [safeString appendString:@"\\\""];
                 break;
+            case soUnicodeEscape:
+                [safeString appendFormat:@"\\u%4x", c];
             default:
                 break;
         }
@@ -92,6 +98,8 @@ enum treatment_t { soAccept, soReject, soEscapeQuote, soEscapeBackquote };
         return jsonSafeString;
     
     unichar c1 = 0;
+    unichar c2 = 0;
+    
     for (int i = 0; i < length; i++) {
         c1 = [jsonSafeString characterAtIndex:i];
         if (i == length -1) {
@@ -105,8 +113,24 @@ enum treatment_t { soAccept, soReject, soEscapeQuote, soEscapeBackquote };
         }
         switch (c1) {
             case '\\':
-                [userDisplayString appendFormat:@"%C", [jsonSafeString characterAtIndex:i+1]];
-                i++;
+                c2 = [jsonSafeString characterAtIndex:i+1];
+                if (c2 == 'u' && i + 5 < length) {
+                    unsigned int scanResult = 0;
+                    NSString* hexDigits = [jsonSafeString substringWithRange:NSMakeRange(i+2, i+5)];
+                    NSScanner *scanner = [NSScanner scannerWithString:hexDigits];
+                    [scanner scanHexInt:&scanResult];
+                    [userDisplayString appendFormat:@"%C", (unichar)scanResult];
+                    i += 5;
+                    break;
+                } else if (c2 == 'u' && i + 5 >= length) {
+                    // missing characters after escape character; ignore
+                    return userDisplayString;
+                } else {
+                    // must be backlash blackslash or backslash quote
+                    [userDisplayString appendFormat:@"%C", c2];
+                    i++;
+                    break;
+                }
                 break;
 
             default:
