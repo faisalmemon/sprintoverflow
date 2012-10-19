@@ -25,6 +25,8 @@
     if (self) {
         self.title = NSLocalizedString(@"Projects", @"Projects welcome screen");
         self.tabBarItem.image = [UIImage imageNamed:@"first"]; // Not NSLocalizedString
+        [[soModel sharedInstance] setDelegateScreenJump:self];
+        self->_jumpState = soNoJump;
     }
     return self;
 }
@@ -32,6 +34,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+}
+
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if (self->_jumpState == soJumpToProject) {
+        self->_jumpState = soNoJump;
+        // CONTINUE HERE ONCE PROJECT SCREEN IS SETUP, JUMP TO IT
+        
+    }
 }
 
 - (void)viewDidUnload
@@ -53,6 +65,9 @@
 
 -(IBAction) drillIntoJoin:(UIButton*)sender
 {
+    if (self->_jumpState != soNoJump) {
+        return;
+    }
     soJoinViewController *joinvc;
     joinvc = [[soJoinViewController alloc] initWithNibName:@"join" bundle:nil]; // Not NSLocalizedString
     
@@ -63,6 +78,9 @@
 
 - (IBAction)drillIntoCurrentProjects:(id)sender
 {
+    if (self->_jumpState != soNoJump) {
+        return;
+    }
     soCurrentProjectsViewController *currentprojvc;
     currentprojvc = [[soCurrentProjectsViewController alloc] initWithNibName:@"soCurrentProjectsViewController" bundle:nil]; // Not NSLocalizedString
     
@@ -72,6 +90,9 @@
 }
 
 - (IBAction)drillIntoStartProject:(id)sender {
+    if (self->_jumpState != soNoJump) {
+        return;
+    }
     soCreateViewController *createvc;
     createvc = [[soCreateViewController alloc] initWithNibName:@"soCreateViewController" bundle:nil] ; // Not NSLocalizedString
     createvc.title = NSLocalizedString(@"Create", @"Screen where you Create a project");
@@ -79,4 +100,11 @@
     [self.navigationController pushViewController: createvc animated:YES];
 }
 
+#pragma mark soScreenJumpProtocol
+- (void)nextScreenShouldShowProjectWithOwner:(NSString*)projectOwnerEmail WithSecurityToken:(NSString*)securityToken
+{
+    self->_jumpState = soJumpToProject;
+    self->_toProject = projectOwnerEmail;
+    self->_withSecurityToken = securityToken;
+}
 @end

@@ -104,6 +104,7 @@
 		3ABB585C15A2EDB1007A57A4 /* soStory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soStory.m; sourceTree = "<group>"; };
 		3AD7477C15A32D7A0034B799 /* soTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soTask.h; sourceTree = "<group>"; };
 		3AD7477D15A32D7A0034B799 /* soTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soTask.m; sourceTree = "<group>"; };
+		3ADADB42162E10000058A6DF /* soScreenJumpProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = soScreenJumpProtocol.h; sourceTree = "<group>"; };
 		3AE763CF160E6359000BDBA9 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -208,6 +209,7 @@
 				3AB5F5E815A1D2AD000D9A55 /* soEpic.m */,
 				3A48920F15A1B4F200AAFF54 /* soDatabase.h */,
 				3A48920D15A1B48C00AAFF54 /* soDatabase.m */,
+				3ADADB42162E10000058A6DF /* soScreenJumpProtocol.h */,
 			);
 			name = model;
 			sourceTree = "<group>";

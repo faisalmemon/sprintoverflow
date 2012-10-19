@@ -89,6 +89,7 @@
             [projectOwnerEmailText setBackgroundColor:[soConstants faultyEmailAddressBackgroundColor]];
         }
     }
+    // CONTINUE HERE
 }
 
 -(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar

@@ -7,9 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "soScreenJumpProtocol.h"
 
-@interface soWelcomeViewController : UIViewController {
+enum soJumpState {
+    soNoJump,
+    soJumpToProject
+};
+
+@interface soWelcomeViewController : UIViewController <soScreenJumpProtocol> {
     UIInterfaceOrientation _orientation;
+    enum soJumpState _jumpState;
+    NSString *_toProject;
+    NSString *_withSecurityToken;
 }
 
 @property (nonatomic) UIInterfaceOrientation orientation;

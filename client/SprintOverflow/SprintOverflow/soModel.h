@@ -7,6 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+
+#import "soScreenJumpProtocol.h"
+
 #import "soEpic.h"
 #import "soProject.h"
 
@@ -41,11 +44,14 @@
     NSMutableArray *_lastFetch;  // MT
     NSMutableArray *_nextPush; // MT
     NSMutableDictionary *_securityCodes; // ST
+    id<soScreenJumpProtocol> _delegateScreenJump;
 }
 
 @property (nonatomic, retain) NSMutableArray *lastFetch;
 @property (nonatomic, retain) NSMutableArray *nextPush;
 @property (nonatomic, retain) NSMutableArray *resolveList;
+@property (nonatomic, retain) id<soScreenJumpProtocol> delegateScreenJump;
+
 - (void)setAltogetherLastFetch:(NSMutableArray *)lastFetch
                       NextPush:(NSMutableArray *)nextPush;
 - (void)getAltogetherLastFetch:(NSMutableArray **)lastFetch

@@ -18,6 +18,8 @@
 
 @implementation soModel
 
+@synthesize delegateScreenJump=_delegateScreenJump;
+
 - (NSMutableArray *)lastFetch
 {
     @synchronized(self) {
