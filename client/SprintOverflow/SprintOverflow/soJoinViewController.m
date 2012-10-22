@@ -9,6 +9,7 @@
 #import "soJoinViewController.h"
 #import "soUtil.h"
 #import "soConstants.h"
+#import "soModel.h"
 
 // Create a local method to intialize the view controller
 @interface soJoinViewController ()
@@ -65,6 +66,15 @@
     [self setOrientation:toInterfaceOrientation];
 }
 
+- (void)kickStateMachine
+{
+    if (projectIdText.text != nil && projectOwnerEmailText != nil &&
+        [soUtil isValidEmail:projectOwnerEmailText.text Strictly:YES]) {
+        [[soModel sharedInstance] joinProjectOwnerEmail:projectOwnerEmailText.text WithIdOrToken:projectIdText.text];
+        [[[soModel sharedInstance] delegateScreenJump] nextScreenShouldShowProjectWithOwner:projectOwnerEmailText.text WithSecurityToken:projectIdText.text];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+}
 
 #pragma mark - UITextFieldDelegate
 
@@ -89,7 +99,7 @@
             [projectOwnerEmailText setBackgroundColor:[soConstants faultyEmailAddressBackgroundColor]];
         }
     }
-    // CONTINUE HERE
+    [self kickStateMachine];
 }
 
 -(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar

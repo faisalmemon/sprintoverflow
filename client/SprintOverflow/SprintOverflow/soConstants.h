@@ -29,6 +29,8 @@ extern NSString *const ksoDictThreeArray;
 extern NSString *const ksoClientVersion;
 extern NSString *const ksoCreateProject;
 extern NSString *const ksoEpic;
+extern NSString *const ksoIdOrToken;
+extern NSString *const ksoJoinProject;
 extern NSString *const ksoLastFetch;
 extern NSString *const ksoMode;
 extern NSString *const ksoNextPush;

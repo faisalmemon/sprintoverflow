@@ -214,7 +214,6 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     });
 }
 
-
 -(BOOL)saveMemoryToDisk
 {
     NSError *error = nil;
@@ -470,6 +469,5 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     }
     return YES;
 }
-
 
 @end

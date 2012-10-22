@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NoResultException;
 
 import com.google.appengine.api.datastore.Key;
 import com.google.gson.*;
@@ -23,6 +25,7 @@ public class Project {
 	@Expose private String projectId;
 	@Expose private String securityToken;
 	@Expose private String softDelete;
+	@Expose private String discoverable;
 	@Expose private Set<Epic> epics;
 	@Expose private List<String> resolutions;
 	
@@ -88,6 +91,8 @@ public class Project {
 	public String getSecurityToken() {
 		return securityToken;
 	}
+	
+	
 	
 	Project(String aOwner, String aId, String aToken) {
 		setProjectOwnerEmail(aOwner);

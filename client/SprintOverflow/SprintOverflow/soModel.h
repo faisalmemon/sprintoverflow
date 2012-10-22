@@ -70,4 +70,7 @@
                       WithID:(NSString*)project_id
            WithSecurityToken:(NSString*)security_token;
 
+- (BOOL)joinProjectOwnerEmail:(NSString*)project_owner_email
+                WithIdOrToken:(NSString*)id_or_token;
+
 @end

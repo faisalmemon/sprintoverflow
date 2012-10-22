@@ -45,5 +45,4 @@ extern const int soDatabase_saveSecurityToken_NoFailureSimulation;
 
 + (void)updateAgainstDiskAndServerSimulatingError:(int)simulate_failure;
 + (void)uploadFromDiskAndServerSimulatingError:(int)simulate_failure;
-
 @end

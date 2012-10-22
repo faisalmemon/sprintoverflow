@@ -68,6 +68,10 @@ public enum Request {
 	NO,
 	YES,
 	
+	IdOrToken,
+	CreateProject,
+	JoinProject,
+	
 	Epic, Sprint, Story, Task,
 	
 	Version,

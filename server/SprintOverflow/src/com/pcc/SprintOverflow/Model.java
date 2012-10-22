@@ -77,6 +77,46 @@ public class Model implements Resolver<String> {
 		return SingletonManager.getTheGson().toJson(updatedProjects);
 	}
 	
+	/**
+	 * Determine if the supplied object is a join project request.
+	 * 
+	 * The client can under-specify a project in the case of joining
+	 * projects because in addition to the project owner email, either
+	 * the Security Token or the Project Id can be supplied.
+	 * 
+	 * The joining request is marked by the name JoinProject being
+	 * set.
+	 * @param r the json object request from the client
+	 * @return true if it is a join project request, otherwise false.
+	 */
+	private boolean joinProjectRequest(JsonObject r) {
+		if (null != r.get(Request.JoinProject.toString())) {
+			return true;
+		}
+		return false;
+	}
+	
+	private Project extractProjectFromJson(JsonObject jo) {
+		if (joinProjectRequest(jo)) {
+			Project search = findProject(
+					jo.get(Request.ProjectOwnerEmail.toString()).getAsString(),
+					jo.get(Request.IdOrToken.toString()).getAsString());
+			if (null != search) {
+				return search;
+			}
+		} else {
+			Project p;
+			try {
+				p = new Project(jo);
+			} catch (ProjectCreateException e) {
+				return null;
+			}
+			if (p != null) {
+				return p;
+			}
+		}
+		return null;
+	}
 	private boolean uploadData(JsonElement nextPushJson, JsonElement lastFetchJson) {
 		JsonArray projectNextArray = null;
 		JsonArray projectBaseArray = null;
@@ -103,22 +143,18 @@ public class Model implements Resolver<String> {
 
 			while (pnaItr.hasNext()) {
 				JsonObject e = pnaItr.next().getAsJsonObject();
-				Project p = new Project(e);
-				if (p != null) {
+				Project p = extractProjectFromJson(e);
+				if (null != p) {
 					newModel.put(p.getProjectKey(), p);
 				}
 			}
-
 			while (pbaItr.hasNext()) {
 				JsonObject e = pbaItr.next().getAsJsonObject();
-				Project p = new Project(e);
+				Project p = extractProjectFromJson(e);
 				if (p != null) {
 					baseModel.put(p.getProjectKey(), p);
 				}
 			}
-		} catch (ProjectCreateException cpe) {
-			System.out.println("Could not create project data cpe: " + cpe);
-			return false;
 		} catch (ClassCastException cce) {
 			System.out.println("Could not create project data cce: " + cce);
 			return false;
@@ -157,6 +193,31 @@ public class Model implements Resolver<String> {
 						" and p.securityToken=:supplied_securityToken")
 						.setParameter("supplied_email", aProjectOwnerEmail)
 						.setParameter("supplied_securityToken", aSecurityToken)
+						.getSingleResult();
+			} catch (NoResultException nre) {
+				return null;
+			}
+		} finally {
+			em.close();
+		}
+		return project;
+	}
+	
+	private Project findProject(String aProjectOwnerEmail, String aSecurityTokenOrId) {
+		Project project = null;
+		EntityManager em = null;
+		if ((project = fetchProject(aProjectOwnerEmail, aSecurityTokenOrId)) != null) {
+			return project;
+		}
+		try {
+			em = SingletonManager.getEntityManagerFactory().createEntityManager();
+			try {
+				project = (Project) em.createQuery(
+						"select p from Project p" +
+								" where p.projectOwnerEmail=:supplied_email" +
+								" and p.projectId=:supplied_key")
+						.setParameter("supplied_email", aProjectOwnerEmail)
+						.setParameter("supplied_key", aSecurityTokenOrId)
 						.getSingleResult();
 			} catch (NoResultException nre) {
 				return null;

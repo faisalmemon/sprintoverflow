@@ -189,6 +189,32 @@
     }
 }
 
+- (BOOL)joinProjectOwnerEmail:(NSString*)project_owner_email
+                WithIdOrToken:(NSString*)id_or_token
+{
+    NSError *error;
+    NSString *safe_project_owner_email = [soUtil jsonSafeStringFromUserInput:project_owner_email];
+    NSString *safe_id_or_token = [soUtil jsonSafeStringFromUserInput:id_or_token];
+    
+    NSString *joinProjectJson = [NSString stringWithFormat:
+                                  ksoThreePairsJson,
+                                  ksoProjectOwnerEmail, safe_project_owner_email,
+                                  ksoIdOrToken, safe_id_or_token,
+                                  ksoJoinProject, ksoYES];
+
+    NSDictionary *dict = [soUtil DictionaryFromJson:joinProjectJson UpdateError:&error];
+
+    if (!error) {
+        @synchronized(self) {
+            [[self nextPush] insertObject:dict atIndex:[[self nextPush] count]];
+        }
+        [soDatabase updateAgainstDiskAndServerSimulatingError:soDatabase_NoFailureSimulation];
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
 - (BOOL)bootstrap
 {
     [soDatabase uploadFromDiskAndServerSimulatingError:soDatabase_fetchEpicData_NoFailureSimulation];
