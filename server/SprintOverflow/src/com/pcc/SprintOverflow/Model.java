@@ -182,7 +182,7 @@ public class Model implements Resolver<String> {
 	 *       are lenient in this area in case we want to re-populate
 	 *       the data with deleting the old data.
 	 */
-	private Project fetchProject(String aProjectOwnerEmail, String aSecurityToken) {
+	private static Project fetchProject(String aProjectOwnerEmail, String aSecurityToken) {
 		Project project = null;
 		EntityManager em = null;
 		try {
@@ -223,7 +223,7 @@ public class Model implements Resolver<String> {
 	 * @param aSecurityTokenOrId the Security Token or Project Id
 	 * @return the Project found, else null.
 	 */
-	private Project findProject(String aProjectOwnerEmail, String aSecurityTokenOrId) {
+	private static Project findProject(String aProjectOwnerEmail, String aSecurityTokenOrId) {
 		Project project = null;
 		EntityManager em = null;
 		if ((project = fetchProject(aProjectOwnerEmail, aSecurityTokenOrId)) != null) {
@@ -257,7 +257,7 @@ public class Model implements Resolver<String> {
 		return project;
 	}
 	
-	private void storeProject(Project p) {
+	private static void storeProject(Project p) {
 		EntityManager em = null;
 		if (null == p) {
 			throw new NullPointerException("Cannot store a project which is null");
@@ -334,13 +334,29 @@ public class Model implements Resolver<String> {
 		
 		Iterator<Project>projItr = newModel.values().iterator();
 		while (projItr.hasNext()) {
-			Project p = projItr.next();
+			Project p = projItr.next();	
+			/*
+			 * If the client has attempted to join a project, newModel
+			 * would have seen this (via the JoinProject tag) and then
+			 * done a search.  If that search failed to match, a
+			 * "Problem Project" would have been created which 
+			 * encapsulates the failed search.  Problem projects are
+			 * never persisted on the server, but they are returned to
+			 * the user so that an error message can be reported.
+			 * The client keeps circulating the problem projects
+			 * because it persists them, until the user deletes them.
+			 * This is so we can work offline.
+			 */
+			if (p.getProblem() != null) {
+				masterModel.put(p.getProjectKey(), p);
+				continue;
+			}
+			
 			String securityToken = p.getSecurityToken();
 			String projectOwnerEmail = p.getProjectOwnerEmail();
 			String projectId = p.getProjectId();
 			String discoverable = p.getDiscoverable();
-			// CONTINUE HERE to handle problem projects using find not fetch
-			Project masterProject = fetchProject(projectOwnerEmail, securityToken);
+			Project masterProject = findProject(projectOwnerEmail, securityToken);
 			if (null != masterProject) {
 				masterModel.put(p.getProjectKey(), masterProject);
 			} else {
