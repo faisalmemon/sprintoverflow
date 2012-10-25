@@ -68,7 +68,8 @@
 
 - (BOOL)addProjectOwnerEmail:(NSString*)project_owner_email
                       WithID:(NSString*)project_id
-           WithSecurityToken:(NSString*)security_token;
+           WithSecurityToken:(NSString*)security_token
+               WithDiscovery:(NSString*)discovery;
 
 - (BOOL)joinProjectOwnerEmail:(NSString*)project_owner_email
                 WithIdOrToken:(NSString*)id_or_token;

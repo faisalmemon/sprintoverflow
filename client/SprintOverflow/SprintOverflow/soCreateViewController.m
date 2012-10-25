@@ -23,6 +23,8 @@
 @synthesize handleSecurityTokenExplanation;
 @synthesize handleSecurityToken;
 @synthesize handleCreateProjectButton;
+@synthesize handleSecurityButton;
+@synthesize handleSecurityExplanation;
 @synthesize orientation;
 
 - (void)viewControllerInit
@@ -186,7 +188,7 @@
     NSString *owner_email = [NSString stringWithString:handleOwnerEmailAddress.text];
     NSString *security_code = [NSString stringWithString:handleSecurityToken.text];
 
-    [[soModel sharedInstance] addProjectOwnerEmail:owner_email WithID:project_id WithSecurityToken:security_code ];
+    [[soModel sharedInstance] addProjectOwnerEmail:owner_email WithID:project_id WithSecurityToken:security_code WithDiscovery:lockButtonState == soLockButtonLocked ? ksoNO : ksoYES];
     
     soEpicViewController *epicvc;
     NSString *epicViewTitle = [[NSString alloc] initWithFormat:@"%@ %@", project_id, NSLocalizedString(@"Epics", @"Screen where you manage the Epic task level for a  project")];
@@ -200,4 +202,16 @@
     [self.navigationController pushViewController:epicvc animated:YES];
 }
 
+- (IBAction)clickedSecurityButton:(id)sender {
+    if (lockButtonState == soLockButtonLocked) {
+        lockButtonState = soLockButtonUnlocked;
+        [handleSecurityButton setImage:[UIImage imageNamed:ksoUnlockedImage]  forState:UIControlStateNormal];
+        handleSecurityExplanation.text = NSLocalizedString(@"This project can be joined using the Project ID or Security Token", @"Next to a padlock lock symbol, for when a security feature is switched off");
+
+    } else {
+        lockButtonState = soLockButtonLocked;
+        [handleSecurityButton setImage:[UIImage imageNamed:ksoLockedImage]  forState:UIControlStateNormal];
+        handleSecurityExplanation.text = NSLocalizedString(@"The security token is needed for people to join this project", @"Next to a padlock lock symbol, for when a security feature is switched on");
+    }
+}
 @end

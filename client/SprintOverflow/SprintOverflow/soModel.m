@@ -163,6 +163,7 @@
 - (BOOL)addProjectOwnerEmail:(NSString*)project_owner_email
                       WithID:(NSString*)project_id
            WithSecurityToken:(NSString*)security_token
+               WithDiscovery:(NSString*)discovery
 {
     NSError *error;
     NSString *safe_project_owner_email = [soUtil jsonSafeStringFromUserInput:project_owner_email];
@@ -177,6 +178,7 @@
 
     NSDictionary *dict = [soUtil DictionaryFromJson:addedProjectJson UpdateError:&error];
     [dict setValue:ksoNO forKey:ksoSoftDelete];
+    [dict setValue:discovery forKey:ksoDiscoverable];
     
     if (!error) {
         @synchronized(self) {

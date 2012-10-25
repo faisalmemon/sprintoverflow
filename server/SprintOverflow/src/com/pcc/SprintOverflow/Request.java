@@ -68,6 +68,8 @@ public enum Request {
 	NO,
 	YES,
 	
+	Discoverable,
+	
 	IdOrToken,
 	CreateProject,
 	JoinProject,

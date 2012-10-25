@@ -11,6 +11,12 @@
 @interface soConstants : NSObject
 
 /*
+ Resource names
+ */
+extern NSString *const ksoLockedImage;
+extern NSString *const ksoUnlockedImage;
+
+/*
  Convenience strings used to build up a JSON dictionary of key:values
  */
 extern NSString *const ksoEmptyList;
@@ -28,6 +34,7 @@ extern NSString *const ksoDictThreeArray;
  */
 extern NSString *const ksoClientVersion;
 extern NSString *const ksoCreateProject;
+extern NSString *const ksoDiscoverable;
 extern NSString *const ksoEpic;
 extern NSString *const ksoIdOrToken;
 extern NSString *const ksoJoinProject;

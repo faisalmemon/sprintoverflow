@@ -15,6 +15,12 @@ enum soCreateStateMachine {
     soShowSecurityToken
 };
 
+enum soLockButtonStatus {
+    soInitialLockButtonState = 0,
+    soLockButtonLocked = soInitialLockButtonState,
+    soLockButtonUnlocked
+};
+
 enum soCreateActions {
     soModifyingText,
     soNotModifyingText,
@@ -27,6 +33,7 @@ enum soCreateActions {
     UIColor *ownerEmailAddressTextFieldOriginalColor;
     soModel* model;
     enum soCreateStateMachine state;
+    enum soLockButtonStatus lockButtonState;
 }
 
 @property (weak, nonatomic) IBOutlet UITextField *handleProjectId;
@@ -35,7 +42,14 @@ enum soCreateActions {
 @property (weak, nonatomic) IBOutlet UILabel *handleSecurityTokenExplanation;
 @property (weak, nonatomic) IBOutlet UILabel *handleSecurityToken;
 @property (weak, nonatomic) IBOutlet UIButton *handleCreateProjectButton;
-- (IBAction)clickedCreateButton:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *handleSecurityButton;
+@property (weak, nonatomic) IBOutlet UILabel *handleSecurityExplanation;
+
 @property (nonatomic) UIInterfaceOrientation orientation;
+
+- (IBAction)clickedCreateButton:(id)sender;
+
+- (IBAction)clickedSecurityButton:(id)sender;
+
 
 @end

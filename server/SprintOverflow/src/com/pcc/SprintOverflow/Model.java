@@ -203,6 +203,24 @@ public class Model implements Resolver<String> {
 		return project;
 	}
 	
+	/**
+	 * Find a project based on its owner email, and either the Security
+	 * Token or its Project Id.
+	 * 
+	 * This function respects the discoverability setting of a project.
+	 * If a project is "discoverable", then it can be found using its
+	 * Project Id or Security Token.  If it is not discoverable, the
+	 * Project Id cannot be used for searching.  This prevents people
+	 * from guessing the name of your project and thus seeing private
+	 * project data.  A project might be made discoverable because it
+	 * is not sensitive data.  It means that it is easy to join the
+	 * project because the Project Id would be more memorable than the
+	 * Security Token.
+	 * 
+	 * @param aProjectOwnerEmail the project owner's email address is always needed
+	 * @param aSecurityTokenOrId the Security Token or Project Id
+	 * @return the Project found, else null.
+	 */
 	private Project findProject(String aProjectOwnerEmail, String aSecurityTokenOrId) {
 		Project project = null;
 		EntityManager em = null;
@@ -215,7 +233,8 @@ public class Model implements Resolver<String> {
 				project = (Project) em.createQuery(
 						"select p from Project p" +
 								" where p.projectOwnerEmail=:supplied_email" +
-								" and p.projectId=:supplied_key")
+								" and p.projectId=:supplied_key" +
+								" and p.discoverable='YES' ")
 						.setParameter("supplied_email", aProjectOwnerEmail)
 						.setParameter("supplied_key", aSecurityTokenOrId)
 						.getSingleResult();
@@ -305,6 +324,7 @@ public class Model implements Resolver<String> {
 			String securityToken = p.getSecurityToken();
 			String projectOwnerEmail = p.getProjectOwnerEmail();
 			String projectId = p.getProjectId();
+			String discoverable = p.getDiscoverable();
 			Project masterProject = fetchProject(projectOwnerEmail, securityToken);
 			if (null != masterProject) {
 				masterModel.put(p.getProjectKey(), masterProject);
@@ -313,7 +333,7 @@ public class Model implements Resolver<String> {
 				if (null == projectOwnerEmail || null == projectId || null == securityToken) {
 					throw new NullPointerException("newModel presents a project for add which has nulls");
 				}
-				p = new Project(projectOwnerEmail, projectId, securityToken);
+				p = new Project(projectOwnerEmail, projectId, securityToken, discoverable);
 				storeProject(p);
 				masterModel.put(p.getProjectKey(), p);
 			}

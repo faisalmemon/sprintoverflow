@@ -13,6 +13,13 @@
 
 @implementation soConstants
 
+/*
+ Resources
+ */
+NSString *const ksoLockedImage = @"padlock-highres.png";
+NSString *const ksoUnlockedImage = @"padlock-highres-unlocked.png";
+
+
 NSString *const ksoEmptyList = @"[]";
 NSString *const ksoOnePairJson = @"{\"%@\" : \"%@\"} ";
 NSString *const ksoTwoPairsJson = @"{\"%@\" : \"%@\", \"%@\" : \"%@\"} ";
@@ -36,6 +43,8 @@ NSString *const ksoDictThreeArray = @"{ \"%@\" : %@, \"%@\" : %@, \"%@\" : %@ }"
  */
 NSString *const ksoClientVersion = @"ClientVersion";
 NSString *const ksoCreateProject = @"CreateProject";
+NSString *const ksoDiscoverable = @"Discoverable";
+
 NSString *const ksoEpic = @"Epic";
 NSString *const ksoIdOrToken = @"IdOrToken";
 NSString *const ksoJoinProject = @"JoinProject";

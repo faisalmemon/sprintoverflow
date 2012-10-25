@@ -61,6 +61,13 @@ public class Project {
 		softDelete = aSoftDelete;
 	}
 	
+	public String getDiscoverable() {
+		return discoverable;
+	}
+	
+	public void setDiscoverable(String aDiscoverable) {
+		discoverable = aDiscoverable;
+	}
 	public List<String> getResolutions() {
 		return resolutions;
 	}
@@ -94,12 +101,13 @@ public class Project {
 	
 	
 	
-	Project(String aOwner, String aId, String aToken) {
+	Project(String aOwner, String aId, String aToken, String aDiscoverable) {
 		setProjectOwnerEmail(aOwner);
 		setProjectId(aId);
 		setSecurityToken(aToken);
 		setEpics(new LinkedHashSet<Epic>());
 		setSoftDelete(Request.NO.toString());
+		setDiscoverable(aDiscoverable);
 		resolutions = new ArrayList<String>();
 	}
 	
@@ -116,6 +124,14 @@ public class Project {
 				setSoftDelete(json.get(Request.SoftDelete.toString()).getAsString());
 			} else {
 				setSoftDelete(Request.NO.toString());
+			}
+			/* PROTOCOL DATA COMPATIBILITY.
+			 * If Discoverable is absent, assume it is NO.
+			 */
+			if (json.get(Request.Discoverable.toString()) != null) {
+				setDiscoverable(json.get(Request.Discoverable.toString()).getAsString());
+			} else {
+				setDiscoverable(Request.NO.toString());
 			}
 		} catch (Exception e) {
 			throw new ProjectCreateException("Bad json data when creating project: " + json.toString());
@@ -174,6 +190,12 @@ public class Project {
 				baseProject.getSoftDelete(),
 				newProject.getSoftDelete(),
 				masterProject.getSoftDelete(),
+				masterProject.getResolutions());
+		
+		resolver.threeWayResolve(
+				baseProject.getDiscoverable(),
+				newProject.getDiscoverable(),
+				masterProject.getDiscoverable(),
 				masterProject.getResolutions());
 		
 		// Now need a public static in Epic to do the same and recurse downwards.
