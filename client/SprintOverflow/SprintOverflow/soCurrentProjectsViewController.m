@@ -80,6 +80,14 @@
     
     soModel *model = [soModel sharedInstance];
     NSDictionary *project = [[model nextPush] objectAtIndex:indexPath.row];
+    // CONTINUE HERE
+    // add a check to see if key JoinProject is YES.  If so, then look at all
+    // the lastFetch data to see if that project has been found.  If so, delete
+    // the JoinProject.  We need to move to a generation number strategy.  Each
+    // project has a generation number randomly set by the client.  If the server
+    // replies lastFetch with the generation number+1, then delete the nextPush
+    // equivalent.  When presenting data, show all the nextPush, then the lastFetch.
+    
     NSString *subtitleText;
     //[[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(deviceDidRotateSelector:) name: UIDeviceOrientationDidChangeNotification object: nil];
     if (self.orientation == UIInterfaceOrientationPortrait || self.orientation == UIInterfaceOrientationPortraitUpsideDown) {
