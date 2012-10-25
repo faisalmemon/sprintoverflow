@@ -44,6 +44,8 @@
 		3ABB585D15A2EDB1007A57A4 /* soStory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABB585C15A2EDB1007A57A4 /* soStory.m */; };
 		3AD7477E15A32D7A0034B799 /* soTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AD7477D15A32D7A0034B799 /* soTask.m */; };
 		3AE763D0160E6359000BDBA9 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AE763CF160E6359000BDBA9 /* Default-568h@2x.png */; };
+		3AEAD20E16395F960084E946 /* padlock-highres.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AEAD20D16395F960084E946 /* padlock-highres.png */; };
+		3AEAD2101639623A0084E946 /* padlock-highres-unlocked.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AEAD20F1639623A0084E946 /* padlock-highres-unlocked.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,12 +88,12 @@
 		3A9EAC7F159E155C0042030E /* soAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = soAppDelegate.m; sourceTree = "<group>"; };
 		3A9EAC81159E155C0042030E /* soWelcomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = soWelcomeViewController.h; sourceTree = "<group>"; };
 		3A9EAC82159E155C0042030E /* soWelcomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = soWelcomeViewController.m; sourceTree = "<group>"; };
-		3A9EAC84159E155C0042030E /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first.png; sourceTree = "<group>"; };
-		3A9EAC86159E155C0042030E /* first@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "first@2x.png"; sourceTree = "<group>"; };
+		3A9EAC84159E155C0042030E /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = first.png; path = SprintOverflow/first.png; sourceTree = "<group>"; };
+		3A9EAC86159E155C0042030E /* first@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "first@2x.png"; path = "SprintOverflow/first@2x.png"; sourceTree = "<group>"; };
 		3A9EAC88159E155C0042030E /* soSecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = soSecondViewController.h; sourceTree = "<group>"; };
 		3A9EAC89159E155C0042030E /* soSecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = soSecondViewController.m; sourceTree = "<group>"; };
-		3A9EAC8B159E155C0042030E /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
-		3A9EAC8D159E155C0042030E /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
+		3A9EAC8B159E155C0042030E /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = second.png; path = SprintOverflow/second.png; sourceTree = "<group>"; };
+		3A9EAC8D159E155C0042030E /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "second@2x.png"; path = "SprintOverflow/second@2x.png"; sourceTree = "<group>"; };
 		3A9EAC90159E155C0042030E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/welcome.xib; sourceTree = "<group>"; };
 		3A9EAC93159E155C0042030E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/soSecondViewController.xib; sourceTree = "<group>"; };
 		3AA9E40F15C851D9006A4704 /* soJoinViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soJoinViewController.h; sourceTree = "<group>"; };
@@ -106,6 +108,8 @@
 		3AD7477D15A32D7A0034B799 /* soTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soTask.m; sourceTree = "<group>"; };
 		3ADADB42162E10000058A6DF /* soScreenJumpProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = soScreenJumpProtocol.h; sourceTree = "<group>"; };
 		3AE763CF160E6359000BDBA9 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		3AEAD20D16395F960084E946 /* padlock-highres.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "padlock-highres.png"; path = "SprintOverflow/padlock-highres.png"; sourceTree = "<group>"; };
+		3AEAD20F1639623A0084E946 /* padlock-highres-unlocked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "padlock-highres-unlocked.png"; path = "SprintOverflow/padlock-highres-unlocked.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -217,7 +221,6 @@
 		3A9EAC60159E155C0042030E = {
 			isa = PBXGroup;
 			children = (
-				3AE763CF160E6359000BDBA9 /* Default-568h@2x.png */,
 				3A9EAC75159E155C0042030E /* SprintOverflow */,
 				3A9EAC6E159E155C0042030E /* Frameworks */,
 				3A9EAC6C159E155C0042030E /* Products */,
@@ -252,13 +255,10 @@
 				3A786DE0161B7F60006A7E73 /* currentProjectsViewController */,
 				3A786DD9161B3C66006A7E73 /* epicViewController */,
 				3A786DDA161B42D3006A7E73 /* welcomeViewController */,
-				3A9EAC84159E155C0042030E /* first.png */,
-				3A9EAC86159E155C0042030E /* first@2x.png */,
 				3A786DC81619E20E006A7E73 /* secondViewController */,
-				3A9EAC8B159E155C0042030E /* second.png */,
-				3A9EAC8D159E155C0042030E /* second@2x.png */,
 				3A786DC91619E29D006A7E73 /* joinViewController */,
 				3A786DCA1619E2BD006A7E73 /* createViewController */,
+				3AEAD211163962E00084E946 /* images */,
 				3A9EAC76159E155C0042030E /* Supporting Files */,
 			);
 			path = SprintOverflow;
@@ -274,6 +274,21 @@
 				3A9EAC7D159E155C0042030E /* SprintOverflow-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3AEAD211163962E00084E946 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				3AE763CF160E6359000BDBA9 /* Default-568h@2x.png */,
+				3A9EAC8D159E155C0042030E /* second@2x.png */,
+				3A9EAC8B159E155C0042030E /* second.png */,
+				3A9EAC86159E155C0042030E /* first@2x.png */,
+				3A9EAC84159E155C0042030E /* first.png */,
+				3AEAD20F1639623A0084E946 /* padlock-highres-unlocked.png */,
+				3AEAD20D16395F960084E946 /* padlock-highres.png */,
+			);
+			name = images;
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -340,6 +355,8 @@
 				3AE763D0160E6359000BDBA9 /* Default-568h@2x.png in Resources */,
 				3A786DD8161B3BCB006A7E73 /* soEpicViewController.xib in Resources */,
 				3A786DDF161B50A6006A7E73 /* soCurrentProjectsViewController.xib in Resources */,
+				3AEAD20E16395F960084E946 /* padlock-highres.png in Resources */,
+				3AEAD2101639623A0084E946 /* padlock-highres-unlocked.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
