@@ -117,6 +117,7 @@ public class Model implements Resolver<String> {
 		}
 		return null;
 	}
+	
 	private boolean uploadData(JsonElement nextPushJson, JsonElement lastFetchJson) {
 		JsonArray projectNextArray = null;
 		JsonArray projectBaseArray = null;
@@ -190,7 +191,8 @@ public class Model implements Resolver<String> {
 				project = (Project) em.createQuery(
 						"select p from Project p" +
 								" where p.projectOwnerEmail=:supplied_email" +
-						" and p.securityToken=:supplied_securityToken")
+						" and p.securityToken=:supplied_securityToken" +
+						" and p.problem is null")
 						.setParameter("supplied_email", aProjectOwnerEmail)
 						.setParameter("supplied_securityToken", aSecurityToken)
 						.getSingleResult();
@@ -234,12 +236,20 @@ public class Model implements Resolver<String> {
 						"select p from Project p" +
 								" where p.projectOwnerEmail=:supplied_email" +
 								" and p.projectId=:supplied_key" +
-								" and p.discoverable='YES' ")
+								" and p.discoverable='YES' " +
+								" and p.problem is null")
 						.setParameter("supplied_email", aProjectOwnerEmail)
 						.setParameter("supplied_key", aSecurityTokenOrId)
 						.getSingleResult();
 			} catch (NoResultException nre) {
-				return null;
+				return new Project(
+						aProjectOwnerEmail,
+						aSecurityTokenOrId,
+						new ProjectJoinFailure(
+								"Could not find "
+										+ aProjectOwnerEmail 
+										+ " " + aSecurityTokenOrId
+										));
 			}
 		} finally {
 			em.close();
@@ -251,6 +261,10 @@ public class Model implements Resolver<String> {
 		EntityManager em = null;
 		if (null == p) {
 			throw new NullPointerException("Cannot store a project which is null");
+		}
+		if (p.getProblem() != null) {
+			System.out.println("Rejecting storage of problem projects: " + p.getProblem());
+			return;
 		}
 		try {
 			em = SingletonManager.getEntityManagerFactory().createEntityManager();
@@ -325,6 +339,7 @@ public class Model implements Resolver<String> {
 			String projectOwnerEmail = p.getProjectOwnerEmail();
 			String projectId = p.getProjectId();
 			String discoverable = p.getDiscoverable();
+			// CONTINUE HERE to handle problem projects using find not fetch
 			Project masterProject = fetchProject(projectOwnerEmail, securityToken);
 			if (null != masterProject) {
 				masterModel.put(p.getProjectKey(), masterProject);

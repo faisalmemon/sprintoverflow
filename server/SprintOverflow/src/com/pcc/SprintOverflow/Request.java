@@ -70,6 +70,8 @@ public enum Request {
 	
 	Discoverable,
 	
+	Problem,
+	
 	IdOrToken,
 	CreateProject,
 	JoinProject,

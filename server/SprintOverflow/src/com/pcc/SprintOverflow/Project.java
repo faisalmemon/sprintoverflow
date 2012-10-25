@@ -28,11 +28,18 @@ public class Project {
 	@Expose private String discoverable;
 	@Expose private Set<Epic> epics;
 	@Expose private List<String> resolutions;
+	@Expose private String problem;
 	
 	/**
 	 * No-arg public constructor as required by the Java Persistence API.
 	 */
 	public Project() {
+	}
+	
+	static private int problemProjectSecurityIdCounter;
+	
+	public int nextProblemProjectSecurityId() {
+		return ++problemProjectSecurityIdCounter;
 	}
 	
 	/**
@@ -99,7 +106,13 @@ public class Project {
 		return securityToken;
 	}
 	
+	public String getProblem() {
+		return problem;
+	}
 	
+	public void setProblem(String aProblem) {
+		problem = aProblem;
+	}
 	
 	Project(String aOwner, String aId, String aToken, String aDiscoverable) {
 		setProjectOwnerEmail(aOwner);
@@ -108,7 +121,16 @@ public class Project {
 		setEpics(new LinkedHashSet<Epic>());
 		setSoftDelete(Request.NO.toString());
 		setDiscoverable(aDiscoverable);
+		setProblem(null);
 		resolutions = new ArrayList<String>();
+	}
+	
+	Project(String aOwner, String aId, ProjectJoinFailure aJoinFailure) {
+		setProjectOwnerEmail(aOwner);
+		setProjectId(aId);
+		setSecurityToken(String.valueOf(nextProblemProjectSecurityId()));
+		resolutions = new ArrayList<String>();
+		setProblem(aJoinFailure.getProblem());
 	}
 	
 	Project(JsonObject json) throws ProjectCreateException {
@@ -116,6 +138,7 @@ public class Project {
 			setProjectOwnerEmail(json.get(Request.ProjectOwnerEmail.toString()).getAsString());
 			setProjectId(json.get(Request.ProjectId.toString()).getAsString());
 			setSecurityToken(json.get(Request.SecurityToken.toString()).getAsString());
+			setProblem(null);
 			
 			/* PROTOCOL DATA COMPATIBILITY.
 			 * If SoftDelete is absent, assume it is NO.
