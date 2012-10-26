@@ -67,7 +67,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     soModel *model = [soModel sharedInstance];
-    return [[model nextPush] count];
+    return [model unifiedCount];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -79,30 +79,22 @@
     }
     
     soModel *model = [soModel sharedInstance];
-    NSDictionary *project = [[model nextPush] objectAtIndex:indexPath.row];
-    // CONTINUE HERE
-    // add a check to see if key JoinProject is YES.  If so, then look at all
-    // the lastFetch data to see if that project has been found.  If so, delete
-    // the JoinProject.  We need to move to a generation number strategy.  Each
-    // project has a generation number randomly set by the client.  If the server
-    // replies lastFetch with the generation number+1, then delete the nextPush
-    // equivalent.  When presenting data, show all the nextPush, then the lastFetch.
-    
+    NSDictionary *project = [model objectAtUnifiedIndex:indexPath.row];
     NSString *subtitleText;
-    //[[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(deviceDidRotateSelector:) name: UIDeviceOrientationDidChangeNotification object: nil];
-    if (self.orientation == UIInterfaceOrientationPortrait || self.orientation == UIInterfaceOrientationPortraitUpsideDown) {
-        subtitleText = [[NSString alloc] initWithFormat:@"%@",  // Not NSLocalizedString
-                        [project valueForKey:ksoProjectOwnerEmail]
-                        ];
+
+    if ([project valueForKey:ksoJoinProject] != nil) {
+        // CONTINUE HERE to report pending search
+    } else if ([project valueForKey:ksoProblem] != nil) {
+        // CONTINUE HERE to report failed search
     } else {
+        // valid project to show        
         subtitleText = [[NSString alloc] initWithFormat:@"%@ %@",  // Not NSLocalizedString
                         [project valueForKey:ksoProjectOwnerEmail],
                         [project valueForKey:ksoSecurityToken]
                         ];
-
+        cell.textLabel.text = [soUtil userDisplayStringFromJsonSafeString:[project valueForKey:ksoProjectId] ];
+        cell.detailTextLabel.text = [soUtil userDisplayStringFromJsonSafeString:subtitleText];
     }
-    cell.textLabel.text = [soUtil userDisplayStringFromJsonSafeString:[project valueForKey:ksoProjectId] ];
-    cell.detailTextLabel.text = [soUtil userDisplayStringFromJsonSafeString:subtitleText];
     return cell;
 }
 

@@ -74,4 +74,7 @@
 - (BOOL)joinProjectOwnerEmail:(NSString*)project_owner_email
                 WithIdOrToken:(NSString*)id_or_token;
 
+- (int)unifiedCount;
+- (id)objectAtUnifiedIndex:(int)index;
+
 @end

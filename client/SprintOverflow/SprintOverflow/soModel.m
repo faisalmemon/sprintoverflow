@@ -35,6 +35,22 @@
     
 }
 
+- (int)unifiedCount {
+    return [_lastFetch count] + [_nextPush count];
+}
+
+- (id)objectAtUnifiedIndex:(int)index {
+    @synchronized(self) {
+        if (index < 0 || index >= [self unifiedCount]) {
+            return nil;
+        } else if (index < [_lastFetch count]) {
+            return [_lastFetch objectAtIndex:index];
+        } else {
+            return [_nextPush objectAtIndex:index - [_lastFetch count]];
+        }
+    }
+}
+
 /*
  When any item in LastFetch has the same GenerationId as an item in
  NextPush, then the NextPush item is deleted.  This represents the

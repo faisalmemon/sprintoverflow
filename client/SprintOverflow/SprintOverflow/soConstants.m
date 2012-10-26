@@ -54,6 +54,7 @@ NSString *const ksoMode = @"Mode";
 NSString *const ksoNextPush = @"NextPush";
 NSString *const ksoNO = @"NO";
 NSString *const ksoPending = @"Pending";
+NSString *const ksoProblem = @"Problem";
 NSString *const ksoPendingQueue = @"PendingQueue";
 NSString *const ksoProjectId = @"ProjectId";
 NSString *const ksoProjectOwnerEmail = @"ProjectOwnerEmail";

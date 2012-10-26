@@ -44,6 +44,7 @@ extern NSString *const ksoMode;
 extern NSString *const ksoNextPush;
 extern NSString *const ksoNO;
 extern NSString *const ksoPending;
+extern NSString *const ksoProblem;
 extern NSString *const ksoProjectId;
 extern NSString *const ksoProjectOwnerEmail;
 extern NSString *const ksoResolveList;
