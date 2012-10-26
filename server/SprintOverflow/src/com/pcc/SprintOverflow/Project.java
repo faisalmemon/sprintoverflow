@@ -26,6 +26,7 @@ public class Project {
 	@Expose private String securityToken;
 	@Expose private String softDelete;
 	@Expose private String discoverable;
+	@Expose private String generationId;
 	@Expose private Set<Epic> epics;
 	@Expose private List<String> resolutions;
 	@Expose private String problem;
@@ -34,12 +35,6 @@ public class Project {
 	 * No-arg public constructor as required by the Java Persistence API.
 	 */
 	public Project() {
-	}
-	
-	static private int problemProjectSecurityIdCounter;
-	
-	public int nextProblemProjectSecurityId() {
-		return ++problemProjectSecurityIdCounter;
 	}
 	
 	/**
@@ -114,7 +109,46 @@ public class Project {
 		problem = aProblem;
 	}
 	
-	Project(String aOwner, String aId, String aToken, String aDiscoverable) {
+	/**
+	 * Get the Generation Id.
+	 * 
+	 * The Generation Id is a way to tie up responses to requests.
+	 * The client can make progress when offline so it might change
+	 * a given data structure.  Each time is does this, it changes its
+	 * Generation Id.  Whenever the server sees a generation Id and
+	 * responds, it copies the generation Id over.  This is so that
+	 * when returned to the client, if it did not make local progress
+	 * with that particular data structure, it knows for sure that the
+	 * server has responded to the clients data request as seen by the
+	 * client at the time the response is processed at the client.
+	 * 
+	 * This is needed because the client maintains two parallel data
+	 * structures, lastFetch (from the server) and nextPush (to the
+	 * server).  When it gets a lastFetch item matching the generation
+	 * Id of a nextPush item, it deletes locally its nextPush item.
+	 * 
+	 * The augmented set of lastFetch + nextPush is what the client
+	 * sees as the latest local description of the world.
+	 * 
+	 * @return the Generation Id.
+	 */
+	public String getGenerationId() {
+		return generationId;
+	}
+	
+	/**
+	 * Set the generation Id.
+	 * 
+	 * See the documentation {@link getGenerationId} for a description
+	 * of the generation Id concept.
+	 * 
+	 * @param aGenerationId the generation Id to set
+	 */
+	public void setGenerationId(String aGenerationId) {
+		generationId = aGenerationId;
+	}
+	
+	Project(String aOwner, String aId, String aToken, String aDiscoverable, String aGenerationId) {
 		setProjectOwnerEmail(aOwner);
 		setProjectId(aId);
 		setSecurityToken(aToken);
@@ -122,13 +156,14 @@ public class Project {
 		setSoftDelete(Request.NO.toString());
 		setDiscoverable(aDiscoverable);
 		setProblem(null);
+		setGenerationId(aGenerationId);
 		resolutions = new ArrayList<String>();
 	}
 	
-	Project(String aOwner, String aId, ProjectJoinFailure aJoinFailure) {
+	Project(String aOwner, String aId, String aGenerationId, ProjectJoinFailure aJoinFailure) {
 		setProjectOwnerEmail(aOwner);
 		setProjectId(aId);
-		setSecurityToken(String.valueOf(nextProblemProjectSecurityId()));
+		setSecurityToken(aGenerationId);
 		resolutions = new ArrayList<String>();
 		setProblem(aJoinFailure.getProblem());
 	}
@@ -139,6 +174,7 @@ public class Project {
 			setProjectId(json.get(Request.ProjectId.toString()).getAsString());
 			setSecurityToken(json.get(Request.SecurityToken.toString()).getAsString());
 			setProblem(null);
+			setGenerationId(json.get(Request.GenerationId.toString()).getAsString());
 			
 			/* PROTOCOL DATA COMPATIBILITY.
 			 * If SoftDelete is absent, assume it is NO.
@@ -174,7 +210,7 @@ public class Project {
 	 *       are lenient in this area in case we want to re-populate
 	 *       the data with deleting the old data.
 	 */
-	static Project fetchProject(String aProjectOwnerEmail, String aSecurityToken) {
+	static Project fetchProject(String aProjectOwnerEmail, String aSecurityToken, String aGenerationId) {
 		Project project = null;
 		EntityManager em = null;
 		try {
@@ -194,6 +230,7 @@ public class Project {
 		} finally {
 			em.close();
 		}
+		project.setGenerationId(aGenerationId);
 		return project;
 	}
 	
@@ -213,12 +250,14 @@ public class Project {
 	 * 
 	 * @param aProjectOwnerEmail the project owner's email address is always needed
 	 * @param aSecurityTokenOrId the Security Token or Project Id
+	 * @param aGenerationId the client Generation Id
 	 * @return the Project found, else null.
 	 */
-	static Project findProject(String aProjectOwnerEmail, String aSecurityTokenOrId) {
+	static Project findProject(String aProjectOwnerEmail, String aSecurityTokenOrId, String aGenerationId) {
 		Project project = null;
 		EntityManager em = null;
-		if ((project = fetchProject(aProjectOwnerEmail, aSecurityTokenOrId)) != null) {
+		if ((project = fetchProject(aProjectOwnerEmail, aSecurityTokenOrId, aGenerationId)) != null) {
+			project.setGenerationId(aGenerationId);
 			return project;
 		}
 		try {
@@ -233,10 +272,12 @@ public class Project {
 						.setParameter("supplied_email", aProjectOwnerEmail)
 						.setParameter("supplied_key", aSecurityTokenOrId)
 						.getSingleResult();
+				project.setGenerationId(aGenerationId);
 			} catch (NoResultException nre) {
 				return new Project(
 						aProjectOwnerEmail,
 						aSecurityTokenOrId,
+						aGenerationId,
 						new ProjectJoinFailure(
 								"Could not find "
 										+ aProjectOwnerEmail 
@@ -293,7 +334,8 @@ public class Project {
 		if (joinProjectRequest(jo)) {
 			Project search = Project.findProject(
 					jo.get(Request.ProjectOwnerEmail.toString()).getAsString(),
-					jo.get(Request.IdOrToken.toString()).getAsString());
+					jo.get(Request.IdOrToken.toString()).getAsString(),
+					jo.get(Request.GenerationId.toString()).getAsString());
 			if (null != search) {
 				return search;
 			}

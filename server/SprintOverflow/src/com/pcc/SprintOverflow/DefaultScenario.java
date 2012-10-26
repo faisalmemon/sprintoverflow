@@ -29,7 +29,7 @@ public class DefaultScenario {
 	private Project project;
 	
 	private DefaultScenario() {
-		project = new Project("john@appleseed.com", "rb23", "qf6u6x2her", "NO");
+		project = new Project("john@appleseed.com", "rb23", "qf6u6x2her", "NO", "df6u6x2her");
 		Epic epic = new Epic("Bootstrap the AgileOverflow project");
 		project.addEpic(epic);
 		Story story0 = new Story("Create GAE default scenario response");

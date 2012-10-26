@@ -36,6 +36,7 @@ extern NSString *const ksoClientVersion;
 extern NSString *const ksoCreateProject;
 extern NSString *const ksoDiscoverable;
 extern NSString *const ksoEpic;
+extern NSString *const ksoGenerationId;
 extern NSString *const ksoIdOrToken;
 extern NSString *const ksoJoinProject;
 extern NSString *const ksoLastFetch;

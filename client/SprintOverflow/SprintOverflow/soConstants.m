@@ -46,6 +46,7 @@ NSString *const ksoCreateProject = @"CreateProject";
 NSString *const ksoDiscoverable = @"Discoverable";
 
 NSString *const ksoEpic = @"Epic";
+NSString *const ksoGenerationId = @"GenerationId";
 NSString *const ksoIdOrToken = @"IdOrToken";
 NSString *const ksoJoinProject = @"JoinProject";
 NSString *const ksoLastFetch = @"LastFetch";

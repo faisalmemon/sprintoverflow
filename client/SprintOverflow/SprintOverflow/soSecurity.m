@@ -10,7 +10,7 @@
 
 @implementation soSecurity
 
-+ (NSString*)createSecurityCode
++ (NSString*)createRandomCode
 {
     NSString *easyTranscribe = @"abcdefghkmnpqrtuvwxy2346789"; // similar looking characters removed  // Not NSLocalizedString
     int lengthEasyTranscribe = [easyTranscribe length];

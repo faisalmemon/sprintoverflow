@@ -13,6 +13,6 @@
     
 }
 
-+ (NSString*)createSecurityCode;
++ (NSString*)createRandomCode;
 
 @end

@@ -148,7 +148,8 @@ public class Model implements Resolver<String> {
 			String projectOwnerEmail = p.getProjectOwnerEmail();
 			String projectId = p.getProjectId();
 			String discoverable = p.getDiscoverable();
-			Project masterProject = Project.fetchProject(projectOwnerEmail, securityToken);
+			String generationId = p.getGenerationId();
+			Project masterProject = Project.fetchProject(projectOwnerEmail, securityToken, generationId);
 			if (null != masterProject) {
 				masterModel.put(p.getProjectKey(), masterProject);
 			} else {
@@ -156,7 +157,7 @@ public class Model implements Resolver<String> {
 				if (null == projectOwnerEmail || null == projectId || null == securityToken) {
 					throw new NullPointerException("newModel presents a project for add which has nulls");
 				}
-				p = new Project(projectOwnerEmail, projectId, securityToken, discoverable);
+				p = new Project(projectOwnerEmail, projectId, securityToken, discoverable, generationId);
 				Project.storeProject(p);
 				masterModel.put(p.getProjectKey(), p);
 			}

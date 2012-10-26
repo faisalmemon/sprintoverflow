@@ -35,6 +35,41 @@
     
 }
 
+/*
+ When any item in LastFetch has the same GenerationId as an item in
+ NextPush, then the NextPush item is deleted.  This represents the
+ server resolving the request exactly as was seen by the client with
+ no subsequent local changes not yet pushed to server.
+ 
+ This must be called from synchronized(self) because it is thread
+ unsafe.
+ */
+- (void)rationalizeNextPushWithLastFetch
+{
+    for (NSDictionary* dict in _lastFetch)
+    {
+        NSString *generation = [dict valueForKey:ksoGenerationId];
+        if (nil == generation) {
+            continue;
+        }
+        NSMutableIndexSet *indexesToDelete = [NSMutableIndexSet indexSet];
+        NSUInteger currentIndex = -1;
+        
+        for (NSDictionary* dict2 in _nextPush)
+        {
+            currentIndex++; // first pass of loop sets currentIndex to 0
+            NSString *generation2 = [dict valueForKey:ksoGenerationId];
+            if (nil == generation2) {
+                continue;
+            }
+            if ([generation compare:generation2] == NSOrderedSame) {
+                [indexesToDelete addIndex:currentIndex];
+            }
+        }
+        [_nextPush removeObjectsAtIndexes:indexesToDelete];
+    }
+}
+
 - (void)setLastFetch:(NSMutableArray *)lastFetch
 {
     if (nil == lastFetch) {
@@ -42,6 +77,7 @@
     }
     @synchronized(self) {
         _lastFetch = lastFetch;
+        [self rationalizeNextPushWithLastFetch];
     }
 }
 
@@ -65,6 +101,7 @@
     @synchronized(self) {
         _lastFetch = lastFetch;
         _nextPush = nextPush;
+        [self rationalizeNextPushWithLastFetch];
     }
 }
 
@@ -154,7 +191,7 @@
     NSString *key = [[NSString alloc] initWithFormat:@"%@:%@", project_id, owner_email]; // Not NSLocalizedString
     NSString *securityCode = [_securityCodes valueForKey:key];
     if (nil == securityCode) {
-        securityCode = [soSecurity createSecurityCode];
+        securityCode = [soSecurity createRandomCode];
         [_securityCodes setObject:securityCode forKey:key];
     }
     return securityCode;
@@ -179,6 +216,7 @@
     NSDictionary *dict = [soUtil DictionaryFromJson:addedProjectJson UpdateError:&error];
     [dict setValue:ksoNO forKey:ksoSoftDelete];
     [dict setValue:discovery forKey:ksoDiscoverable];
+    [dict setValue:[soSecurity createRandomCode] forKey:ksoGenerationId];
     
     if (!error) {
         @synchronized(self) {
@@ -205,6 +243,7 @@
                                   ksoJoinProject, ksoYES];
 
     NSDictionary *dict = [soUtil DictionaryFromJson:joinProjectJson UpdateError:&error];
+    [dict setValue:[soSecurity createRandomCode] forKey:ksoGenerationId];
 
     if (!error) {
         @synchronized(self) {

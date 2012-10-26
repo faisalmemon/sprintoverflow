@@ -69,12 +69,12 @@ public enum Request {
 	YES,
 	
 	Discoverable,
-	
-	Problem,
-	
+		
 	IdOrToken,
 	CreateProject,
 	JoinProject,
+	
+	GenerationId,
 	
 	Epic, Sprint, Story, Task,
 	
