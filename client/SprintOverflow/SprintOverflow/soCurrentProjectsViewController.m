@@ -83,9 +83,18 @@
     NSString *subtitleText;
 
     if ([project valueForKey:ksoJoinProject] != nil) {
-        NSLog(@"Found a join project request");
+        NSString *searchMessage = [NSString stringWithFormat:NSLocalizedString(@"Searching for %@ %@", @"Detailed message showing that a search is underway for the specified keywords"),
+                                   [soUtil userDisplayStringFromJsonSafeString:[project valueForKey:ksoProjectOwnerEmail]],
+                                   [soUtil userDisplayStringFromJsonSafeString:[project valueForKey:ksoIdOrToken]]];
+        cell.textLabel.text = NSLocalizedString(@"Searching...", @"Large text line indicating a search is underway");
+        cell.detailTextLabel.text = searchMessage;
     } else if ([project valueForKey:ksoProblem] != nil) {
-        // CONTINUE HERE to report failed search
+        NSString *failedSearchMessage = [NSString stringWithFormat:NSLocalizedString(@"Search did not discover a project for %@ %@", @"Detailed message showing that a search was done but failed to find the given keywords"),
+                                         [soUtil userDisplayStringFromJsonSafeString:[project valueForKey:ksoProblem]],
+                                         [soUtil userDisplayStringFromJsonSafeString:[project valueForKey:ksoProblem]]];
+        cell.textLabel.text = NSLocalizedString(@"Failed discovery of project", @"Large text line indicating a search was done but did not discover the desired project");
+        cell.detailTextLabel.text = failedSearchMessage;
+        
     } else {
         // valid project to show        
         subtitleText = [[NSString alloc] initWithFormat:@"%@ %@",  // Not NSLocalizedString
