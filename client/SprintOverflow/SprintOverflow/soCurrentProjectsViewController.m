@@ -83,7 +83,7 @@
     NSString *subtitleText;
 
     if ([project valueForKey:ksoJoinProject] != nil) {
-        // CONTINUE HERE to report pending search
+        NSLog(@"Found a join project request");
     } else if ([project valueForKey:ksoProblem] != nil) {
         // CONTINUE HERE to report failed search
     } else {

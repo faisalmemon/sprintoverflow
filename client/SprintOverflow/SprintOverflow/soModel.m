@@ -74,7 +74,7 @@
         for (NSDictionary* dict2 in _nextPush)
         {
             currentIndex++; // first pass of loop sets currentIndex to 0
-            NSString *generation2 = [dict valueForKey:ksoGenerationId];
+            NSString *generation2 = [dict2 valueForKey:ksoGenerationId];
             if (nil == generation2) {
                 continue;
             }
