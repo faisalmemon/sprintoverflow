@@ -34,7 +34,7 @@ public enum Response {
 	
 	/** Response assumed when the server did not respond in time */
 	ServerDidNotRespond,
-	Problem,
+	DidNotDiscover,
 	
 	/** Json Reply from a Json request */
 	JsonReply,

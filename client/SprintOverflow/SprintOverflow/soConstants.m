@@ -44,7 +44,7 @@ NSString *const ksoDictThreeArray = @"{ \"%@\" : %@, \"%@\" : %@, \"%@\" : %@ }"
 NSString *const ksoClientVersion = @"ClientVersion";
 NSString *const ksoCreateProject = @"CreateProject";
 NSString *const ksoDiscoverable = @"Discoverable";
-
+NSString *const ksoDidNotDiscover = @"DidNotDiscover";
 NSString *const ksoEpic = @"Epic";
 NSString *const ksoGenerationId = @"GenerationId";
 NSString *const ksoIdOrToken = @"IdOrToken";
@@ -54,7 +54,6 @@ NSString *const ksoMode = @"Mode";
 NSString *const ksoNextPush = @"NextPush";
 NSString *const ksoNO = @"NO";
 NSString *const ksoPending = @"Pending";
-NSString *const ksoProblem = @"Problem";
 NSString *const ksoPendingQueue = @"PendingQueue";
 NSString *const ksoProjectId = @"ProjectId";
 NSString *const ksoProjectOwnerEmail = @"ProjectOwnerEmail";

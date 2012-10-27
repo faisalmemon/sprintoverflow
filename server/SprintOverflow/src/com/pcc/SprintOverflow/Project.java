@@ -29,7 +29,7 @@ public class Project {
 	@Expose private String generationId;
 	@Expose private Set<Epic> epics;
 	@Expose private List<String> resolutions;
-	@Expose private String problem;
+	@Expose private String didNotDiscover;
 	
 	/**
 	 * No-arg public constructor as required by the Java Persistence API.
@@ -101,12 +101,12 @@ public class Project {
 		return securityToken;
 	}
 	
-	public String getProblem() {
-		return problem;
+	public String getDidNotDiscover() {
+		return didNotDiscover;
 	}
 	
-	public void setProblem(String aProblem) {
-		problem = aProblem;
+	public void setDidNotDiscover(String aSearch) {
+		didNotDiscover = aSearch;
 	}
 	
 	/**
@@ -155,7 +155,7 @@ public class Project {
 		setEpics(new LinkedHashSet<Epic>());
 		setSoftDelete(Request.NO.toString());
 		setDiscoverable(aDiscoverable);
-		setProblem(null);
+		setDidNotDiscover(null);
 		setGenerationId(aGenerationId);
 		resolutions = new ArrayList<String>();
 	}
@@ -165,7 +165,8 @@ public class Project {
 		setProjectId(aId);
 		setSecurityToken(aGenerationId);
 		resolutions = new ArrayList<String>();
-		setProblem(aJoinFailure.getProblem());
+		setDidNotDiscover(aJoinFailure.getProblem());
+		setGenerationId(aGenerationId);
 	}
 	
 	Project(JsonObject json) throws ProjectCreateException {
@@ -173,7 +174,7 @@ public class Project {
 			setProjectOwnerEmail(json.get(Request.ProjectOwnerEmail.toString()).getAsString());
 			setProjectId(json.get(Request.ProjectId.toString()).getAsString());
 			setSecurityToken(json.get(Request.SecurityToken.toString()).getAsString());
-			setProblem(null);
+			setDidNotDiscover(null);
 			setGenerationId(json.get(Request.GenerationId.toString()).getAsString());
 			
 			/* PROTOCOL DATA COMPATIBILITY.
@@ -220,7 +221,7 @@ public class Project {
 						"select p from Project p" +
 								" where p.projectOwnerEmail=:supplied_email" +
 						" and p.securityToken=:supplied_securityToken" +
-						" and p.problem is null")
+						" and p.didNotDiscover is null")
 						.setParameter("supplied_email", aProjectOwnerEmail)
 						.setParameter("supplied_securityToken", aSecurityToken)
 						.getSingleResult();
@@ -268,7 +269,7 @@ public class Project {
 								" where p.projectOwnerEmail=:supplied_email" +
 								" and p.projectId=:supplied_key" +
 								" and p.discoverable='YES' " +
-								" and p.problem is null")
+								" and p.didNotDiscover is null")
 						.setParameter("supplied_email", aProjectOwnerEmail)
 						.setParameter("supplied_key", aSecurityTokenOrId)
 						.getSingleResult();
@@ -278,11 +279,7 @@ public class Project {
 						aProjectOwnerEmail,
 						aSecurityTokenOrId,
 						aGenerationId,
-						new ProjectJoinFailure(
-								"Could not find "
-										+ aProjectOwnerEmail 
-										+ " " + aSecurityTokenOrId
-										));
+						new ProjectJoinFailure(aProjectOwnerEmail + " " + aSecurityTokenOrId));
 			}
 		} finally {
 			em.close();
@@ -295,8 +292,8 @@ public class Project {
 		if (null == p) {
 			throw new NullPointerException("Cannot store a project which is null");
 		}
-		if (p.getProblem() != null) {
-			System.out.println("Rejecting storage of problem projects: " + p.getProblem());
+		if (p.getDidNotDiscover() != null) {
+			System.out.println("Rejecting storage of didNotDiscover projects: " + p.getDidNotDiscover());
 			return;
 		}
 		try {
@@ -389,8 +386,8 @@ public class Project {
 		if (null == newProject) {
 			throw new NullPointerException("The next project may not be null because it means we have a client asking to update the server but supplying no projects");
 		}
-		if  (null != newProject.getProblem()) {
-			throw new IllegalArgumentException("Cannot resolve the new project as it is a problem project, designed only for reporting errors");
+		if  (null != newProject.getDidNotDiscover()) {
+			throw new IllegalArgumentException("Cannot resolve the new project as it is a didNotDiscover project, designed only for reporting errors");
 		}
 		
 		// The ProjectId is mutable.

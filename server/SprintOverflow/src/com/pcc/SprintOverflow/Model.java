@@ -131,15 +131,15 @@ public class Model implements Resolver<String> {
 			 * If the client has attempted to join a project, newModel
 			 * would have seen this (via the JoinProject tag) and then
 			 * done a search.  If that search failed to match, a
-			 * "Problem Project" would have been created which 
-			 * encapsulates the failed search.  Problem projects are
+			 * "DidNotDiscover Project" would have been created which 
+			 * encapsulates the failed search.  DidNotDiscover projects are
 			 * never persisted on the server, but they are returned to
 			 * the user so that an error message can be reported.
 			 * The client keeps circulating the problem projects
 			 * because it persists them, until the user deletes them.
 			 * This is so we can work offline.
 			 */
-			if (p.getProblem() != null) {
+			if (p.getDidNotDiscover() != null) {
 				masterModel.put(p.getProjectKey(), p);
 				continue;
 			}
@@ -174,7 +174,7 @@ public class Model implements Resolver<String> {
 		Iterator<Project>projItr = newModel.values().iterator();
 		while (projItr.hasNext()) {
 			Project newProject = projItr.next();
-			if (newProject.getProblem() != null) {
+			if (newProject.getDidNotDiscover() != null) {
 				// Don't resolve problem projects as these are merely
 				// relayed back to the user as they comprise an error
 				// message

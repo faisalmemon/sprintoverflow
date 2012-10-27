@@ -88,12 +88,9 @@
                                    [soUtil userDisplayStringFromJsonSafeString:[project valueForKey:ksoIdOrToken]]];
         cell.textLabel.text = NSLocalizedString(@"Searching...", @"Large text line indicating a search is underway");
         cell.detailTextLabel.text = searchMessage;
-    } else if ([project valueForKey:ksoProblem] != nil) {
-        NSString *failedSearchMessage = [NSString stringWithFormat:NSLocalizedString(@"Search did not discover a project for %@ %@", @"Detailed message showing that a search was done but failed to find the given keywords"),
-                                         [soUtil userDisplayStringFromJsonSafeString:[project valueForKey:ksoProblem]],
-                                         [soUtil userDisplayStringFromJsonSafeString:[project valueForKey:ksoProblem]]];
+    } else if ([project valueForKey:ksoDidNotDiscover] != nil) {
         cell.textLabel.text = NSLocalizedString(@"Failed discovery of project", @"Large text line indicating a search was done but did not discover the desired project");
-        cell.detailTextLabel.text = failedSearchMessage;
+        cell.detailTextLabel.text = [soUtil userDisplayStringFromJsonSafeString:[project valueForKey:ksoDidNotDiscover]];
         
     } else {
         // valid project to show        

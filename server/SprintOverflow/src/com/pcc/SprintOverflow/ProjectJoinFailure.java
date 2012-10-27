@@ -8,7 +8,7 @@ public class ProjectJoinFailure {
 		return problem;
 	}
 	
-	public ProjectJoinFailure(String aProblem) {
-		problem = aProblem;
+	public ProjectJoinFailure(String aSearch) {
+		problem = aSearch;
 	}
 }

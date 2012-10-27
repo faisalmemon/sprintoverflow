@@ -422,6 +422,7 @@ const int soDatabase_saveSecurityToken_NoFailureSimulation = 2;
     
     NSString *bodyData = [NSString stringWithFormat: @"Json=%@", [soUtil safeWebStringFromString:jsonPacket]];
   
+    NSLog(@"Unencoded prepared for server:\n%@", jsonPacket);
     NSMutableURLRequest *postRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[model serverUrlPrefix]] cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:20];
 
     [postRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
