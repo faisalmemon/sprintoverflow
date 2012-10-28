@@ -44,8 +44,8 @@
 		3ABB585D15A2EDB1007A57A4 /* soStory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABB585C15A2EDB1007A57A4 /* soStory.m */; };
 		3AD7477E15A32D7A0034B799 /* soTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AD7477D15A32D7A0034B799 /* soTask.m */; };
 		3AE763D0160E6359000BDBA9 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AE763CF160E6359000BDBA9 /* Default-568h@2x.png */; };
-		3AEAD20E16395F960084E946 /* padlock-highres.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AEAD20D16395F960084E946 /* padlock-highres.png */; };
-		3AEAD2101639623A0084E946 /* padlock-highres-unlocked.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AEAD20F1639623A0084E946 /* padlock-highres-unlocked.png */; };
+		3AEAD215163DAC0E0084E946 /* locked.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AEAD214163DAC0E0084E946 /* locked.png */; };
+		3AEAD217163DAC1E0084E946 /* unlocked.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AEAD216163DAC1E0084E946 /* unlocked.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -108,8 +108,8 @@
 		3AD7477D15A32D7A0034B799 /* soTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soTask.m; sourceTree = "<group>"; };
 		3ADADB42162E10000058A6DF /* soScreenJumpProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = soScreenJumpProtocol.h; sourceTree = "<group>"; };
 		3AE763CF160E6359000BDBA9 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		3AEAD20D16395F960084E946 /* padlock-highres.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "padlock-highres.png"; path = "SprintOverflow/padlock-highres.png"; sourceTree = "<group>"; };
-		3AEAD20F1639623A0084E946 /* padlock-highres-unlocked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "padlock-highres-unlocked.png"; path = "SprintOverflow/padlock-highres-unlocked.png"; sourceTree = "<group>"; };
+		3AEAD214163DAC0E0084E946 /* locked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = locked.png; path = SprintOverflow/locked.png; sourceTree = "<group>"; };
+		3AEAD216163DAC1E0084E946 /* unlocked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = unlocked.png; path = SprintOverflow/unlocked.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -279,13 +279,13 @@
 		3AEAD211163962E00084E946 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				3AEAD216163DAC1E0084E946 /* unlocked.png */,
+				3AEAD214163DAC0E0084E946 /* locked.png */,
 				3AE763CF160E6359000BDBA9 /* Default-568h@2x.png */,
 				3A9EAC8D159E155C0042030E /* second@2x.png */,
 				3A9EAC8B159E155C0042030E /* second.png */,
 				3A9EAC86159E155C0042030E /* first@2x.png */,
 				3A9EAC84159E155C0042030E /* first.png */,
-				3AEAD20F1639623A0084E946 /* padlock-highres-unlocked.png */,
-				3AEAD20D16395F960084E946 /* padlock-highres.png */,
 			);
 			name = images;
 			path = ..;
@@ -355,8 +355,8 @@
 				3AE763D0160E6359000BDBA9 /* Default-568h@2x.png in Resources */,
 				3A786DD8161B3BCB006A7E73 /* soEpicViewController.xib in Resources */,
 				3A786DDF161B50A6006A7E73 /* soCurrentProjectsViewController.xib in Resources */,
-				3AEAD20E16395F960084E946 /* padlock-highres.png in Resources */,
-				3AEAD2101639623A0084E946 /* padlock-highres-unlocked.png in Resources */,
+				3AEAD215163DAC0E0084E946 /* locked.png in Resources */,
+				3AEAD217163DAC1E0084E946 /* unlocked.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,8 +16,8 @@
 /*
  Resources
  */
-NSString *const ksoLockedImage = @"padlock-highres.png";
-NSString *const ksoUnlockedImage = @"padlock-highres-unlocked.png";
+NSString *const ksoLockedImage = @"locked.png";
+NSString *const ksoUnlockedImage = @"unlocked.png";
 
 
 NSString *const ksoEmptyList = @"[]";
