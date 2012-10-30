@@ -46,6 +46,7 @@
 		3AE763D0160E6359000BDBA9 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AE763CF160E6359000BDBA9 /* Default-568h@2x.png */; };
 		3AEAD215163DAC0E0084E946 /* locked.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AEAD214163DAC0E0084E946 /* locked.png */; };
 		3AEAD217163DAC1E0084E946 /* unlocked.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AEAD216163DAC1E0084E946 /* unlocked.png */; };
+		3AEAD21E16401A2B0084E946 /* soCurrentProject.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AEAD21D16401A2B0084E946 /* soCurrentProject.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -110,6 +111,8 @@
 		3AE763CF160E6359000BDBA9 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		3AEAD214163DAC0E0084E946 /* locked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = locked.png; path = SprintOverflow/locked.png; sourceTree = "<group>"; };
 		3AEAD216163DAC1E0084E946 /* unlocked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = unlocked.png; path = SprintOverflow/unlocked.png; sourceTree = "<group>"; };
+		3AEAD21C16401A2B0084E946 /* soCurrentProject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soCurrentProject.h; sourceTree = "<group>"; };
+		3AEAD21D16401A2B0084E946 /* soCurrentProject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soCurrentProject.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,6 +206,8 @@
 				3AB5F5E815A1D2AD000D9A55 /* soEpic.m */,
 				3AB5F5EB15A1D78A000D9A55 /* soModel.h */,
 				3AB5F5EC15A1D78A000D9A55 /* soModel.m */,
+				3AEAD21C16401A2B0084E946 /* soCurrentProject.h */,
+				3AEAD21D16401A2B0084E946 /* soCurrentProject.m */,
 				3A32968915FA41B500D0501C /* soProject.h */,
 				3A32968A15FA41B500D0501C /* soProject.m */,
 				3ADADB42162E10000058A6DF /* soScreenJumpProtocol.h */,
@@ -387,6 +392,7 @@
 				3A786DBA1618D90C006A7E73 /* JsonModel.m in Sources */,
 				3A786DD7161B3BCB006A7E73 /* soEpicViewController.m in Sources */,
 				3A786DDE161B50A6006A7E73 /* soCurrentProjectsViewController.m in Sources */,
+				3AEAD21E16401A2B0084E946 /* soCurrentProject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

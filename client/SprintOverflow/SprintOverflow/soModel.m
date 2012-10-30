@@ -15,6 +15,7 @@
 #import "soProject.h"
 #import "soConstants.h"
 #import "soUtil.h"
+#import "soCurrentProject.h"
 
 @implementation soModel
 
@@ -35,20 +36,67 @@
     
 }
 
-- (int)unifiedCount {
-    return [_lastFetch count] + [_nextPush count];
+- (soCurrentProject*)projectFromDict:(NSDictionary*)dict
+{
+    soCurrentProject *currentProject = [[soCurrentProject alloc] init];
+    if ([dict valueForKey:ksoJoinProject] != nil) {
+        [currentProject setLabel:NSLocalizedString(@"Searching...", @"Large text line indicating a search is underway")];
+        NSString *searchMessage = [NSString stringWithFormat:NSLocalizedString(@"Searching for %@ %@", @"Detailed message showing that a search is underway for the specified keywords"),
+                                   [soUtil userDisplayStringFromJsonSafeString:[dict valueForKey:ksoProjectOwnerEmail]],
+                                   [soUtil userDisplayStringFromJsonSafeString:[dict valueForKey:ksoIdOrToken]]];
+        [currentProject setDetailLabel:searchMessage];
+        [currentProject setHint:soDiscoveryInProgress];
+        
+    } else if ([dict valueForKey:ksoDidNotDiscover] != nil) {
+        [currentProject setLabel:NSLocalizedString(@"Failed discovery of project", @"Large text line indicating a search was done but did not discover the desired project")];
+        [currentProject setDetailLabel:[soUtil userDisplayStringFromJsonSafeString:[dict valueForKey:ksoDidNotDiscover]]];
+        [currentProject setHint:soDiscoveryFailed];
+    } else {
+        [currentProject setLabel:
+         [soUtil userDisplayStringFromJsonSafeString:[dict valueForKey:ksoProjectId]]];
+        [currentProject setDetailLabel:
+         [soUtil userDisplayStringFromJsonSafeString:
+          [[NSString alloc] initWithFormat:@"%@ %@",  // Not NSLocalizedString
+           [dict valueForKey:ksoProjectOwnerEmail],
+           [dict valueForKey:ksoSecurityToken]
+           ]]];
+        [currentProject setHint:soSelectableProject];
+    }
+    return currentProject;
 }
 
-- (id)objectAtUnifiedIndex:(int)index {
+- (NSMutableArray*)getCurrentProjectsAsSnapshot
+{
+    NSMutableArray *snapshot;
     @synchronized(self) {
-        if (index < 0 || index >= [self unifiedCount]) {
-            return nil;
-        } else if (index < [_lastFetch count]) {
-            return [_lastFetch objectAtIndex:index];
-        } else {
-            return [_nextPush objectAtIndex:index - [_lastFetch count]];
+        snapshot = [[NSMutableArray alloc] init];
+        for (NSDictionary* dict in _lastFetch) {
+            soCurrentProject* currentProject = [self projectFromDict:dict];
+            [snapshot addObject:currentProject];
+        }
+        for (NSDictionary* dict in _nextPush) {
+            soCurrentProject* currentProject = [self projectFromDict:dict];
+            [snapshot addObject:currentProject];
         }
     }
+    return snapshot;
+}
+
+- (int)findProjectFromSnapshot:(NSMutableArray*)snapshot WithProjectOwner:(NSString*)project_owner_email WithSecurityToken:(NSString*)security_token
+{
+    int index = -1;
+    NSString *detailSearchString = [soUtil userDisplayStringFromJsonSafeString:
+     [[NSString alloc] initWithFormat:@"%@ %@",  // Not NSLocalizedString
+      project_owner_email,
+      security_token
+      ]];
+    for (soCurrentProject* project in snapshot) {
+        ++index;
+        if ([detailSearchString compare:[project detailLabel]] == NSOrderedSame) {
+            return index;
+        }
+    }
+    return index; // -1 means not found
 }
 
 /*

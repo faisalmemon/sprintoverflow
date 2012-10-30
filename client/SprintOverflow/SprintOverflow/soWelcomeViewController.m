@@ -41,8 +41,12 @@
     [super viewWillAppear:animated];
     if (self->_jumpState == soJumpToProject) {
         self->_jumpState = soNoJump;
-        // CONTINUE HERE ONCE PROJECT SCREEN IS SETUP, JUMP TO IT
+        soCurrentProjectsViewController *currentprojvc;
+        currentprojvc = [[soCurrentProjectsViewController alloc] initWithNibName:@"soCurrentProjectsViewController" bundle:nil WithProjectOwnerEmail:self->_toProject WithSecurityToken:self->_withSecurityToken]; // Not NSLocalizedString
         
+        currentprojvc.title = NSLocalizedString(@"Current Projects", @"Screen where you look at the projects you are currently using");
+        [currentprojvc setOrientation:[self orientation]];
+        [self.navigationController pushViewController:currentprojvc animated:YES];        
     }
 }
 

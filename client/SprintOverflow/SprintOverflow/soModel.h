@@ -74,7 +74,7 @@
 - (BOOL)joinProjectOwnerEmail:(NSString*)project_owner_email
                 WithIdOrToken:(NSString*)id_or_token;
 
-- (int)unifiedCount;
-- (id)objectAtUnifiedIndex:(int)index;
+- (NSMutableArray*)getCurrentProjectsAsSnapshot;
+- (int)findProjectFromSnapshot:(NSMutableArray*)snapshot WithProjectOwner:(NSString*)project_owner_email WithSecurityToken:(NSString*)security_token;
 
 @end

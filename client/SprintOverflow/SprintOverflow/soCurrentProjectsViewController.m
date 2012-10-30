@@ -20,11 +20,49 @@
 
 @synthesize orientation=_orientation;
 
+- (void)initController
+{
+    _model = [soModel sharedInstance];
+    _currentProjects = [_model getCurrentProjectsAsSnapshot];
+
+}
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
+        [self initController];
+    }
+    return self;
+}
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        [self initController];
+    }
+    return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    _currentProjects = [_model getCurrentProjectsAsSnapshot];
+}
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil WithProjectOwnerEmail:(NSString*)project_owner_email WithSecurityToken:(NSString*)security_token
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        [self initController];
+
+        int unifiedIndex = [_model findProjectFromSnapshot:_currentProjects WithProjectOwner:project_owner_email WithSecurityToken:security_token];
+        
+        NSUInteger sectionOneIndexPosition[2] = {0, unifiedIndex};
+        NSIndexPath* rowToSelect = [NSIndexPath indexPathWithIndexes:sectionOneIndexPosition length:2];
+        [[self tableView]
+         selectRowAtIndexPath:rowToSelect animated:YES scrollPosition:UITableViewScrollPositionNone];
+        [[self tableView] scrollToRowAtIndexPath:rowToSelect atScrollPosition:UITableViewScrollPositionNone animated:YES];
     }
     return self;
 }
@@ -66,8 +104,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    soModel *model = [soModel sharedInstance];
-    return [model unifiedCount];
+    return [_currentProjects count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -78,28 +115,16 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     
-    soModel *model = [soModel sharedInstance];
-    NSDictionary *project = [model objectAtUnifiedIndex:indexPath.row];
-    NSString *subtitleText;
-
-    if ([project valueForKey:ksoJoinProject] != nil) {
-        NSString *searchMessage = [NSString stringWithFormat:NSLocalizedString(@"Searching for %@ %@", @"Detailed message showing that a search is underway for the specified keywords"),
-                                   [soUtil userDisplayStringFromJsonSafeString:[project valueForKey:ksoProjectOwnerEmail]],
-                                   [soUtil userDisplayStringFromJsonSafeString:[project valueForKey:ksoIdOrToken]]];
-        cell.textLabel.text = NSLocalizedString(@"Searching...", @"Large text line indicating a search is underway");
-        cell.detailTextLabel.text = searchMessage;
-    } else if ([project valueForKey:ksoDidNotDiscover] != nil) {
-        cell.textLabel.text = NSLocalizedString(@"Failed discovery of project", @"Large text line indicating a search was done but did not discover the desired project");
-        cell.detailTextLabel.text = [soUtil userDisplayStringFromJsonSafeString:[project valueForKey:ksoDidNotDiscover]];
-        
-    } else {
-        // valid project to show        
-        subtitleText = [[NSString alloc] initWithFormat:@"%@ %@",  // Not NSLocalizedString
-                        [project valueForKey:ksoProjectOwnerEmail],
-                        [project valueForKey:ksoSecurityToken]
-                        ];
-        cell.textLabel.text = [soUtil userDisplayStringFromJsonSafeString:[project valueForKey:ksoProjectId] ];
-        cell.detailTextLabel.text = [soUtil userDisplayStringFromJsonSafeString:subtitleText];
+    soCurrentProject *project = [_currentProjects objectAtIndex:indexPath.row];
+    cell.textLabel.text = [project label];
+    cell.detailTextLabel.text = [project detailLabel];
+    switch ([project hint]) {
+        case soSelectableProject:
+        case soDiscoveryInProgress:
+        case soDiscoveryFailed:
+        default:
+            // CONTINUE HERE by adding icons as needed
+            break;
     }
     return cell;
 }
