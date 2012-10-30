@@ -157,6 +157,8 @@ public class Model implements Resolver<String> {
 				if (null == projectOwnerEmail || null == projectId || null == securityToken) {
 					throw new NullPointerException("newModel presents a project for add which has nulls");
 				}
+				// CONTINUE HERE need to put checks in place so two projects sharing the same
+				// project owner email do not share the same project id.
 				p = new Project(projectOwnerEmail, projectId, securityToken, discoverable, generationId);
 				Project.storeProject(p);
 				masterModel.put(p.getProjectKey(), p);
