@@ -46,7 +46,9 @@
         
         currentprojvc.title = NSLocalizedString(@"Current Projects", @"Screen where you look at the projects you are currently using");
         [currentprojvc setOrientation:[self orientation]];
-        [self.navigationController pushViewController:currentprojvc animated:YES];        
+        // CONTINUE HERE we need to auto highlight the current projects button, and
+        // then push the current projects vc onto the stack after a small pause
+        [self.navigationController pushViewController:currentprojvc animated:YES];
     }
 }
 

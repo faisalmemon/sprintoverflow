@@ -190,20 +190,14 @@
 
     [model addProjectOwnerEmail:owner_email WithID:project_id WithSecurityToken:security_code WithDiscovery:lockButtonState == soLockButtonLocked ? ksoNO : ksoYES];
     
-    //soEpicViewController *epicvc;
-    //NSString *epicViewTitle = [[NSString alloc] initWithFormat:@"%@ %@", project_id, NSLocalizedString(@"Epics", @"Screen where you manage the Epic task level for a  project")];
-    //epicvc = [[ soEpicViewController alloc] initWithNibName:@"soEpicViewController" bundle:nil];
-    //epicvc.title = epicViewTitle;
-    //epicvc.orientation = orientation;
     [[model delegateScreenJump] nextScreenShouldShowProjectWithOwner:owner_email WithSecurityToken:security_code];
     [self.navigationController popToRootViewControllerAnimated:YES];
-    // CONTINUE HERE
-    // change code to use a protocol to get the root view controller to show and then to drill
-    // down to get to the new project.
-    //[self.navigationController pushViewController:epicvc animated:YES];
 }
 
 - (IBAction)clickedSecurityButton:(id)sender {
+    [handleOwnerEmailAddress resignFirstResponder];
+    [handleProjectId resignFirstResponder];
+    
     if (lockButtonState == soLockButtonLocked) {
         lockButtonState = soLockButtonUnlocked;
         [handleSecurityButton setImage:[UIImage imageNamed:ksoUnlockedImage]  forState:UIControlStateNormal];
