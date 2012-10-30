@@ -68,6 +68,7 @@ extern NSString *const ksoCreateNewProjectUrl;
 extern NSString *const ksoServerNotRespondedYet;
 extern NSString *const ksoServerDidNotRespond;
 
+extern const NSTimeInterval delayToAutomaticallySwitchViews;
 
 + (UIColor *)faultyEmailAddressBackgroundColor;
 @end

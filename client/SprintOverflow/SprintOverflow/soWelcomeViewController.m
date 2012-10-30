@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
+#import "soConstants.h"
+
 #import "soWelcomeViewController.h"
 #import "soJoinViewController.h"
 #import "soCreateViewController.h"
@@ -17,7 +19,7 @@
 
 @implementation soWelcomeViewController
 
-@synthesize orientation = _orientation;
+@synthesize orientation = _orientation, handleCurrentProjects;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -41,19 +43,25 @@
     [super viewWillAppear:animated];
     if (self->_jumpState == soJumpToProject) {
         self->_jumpState = soNoJump;
-        soCurrentProjectsViewController *currentprojvc;
-        currentprojvc = [[soCurrentProjectsViewController alloc] initWithNibName:@"soCurrentProjectsViewController" bundle:nil WithProjectOwnerEmail:self->_toProject WithSecurityToken:self->_withSecurityToken]; // Not NSLocalizedString
-        
-        currentprojvc.title = NSLocalizedString(@"Current Projects", @"Screen where you look at the projects you are currently using");
-        [currentprojvc setOrientation:[self orientation]];
-        // CONTINUE HERE we need to auto highlight the current projects button, and
-        // then push the current projects vc onto the stack after a small pause
-        [self.navigationController pushViewController:currentprojvc animated:YES];
+        [handleCurrentProjects setHighlighted:YES];
+        [self performSelector:@selector(jump) withObject:nil afterDelay:delayToAutomaticallySwitchViews];
     }
 }
 
+- (void) jump
+{
+    [handleCurrentProjects setHighlighted:NO];
+    soCurrentProjectsViewController *currentprojvc;
+    currentprojvc = [[soCurrentProjectsViewController alloc] initWithNibName:@"soCurrentProjectsViewController" bundle:nil WithProjectOwnerEmail:self->_toProject WithSecurityToken:self->_withSecurityToken]; // Not NSLocalizedString
+    
+    currentprojvc.title = NSLocalizedString(@"Current Projects", @"Screen where you look at the projects you are currently using");
+    [currentprojvc setOrientation:[self orientation]];
+   [self.navigationController pushViewController:currentprojvc animated:YES];
+}
+                                    
 - (void)viewDidUnload
 {
+    [self setHandleCurrentProjects:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }

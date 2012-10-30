@@ -26,5 +26,6 @@ enum soJumpState {
 - (IBAction)drillIntoJoin:(UIButton*)sender;
 - (IBAction)drillIntoStartProject:(id)sender;
 - (IBAction)drillIntoCurrentProjects:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *handleCurrentProjects;
 
 @end

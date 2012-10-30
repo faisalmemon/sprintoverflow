@@ -75,7 +75,7 @@ NSString *const ksoYES = @"YES";
 NSString *const ksoServerNotRespondedYet = @"ServerNotRespondedYet";
 NSString *const ksoServerDidNotRespond = @"ServerDidNotRespond";
 
-
+const NSTimeInterval delayToAutomaticallySwitchViews = 1.0; // 1 second
 
 + (UIColor *)faultyEmailAddressBackgroundColor
 {
