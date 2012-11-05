@@ -24,7 +24,11 @@
 {
     _model = [soModel sharedInstance];
     _currentProjects = [_model getCurrentProjectsAsSnapshot];
-
+    // CONTINUE HERE by having the model broadcast when it async updates
+    // so that any view controller can redraw itself with updated information
+    // The model also needs update to listen to network/radio up/down so that
+    // if the network is down, it does not bother chatting, and when the network
+    // comes up, to do an update.
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
