@@ -27,8 +27,6 @@
     if (self) {
         self.title = NSLocalizedString(@"Projects", @"Projects welcome screen");
         self.tabBarItem.image = [UIImage imageNamed:@"first"]; // Not NSLocalizedString
-        [[soModel sharedInstance] setDelegateScreenJump:self];
-        self->_jumpState = soNoJump;
     }
     return self;
 }
@@ -41,22 +39,6 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    if (self->_jumpState == soJumpToProject) {
-        self->_jumpState = soNoJump;
-        [handleCurrentProjects setHighlighted:YES];
-        [self performSelector:@selector(jump) withObject:nil afterDelay:delayToAutomaticallySwitchViews];
-    }
-}
-
-- (void) jump
-{
-    [handleCurrentProjects setHighlighted:NO];
-    soCurrentProjectsViewController *currentprojvc;
-    currentprojvc = [[soCurrentProjectsViewController alloc] initWithNibName:@"soCurrentProjectsViewController" bundle:nil WithProjectOwnerEmail:self->_toProject WithSecurityToken:self->_withSecurityToken]; // Not NSLocalizedString
-    
-    currentprojvc.title = NSLocalizedString(@"Current Projects", @"Screen where you look at the projects you are currently using");
-    [currentprojvc setOrientation:[self orientation]];
-   [self.navigationController pushViewController:currentprojvc animated:YES];
 }
                                     
 - (void)viewDidUnload
@@ -79,9 +61,7 @@
 
 -(IBAction) drillIntoJoin:(UIButton*)sender
 {
-    if (self->_jumpState != soNoJump) {
-        return;
-    }
+
     soJoinViewController *joinvc;
     joinvc = [[soJoinViewController alloc] initWithNibName:@"join" bundle:nil]; // Not NSLocalizedString
     
@@ -92,9 +72,6 @@
 
 - (IBAction)drillIntoCurrentProjects:(id)sender
 {
-    if (self->_jumpState != soNoJump) {
-        return;
-    }
     soCurrentProjectsViewController *currentprojvc;
     currentprojvc = [[soCurrentProjectsViewController alloc] initWithNibName:@"soCurrentProjectsViewController" bundle:nil]; // Not NSLocalizedString
     
@@ -104,9 +81,7 @@
 }
 
 - (IBAction)drillIntoStartProject:(id)sender {
-    if (self->_jumpState != soNoJump) {
-        return;
-    }
+
     soCreateViewController *createvc;
     createvc = [[soCreateViewController alloc] initWithNibName:@"soCreateViewController" bundle:nil] ; // Not NSLocalizedString
     createvc.title = NSLocalizedString(@"Create", @"Screen where you Create a project");
@@ -114,11 +89,4 @@
     [self.navigationController pushViewController: createvc animated:YES];
 }
 
-#pragma mark soScreenJumpProtocol
-- (void)nextScreenShouldShowProjectWithOwner:(NSString*)projectOwnerEmail WithSecurityToken:(NSString*)securityToken
-{
-    self->_jumpState = soJumpToProject;
-    self->_toProject = projectOwnerEmail;
-    self->_withSecurityToken = securityToken;
-}
 @end

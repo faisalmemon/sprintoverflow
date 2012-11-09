@@ -19,7 +19,7 @@
 
 @implementation soModel
 
-@synthesize delegateScreenJump=_delegateScreenJump, delegateModelUpdate=_delegateModelUpdate;
+@synthesize delegateModelUpdate=_delegateModelUpdate;
 
 - (NSMutableArray *)lastFetch
 {

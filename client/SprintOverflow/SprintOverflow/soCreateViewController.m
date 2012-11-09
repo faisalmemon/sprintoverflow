@@ -8,6 +8,7 @@
 
 #import "soCreateViewController.h"
 #import "soEpicViewController.h"
+#import "soCurrentProjectsViewController.h"
 
 #import "soConstants.h"
 #import "soUtil.h"
@@ -189,9 +190,9 @@
     NSString *security_code = [NSString stringWithString:handleSecurityToken.text];
 
     [model addProjectOwnerEmail:owner_email WithID:project_id WithSecurityToken:security_code WithDiscovery:lockButtonState == soLockButtonLocked ? ksoNO : ksoYES];
-    
-    [[model delegateScreenJump] nextScreenShouldShowProjectWithOwner:owner_email WithSecurityToken:security_code];
-    [self.navigationController popToRootViewControllerAnimated:YES];
+
+    soCurrentProjectsViewController* currentvc = [[soCurrentProjectsViewController alloc] initWithNibName:@"soCurrentProjectsViewController" bundle:nil WithProjectOwnerEmail:owner_email WithSecurityToken:security_code];
+    [self.navigationController pushViewController:currentvc animated:YES];
 }
 
 - (IBAction)clickedSecurityButton:(id)sender {

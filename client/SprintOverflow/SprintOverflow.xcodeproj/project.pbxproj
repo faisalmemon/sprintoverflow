@@ -107,7 +107,6 @@
 		3ABB585C15A2EDB1007A57A4 /* soStory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soStory.m; sourceTree = "<group>"; };
 		3AD7477C15A32D7A0034B799 /* soTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soTask.h; sourceTree = "<group>"; };
 		3AD7477D15A32D7A0034B799 /* soTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soTask.m; sourceTree = "<group>"; };
-		3ADADB42162E10000058A6DF /* soScreenJumpProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = soScreenJumpProtocol.h; sourceTree = "<group>"; };
 		3AE763CF160E6359000BDBA9 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		3AEAD214163DAC0E0084E946 /* locked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = locked.png; path = SprintOverflow/locked.png; sourceTree = "<group>"; };
 		3AEAD216163DAC1E0084E946 /* unlocked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = unlocked.png; path = SprintOverflow/unlocked.png; sourceTree = "<group>"; };
@@ -211,7 +210,6 @@
 				3AEAD21D16401A2B0084E946 /* soCurrentProject.m */,
 				3A32968915FA41B500D0501C /* soProject.h */,
 				3A32968A15FA41B500D0501C /* soProject.m */,
-				3ADADB42162E10000058A6DF /* soScreenJumpProtocol.h */,
 				3AEAD223164D117D0084E946 /* soModelUpdateProtocol.h */,
 				3A30C02315EECBE100FE937C /* soSecurity.h */,
 				3A30C02415EECBE100FE937C /* soSecurity.m */,

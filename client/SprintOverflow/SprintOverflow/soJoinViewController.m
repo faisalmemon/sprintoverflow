@@ -10,6 +10,7 @@
 #import "soUtil.h"
 #import "soConstants.h"
 #import "soModel.h"
+#import "soCurrentProjectsViewController.h"
 
 // Create a local method to intialize the view controller
 @interface soJoinViewController ()
@@ -71,8 +72,8 @@
     if (projectIdText.text != nil && projectOwnerEmailText != nil &&
         [soUtil isValidEmail:projectOwnerEmailText.text Strictly:YES]) {
         [[soModel sharedInstance] joinProjectOwnerEmail:projectOwnerEmailText.text WithIdOrToken:projectIdText.text];
-        [[[soModel sharedInstance] delegateScreenJump] nextScreenShouldShowProjectWithOwner:projectOwnerEmailText.text WithSecurityToken:projectIdText.text];
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        soCurrentProjectsViewController* currentvc = [[soCurrentProjectsViewController alloc] initWithNibName:@"soCurrentProjectsViewController" bundle:nil WithProjectOwnerEmail:projectOwnerEmailText.text WithSecurityToken:projectIdText.text];
+        [self.navigationController pushViewController:currentvc animated:YES];
     }
 }
 
