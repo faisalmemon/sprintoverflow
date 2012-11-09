@@ -5,6 +5,7 @@
 //  Created by Faisal Memon on 29/08/2012.
 //
 //
+#import <MessageUI/MessageUI.h>
 
 #import "soCreateViewController.h"
 #import "soEpicViewController.h"
@@ -184,14 +185,84 @@
     [handleScrollView setContentOffset:savedContentOffset animated:YES];
 }
 
+// Displays an email composition interface inside the application. Populates all the Mail fields.
+-(void)displayComposerSheet
+{
+	MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
+	picker.mailComposeDelegate = self;
+	
+	[picker setSubject:@"Hello from California!"];
+	
+    
+	// Set up recipients
+	NSArray *toRecipients = [NSArray arrayWithObject:@"first@example.com"];
+	NSArray *ccRecipients = [NSArray arrayWithObjects:@"second@example.com", @"third@example.com", nil];
+	NSArray *bccRecipients = [NSArray arrayWithObject:@"fourth@example.com"];
+	
+	[picker setToRecipients:toRecipients];
+	[picker setCcRecipients:ccRecipients];
+	[picker setBccRecipients:bccRecipients];
+	
+	// Attach an image to the email
+	NSString *path = [[NSBundle mainBundle] pathForResource:@"rainy" ofType:@"png"];
+    NSData *myData = [NSData dataWithContentsOfFile:path];
+	[picker addAttachmentData:myData mimeType:@"image/png" fileName:@"rainy"];
+	
+	// Fill out the email body text
+	NSString *emailBody = @"It is raining in sunny California!";
+	[picker setMessageBody:emailBody isHTML:NO];
+	
+	[self presentModalViewController:picker animated:YES];
+}
+
+-(void)launchMailAppOnDevice
+{
+	NSString *recipients = @"mailto:first@example.com?cc=second@example.com,third@example.com&subject=Hello from California!";
+	NSString *body = @"&body=It is raining in sunny California!";
+	
+	NSString *email = [NSString stringWithFormat:@"%@%@", recipients, body];
+	email = [email stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+	
+	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:email]];
+}
+
+- (void) emailProjectOwner:(NSString*)project_owner_email WithId:(NSString*)project_id WithSecurityToken:(NSString*)security_token
+{
+    // CONTINUE HERE by passing the strings down to the helper functions
+    // add member data to remember this info so that the delegate can switch to the
+    // currentvc after the email
+    Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
+	if (mailClass != nil)
+	{
+		if ([mailClass canSendMail])
+		{
+			[self displayComposerSheet];
+		}
+		else
+		{
+			[self launchMailAppOnDevice];
+		}
+	}
+	else
+	{
+		[self launchMailAppOnDevice];
+	}
+
+}
+
 - (IBAction)clickedCreateButton:(id)sender {
     NSString *project_id = [NSString stringWithString:handleProjectId.text];
     NSString *owner_email = [NSString stringWithString:handleOwnerEmailAddress.text];
     NSString *security_code = [NSString stringWithString:handleSecurityToken.text];
 
     [model addProjectOwnerEmail:owner_email WithID:project_id WithSecurityToken:security_code WithDiscovery:lockButtonState == soLockButtonLocked ? ksoNO : ksoYES];
+    
+    [self emailProjectOwner:owner_email WithId:project_id WithSecurityToken:security_code];
 
     soCurrentProjectsViewController* currentvc = [[soCurrentProjectsViewController alloc] initWithNibName:@"soCurrentProjectsViewController" bundle:nil WithProjectOwnerEmail:owner_email WithSecurityToken:security_code];
+    
+    // CONTINUE HERE fix this so that in the mail composer delegate, it switches to the currentvc
+    // having it here means you get a transition followed immediately by the modal mail composer tool
     [self.navigationController pushViewController:currentvc animated:YES];
 }
 
@@ -210,4 +281,26 @@
         handleSecurityExplanation.text = NSLocalizedString(@"The security token is needed for people to join this project", @"Next to a padlock lock symbol, for when a security feature is switched on");
     }
 }
+
+#pragma mark - MFMailComposeViewControllerDelegate
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
+{
+    NSLog (@"After attempting an email, result was %d", result);
+	switch (result)
+	{
+		case MFMailComposeResultCancelled:
+			break;
+		case MFMailComposeResultSaved:
+			break;
+		case MFMailComposeResultSent:
+			break;
+		case MFMailComposeResultFailed:
+			break;
+		default:
+			break;
+	}
+	[self dismissModalViewControllerAnimated:YES];
+}
+
 @end

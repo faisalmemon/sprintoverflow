@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MFMailComposeViewController.h>
+
 #import "soModel.h"
 
 enum soCreateStateMachine {
@@ -26,7 +28,7 @@ enum soCreateActions {
     soNotModifyingText,
 };
 
-@interface soCreateViewController : UIViewController <UITextFieldDelegate> {
+@interface soCreateViewController : UIViewController <UITextFieldDelegate, MFMailComposeViewControllerDelegate> {
     UIInterfaceOrientation orientation;
     NSObject* currentlyEditing;
     CGPoint savedContentOffset;
