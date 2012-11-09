@@ -19,7 +19,7 @@
 
 @implementation soModel
 
-@synthesize delegateScreenJump=_delegateScreenJump;
+@synthesize delegateScreenJump=_delegateScreenJump, delegateModelUpdate=_delegateModelUpdate;
 
 - (NSMutableArray *)lastFetch
 {
@@ -134,6 +134,16 @@
     }
 }
 
+- (void)notifyModelUpdatedFromMainThread
+{
+    dispatch_queue_t mainQueue = dispatch_get_main_queue();
+    
+    void (^blockInTheMainThread)(void) = ^(void) {
+        [[self delegateModelUpdate] modelUpdated];
+    };
+    dispatch_async(mainQueue, blockInTheMainThread);
+}
+
 - (void)setLastFetch:(NSMutableArray *)lastFetch
 {
     if (nil == lastFetch) {
@@ -143,6 +153,7 @@
         _lastFetch = lastFetch;
         [self rationalizeNextPushWithLastFetch];
     }
+    [self notifyModelUpdatedFromMainThread];
 }
 
 - (void)setNextPush:(NSMutableArray *)nextPush

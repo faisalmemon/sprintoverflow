@@ -24,11 +24,6 @@
 {
     _model = [soModel sharedInstance];
     _currentProjects = [_model getCurrentProjectsAsSnapshot];
-    // CONTINUE HERE by having the model broadcast when it async updates
-    // so that any view controller can redraw itself with updated information
-    // The model also needs update to listen to network/radio up/down so that
-    // if the network is down, it does not bother chatting, and when the network
-    // comes up, to do an update.
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -49,9 +44,17 @@
     return self;
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
     _currentProjects = [_model getCurrentProjectsAsSnapshot];
+    [[soModel sharedInstance] setDelegateModelUpdate:self];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[soModel sharedInstance] setDelegateModelUpdate:nil];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil WithProjectOwnerEmail:(NSString*)project_owner_email WithSecurityToken:(NSString*)security_token
@@ -185,4 +188,11 @@
      */
 }
 
+#pragma mark - soModelUpdateProtocol
+
+- (void) modelUpdated
+{
+    _currentProjects = [_model getCurrentProjectsAsSnapshot];
+    [[self tableView] reloadData];
+}
 @end

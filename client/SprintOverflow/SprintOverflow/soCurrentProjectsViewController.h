@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "soModel.h"
 #import "soCurrentProject.h"
+#import "soModelUpdateProtocol.h"
 
-@interface soCurrentProjectsViewController : UITableViewController {
+@interface soCurrentProjectsViewController : UITableViewController <soModelUpdateProtocol> {
     UIInterfaceOrientation _orientation;
     soModel* _model;
     NSMutableArray* _currentProjects;

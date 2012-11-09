@@ -113,6 +113,7 @@
 		3AEAD216163DAC1E0084E946 /* unlocked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = unlocked.png; path = SprintOverflow/unlocked.png; sourceTree = "<group>"; };
 		3AEAD21C16401A2B0084E946 /* soCurrentProject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soCurrentProject.h; sourceTree = "<group>"; };
 		3AEAD21D16401A2B0084E946 /* soCurrentProject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = soCurrentProject.m; sourceTree = "<group>"; };
+		3AEAD223164D117D0084E946 /* soModelUpdateProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = soModelUpdateProtocol.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +212,7 @@
 				3A32968915FA41B500D0501C /* soProject.h */,
 				3A32968A15FA41B500D0501C /* soProject.m */,
 				3ADADB42162E10000058A6DF /* soScreenJumpProtocol.h */,
+				3AEAD223164D117D0084E946 /* soModelUpdateProtocol.h */,
 				3A30C02315EECBE100FE937C /* soSecurity.h */,
 				3A30C02415EECBE100FE937C /* soSecurity.m */,
 				3ABB585B15A2EDB1007A57A4 /* soStory.h */,
